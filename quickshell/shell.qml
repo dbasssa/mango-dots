@@ -13,7 +13,7 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
 
-        ScreenFrame {}
+        //ScreenFrame {}
 
     }
 
@@ -35,5 +35,8 @@ ShellRoot {
     CtrlCenter {}
 
     WallpaperPicker {}
+
+    ThemePicker {}
+    AppLauncher {}
 
 }

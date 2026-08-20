@@ -14,7 +14,7 @@ PanelWindow {
     screen: modelData
     color: "transparent"
 
-    visible: CtrlCenterState.ctrlOpen || NotificationState.centerOpen
+    visible: CtrlCenterState.ctrlOpen
 
     WlrLayershell.namespace: "quickshell:outside-click-catcher"
     WlrLayershell.layer: WlrLayer.Overlay
@@ -37,7 +37,6 @@ PanelWindow {
         anchors.fill: parent
         onClicked: {
             CtrlCenterState.ctrlOpen = false
-            NotificationState.centerOpen = false
         }
     }
 }

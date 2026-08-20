@@ -5,7 +5,6 @@ import Quickshell.Wayland._ToplevelManagement
 QtObject {
     id: root
 
-    property bool centerOpen: false
     property var persistent: []
 
     function add(notification) {

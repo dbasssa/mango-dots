@@ -5,13 +5,13 @@ import Quickshell.Wayland
 
 PanelWindow {
     id: root
-    required property var modelData
 
-    screen: modelData
-    property int thickness: 5
+    required property var modelData
+    property int thickness: 10
     property int rounding: 12
     property color frameColor: Theme.bgcolor
 
+    screen: modelData
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top
     color: "transparent"

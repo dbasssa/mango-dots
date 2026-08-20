@@ -7,17 +7,23 @@ PanelWindow {
 
     screen: modelData
     implicitHeight: 40
+    implicitWidth: 650
     color: "transparent"
-
     anchors {
         top: true
-        left: true
-        right: true
+    }
+    margins {
+        top: 5
     }
 
     Rectangle {
         anchors.fill: parent
         color: Theme.bgcolor
+        radius: 10
+        border {
+            width: 2
+            color: Theme.bordercolor
+        }
     }
 
     RowLayout {
@@ -26,9 +32,7 @@ PanelWindow {
         spacing: 5
         anchors.fill: parent
 
-        Workspaces {
-            monitorName: modelData.name
-        }
+        Workspaces {monitorName: modelData.name }
 
         Item {
             Layout.fillWidth: true
@@ -39,8 +43,6 @@ PanelWindow {
         Item {
             Layout.fillWidth: true
         }
-        VolumeBar{}
-        NotifBtn{}
         CtrlCenterBtn{}
 
     }

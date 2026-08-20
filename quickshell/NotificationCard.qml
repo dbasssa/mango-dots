@@ -46,7 +46,6 @@ Rectangle {
             NotificationState.focusApp(root.modelData)
             root.modelData.dismiss()
             NotificationState.remove(root.modelData)
-            NotificationState.centerOpen = false
         }
     }
 

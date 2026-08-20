@@ -61,8 +61,4 @@ Scope {
 
     }
 
-    NotificationCenter {
-        open: NotificationState.centerOpen
-    }
-
 }

@@ -21,21 +21,7 @@ PanelWindow {
         bottom: true
     }
 
-    Component.onCompleted: scanner.running = true
-
-    Process {
-        id: scanner
-        command: ["find", "/home/tanish/walls", "-maxdepth", "1", "-type", "f", "-printf", "%p\n"]
-        stdout: StdioCollector {}
-
-        onExited: {
-            const files = scanner.stdout.text
-                .split("\n")
-                .map(f => f.trim())
-                .filter(f => f.length > 0)
-            WallpaperState.loadWallpapers(files)
-        }
-    }
+    Component.onCompleted: WallpaperState.doScan()
 
     Rectangle {
         id: bg
@@ -163,7 +149,7 @@ PanelWindow {
                         pixelSize: Theme.fontmd
                     }
                     text: {
-                        if (list.count === 0) return "no wallpapers found in ~/walls"
+                        if (list.count === 0) return "no wallpapers found in ~/walls/" + ThemeState.themes[ThemeState.currentIndex].wallFolder
                         const p = WallpaperState.wallpapers[list.currentIndex] || ""
                         return (list.currentIndex + 1) + " / " + list.count + "    " + p.split("/").pop()
                     }
