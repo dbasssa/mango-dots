@@ -24,14 +24,19 @@ I run CachyOS, but any arch-based distro or arch itself should be fine (i have n
 - zen-browser (browser)
 - swaylock (lockscreen for wayland)
 - yazi (TUI file manager)
+- ~/walls/THEMENAME (directory for wallpapers under themes)
 
 **Updates:**
 
 Commit #2:
-Created app launcher functionality in Quickshell to remove the use of fuzzel. 
+- Created app launcher functionality in Quickshell to remove the use of fuzzel. 
 
-Changed the aesthetics of the Bar to make it more notch-like. 
+- Changed the aesthetics of the Bar to make it more notch-like. 
 
-Changed the control center Bar icon to represent all possible changes (i didnt like how the volume and notifications were seperate from the control center. Now accessing everything can be done in one click.)
 
-Added a logout manager to the control center to remove the use of Wlogout.
+- Changed the control center Bar icon to represent all possible changes (i didnt like how the volume and notifications were seperate from the control center. Now accessing everything can be done in one click.)
+
+- Added a logout manager to the control center to remove the use of Wlogout.
+
+**TODO: potential features, not guaranteed to be added**
+- Add a "Settings" window to change things on the fly instead of having to edit code.
