@@ -120,7 +120,7 @@ Row {
             height: 15
             radius: 8
             color: modelData.is_urgent ? Theme.alertcolor : Theme.textactive
-            border.color: modelData.is_active ? Theme.wsbordercolor : Theme.bgcolor
+            border.color: States.islandBar ? Theme.rectcolor : Theme.textactive
             border.width: (modelData.is_active || pill.hovered) ? 2 : 0
             scale: pill.hovered ? 1.15 : 1.0
 

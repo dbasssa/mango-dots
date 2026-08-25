@@ -17,15 +17,17 @@ PanelWindow {
 
     anchors {
         top: true
+        right: States.fullBar ? true : false
     }
 
     margins {
-        top: 50
+        top: States.frameVis ? 53 : 50
+        right: States.fullBar ? 12 : 0
     }
 
     Connections {
         function onCtrlOpenChanged() {
-            if (CtrlCenterState.ctrlOpen) {
+            if (States.ctrlOpen) {
                 root.animOpen = true;
                 Qt.callLater(panelIn.start);
             } else {
@@ -33,7 +35,7 @@ PanelWindow {
             }
         }
 
-        target: CtrlCenterState
+        target: States
     }
 
     Rectangle {
@@ -139,8 +141,8 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
-                        CtrlCenterState.ctrlOpen = false;
-                        ThemeState.pickerOpen = true;
+                        States.ctrlOpen = false;
+                        States.themePickerOpen = true;
                     }
                 }
 

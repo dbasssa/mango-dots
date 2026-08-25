@@ -37,8 +37,8 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            CtrlCenterState.ctrlOpen = false;
-            WallpaperState.pickerOpen = true;
+            States.ctrlOpen = false;
+            States.wallPickerOpen = true;
         }
     }
 

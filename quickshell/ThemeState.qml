@@ -5,7 +5,6 @@ import Quickshell.Io
 QtObject {
     id: root
 
-    property bool pickerOpen: false
     property int currentIndex: 0
 
     property var themes: [

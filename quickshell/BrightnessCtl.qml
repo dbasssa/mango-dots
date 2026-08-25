@@ -135,7 +135,7 @@ Item {
         id: poll
         interval: 5000
         repeat: true
-        running: CtrlCenterState.ctrlOpen
+        running: States.ctrlOpen
         onTriggered: root.startRead()
         onRunningChanged: if (running) root.startRead()
     }

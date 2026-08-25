@@ -99,7 +99,7 @@ Item {
                 Layout.maximumWidth: implicitWidth
                 visible: root.hasArtist
                 text: root.player ? root.player.trackArtist : ""
-                color: Theme.textmuted
+                color: Theme.text1
                 font.family: Theme.fontfamily
                 font.pixelSize: Theme.fontmd
                 font.bold: true

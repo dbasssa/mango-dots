@@ -13,9 +13,9 @@ Item {
     Text {
         id:clktxt
         text: Qt.formatDateTime(clock.date, "hh:mm")
-        color: Theme.text1
+        color: States.islandBar ? Theme.bgcolor : Theme.text1
         font.family: Theme.fontfamily
-        font.pixelSize: Theme.fontxl
+        font.pixelSize: Theme.fontxxl
         onTextChanged: clkFade.restart()
     }
 

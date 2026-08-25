@@ -8,7 +8,6 @@ QtObject {
     property var wallpapers: []
     property string currentWallpaper: "/home/tanish/walls/nord/11356515.jpg"
     property int currentIndex: 0
-    property bool pickerOpen: false
     property bool loaded: false
 
     property var wpReader: Process {
@@ -76,13 +75,13 @@ QtObject {
     function apply() {
         if (root.wallpapers.length === 0) return
         root.currentWallpaper = root.wallpapers[root.currentIndex]
-        root.pickerOpen = false
+        States.wallPickerOpen = false
         wpWriter.running = true
         pywalProc.command = ["sh", "-c", "wal -i " + root.currentWallpaper + " && pywalfox update && kitty @ set-colors --configured ~/.cache/wal/colors-kitty.conf"]
         pywalProc.running = true
     }
 
     function closePicker() {
-        root.pickerOpen = false
+        States.wallPickerOpen = false
     }
 }

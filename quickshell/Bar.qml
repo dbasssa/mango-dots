@@ -6,29 +6,31 @@ PanelWindow {
     required property var modelData
 
     screen: modelData
-    implicitHeight: 40
-    implicitWidth: 650
+    implicitHeight: States.barHeight
+    implicitWidth: States.barWidth
     color: "transparent"
     anchors {
         top: true
+        left: States.fullBar ? true: false
+        right: States.fullBar ? true : false
     }
     margins {
-        top: 5
+        top: States.fullBar ? 0 : 5
     }
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.bgcolor
-        radius: 10
+        color: States.islandBar ? "transparent" : Theme.bgcolor
+        radius: States.fullBar ? 0 : 10
         border {
-            width: 2
+            width: States.fullBar ? 0 : 2
             color: Theme.bordercolor
         }
     }
 
     RowLayout {
-        anchors.leftMargin: 14
-        anchors.rightMargin: 14
+        anchors.leftMargin: States.barMargin
+        anchors.rightMargin: States.barMargin
         spacing: 5
         anchors.fill: parent
 
@@ -43,6 +45,7 @@ PanelWindow {
         Item {
             Layout.fillWidth: true
         }
+        SettingsBtn {}
         CtrlCenterBtn{}
 
     }

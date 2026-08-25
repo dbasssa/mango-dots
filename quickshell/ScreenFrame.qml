@@ -10,7 +10,7 @@ PanelWindow {
     property int thickness: 10
     property int rounding: 12
     property color frameColor: Theme.bgcolor
-
+    visible: States.frameVis
     screen: modelData
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top

@@ -6,7 +6,7 @@ import Quickshell.Wayland
 PanelWindow {
     id: root
     exclusionMode: ExclusionMode.Ignore
-    visible: ThemeState.pickerOpen
+    visible: States.themePickerOpen
     color: "transparent"
 
     WlrLayershell.layer: WlrLayer.Overlay
@@ -42,7 +42,7 @@ PanelWindow {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: ThemeState.pickerOpen = false
+            onClicked: States.themePickerOpen = false
         }
 
         Item {
@@ -53,8 +53,8 @@ PanelWindow {
             Keys.onRightPressed: root.move(1)
             Keys.onUpPressed: root.move(-root.cols)
             Keys.onDownPressed: root.move(root.cols)
-            Keys.onReturnPressed: ThemeState.pickerOpen = false
-            Keys.onEscapePressed: ThemeState.pickerOpen = false
+            Keys.onReturnPressed: States.themePickerOpen = false
+            Keys.onEscapePressed: States.themePickerOpen = false
 
             ColumnLayout {
                 anchors.centerIn: parent

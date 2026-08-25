@@ -75,10 +75,10 @@ Rectangle {
 
         Text {
             text: "󰍜"
-            color: CtrlCenterState.ctrlOpen ? Theme.textactive : Theme.text1
+            color: States.ctrlOpen ? Theme.textactive : Theme.text1
             font.family: Theme.fontfamily
             font.pixelSize: Theme.fontxxl
-            rotation: CtrlCenterState.ctrlOpen ? 90 : 0
+            rotation: States.ctrlOpen ? 90 : 0
             Behavior on rotation { NumberAnimation { duration: 350; easing.type: Easing.InOutCubic } }
             Behavior on color { ColorAnimation { duration: 150 } }
         }
@@ -88,7 +88,7 @@ Rectangle {
         id: ctrlMouse
         anchors.fill: parent
         hoverEnabled: true
-        onClicked: CtrlCenterState.ctrlOpen = !CtrlCenterState.ctrlOpen
+        onClicked: {States.ctrlOpen = !States.ctrlOpen; States.appOpen = false}
     }
 
     PwObjectTracker {

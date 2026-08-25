@@ -302,9 +302,9 @@ Item {
     }
 
     Connections {
-        target: CtrlCenterState
+        target: States
         function onCtrlOpenChanged() {
-            if (!CtrlCenterState.ctrlOpen)
+            if (!States.ctrlOpen)
                 root.outOpen = false;
         }
     }

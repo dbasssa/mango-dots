@@ -8,7 +8,7 @@ import Quickshell.Wayland
 PanelWindow {
     id: root
     exclusionMode: ExclusionMode.Ignore
-    visible: WallpaperState.pickerOpen
+    visible: States.wallPickerOpen
     color: "transparent"
 
     WlrLayershell.layer: WlrLayer.Overlay
