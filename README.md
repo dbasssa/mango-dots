@@ -42,3 +42,4 @@ v0.01 Changes:
 - Add more features to the Bar itself (suggestions welcome)
 - Revamp Notifications and the notification center (visible in the control center)
 - Change the way the Control center button looks in Full and Island Bar mode. (Smaller and more minimal)
+- figure out a way to have changes in settings persist
