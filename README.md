@@ -10,8 +10,6 @@ This project is partially vibe coded for the animations and more complicated par
 - R5 3500X
 - Nvidia GeForce 1660Ti
 - 16GB DDR4 @ 3200MHz
-- 1TB NVME ssd + 512GB HDD
-- MSI B450M PRO M2 MAX 
 
 I run CachyOS, but any arch-based distro or arch itself should be fine (i have not and will not be testing this, it is purely speculation)
 
@@ -19,7 +17,6 @@ I run CachyOS, but any arch-based distro or arch itself should be fine (i have n
 
 - mangowm (wayland window manager)
 - Quickshell (Desktop shell for wayland)
-- fuzzel (app launcher)
 - kitty (terminal emulator)
 - zen-browser (browser)
 - swaylock (lockscreen for wayland)
@@ -28,15 +25,20 @@ I run CachyOS, but any arch-based distro or arch itself should be fine (i have n
 
 **Updates:**
 
-Commit #2:
-- Created app launcher functionality in Quickshell to remove the use of fuzzel. 
+v0.01 Changes:
+- Removed Workspaces from quickshell (personal preference, since i dont use more than one workspace. 
+- Updated the App Launcher to make it more efficient and smaller size.
+- Updated the Settings App to include "Notch" style instead of Pill. Island and Full Bar remain untouched
+- Added IPC tools to spawn Settings and Control Center which can be bound in the config (needed with Notch Bar style, optional with others)
+    ```
+    # calls for each menu 
+    qs ipc call ctrlcntr-qs toggle
+    qs ipc call settings-qs toggle
+    ```
+- Added Screen Frame Settings to the Settings App, adjusting thickness and rounding, as well as toggling it on/off is now doable through the Settings app
 
-- Changed the aesthetics of the Bar to make it more notch-like. 
-
-
-- Changed the control center Bar icon to represent all possible changes (i didnt like how the volume and notifications were seperate from the control center. Now accessing everything can be done in one click.)
-
-- Added a logout manager to the control center to remove the use of Wlogout.
-
-**TODO: potential features, not guaranteed to be added**
-- Add a "Settings" window to change things on the fly instead of having to edit code.
+**TODO:**
+- Adding more functionality to the settings app (ability to change gaps, Bar length and height, and some other features)
+- Add more features to the Bar itself (suggestions welcome)
+- Revamp Notifications and the notification center (visible in the control center)
+- Change the way the Control center button looks in Full and Island Bar mode. (Smaller and more minimal)
