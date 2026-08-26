@@ -35,9 +35,8 @@ ShellRoot {
     CtrlCenter {}
 
     WallpaperPicker {}
-
-    ThemePicker {}
     AppLauncher {}
+    ThemePicker {}
     Settings {}
 
 }

@@ -21,17 +21,21 @@ QtObject {
 
 
 
-    //Appearance Settings (changeable in app)
+    //Appearance Settings (changeable in Settings app)
 
     //Bar dimensions when in pill/island mode
     property int barHeight: 40
-    property int barWidth: 650
-    //toggles if the bar reaches the edges of monitors
-    property bool fullBar: false
+    property int barWidth: 200
+    //Bars Available Types
+    property bool fullBar: true
+    property bool islandBar: false
+    property bool notchBar: false
     //toggles the screen frame along the edges of the monitor
-    property bool frameVis: false
+    property bool frameVis: true
+    property int frameThickness:5
+    property int frameRounding: 5
     //outer gap inside bar
     property int barMargin: 12
 
-    property bool islandBar: false
+
 }

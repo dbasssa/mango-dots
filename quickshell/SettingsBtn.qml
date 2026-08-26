@@ -2,6 +2,7 @@ import Quickshell
 import QtQuick
 
 Rectangle {
+    visible: States.notchBar ? false : true
     implicitHeight: 27
     implicitWidth: 30
     radius: 5

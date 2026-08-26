@@ -43,6 +43,7 @@ Rectangle {
         id: tapArea
         anchors.fill: parent
         onClicked: {
+            if (!root.modelData) return
             NotificationState.focusApp(root.modelData)
             root.modelData.dismiss()
             NotificationState.remove(root.modelData)
@@ -62,7 +63,7 @@ Rectangle {
             Text {
                 Layout.fillWidth: true
                 visible: text !== ""
-                text: root.modelData.appName
+                text: root.modelData ? root.modelData.appName : ""
                 color: Theme.textmuted
                 font.family: Theme.fontfamily
                 font.pixelSize: Theme.fontsm
@@ -95,6 +96,7 @@ Rectangle {
                     anchors.fill: parent
                     hoverEnabled: true
                     onClicked: {
+                        if (!root.modelData) return
                         root.modelData.dismiss()
                         NotificationState.remove(root.modelData)
                     }
@@ -112,7 +114,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignTop
                 fillMode: Image.PreserveAspectFit
                 visible: source.toString() !== ""
-                source: root.modelData.image || root.modelData.appIcon || ""
+                source: root.modelData ? (root.modelData.image || root.modelData.appIcon || "") : ""
             }
 
             ColumnLayout {
@@ -122,7 +124,7 @@ Rectangle {
                 Text {
                     Layout.fillWidth: true
                     visible: text !== ""
-                    text: root.modelData.summary
+                    text: root.modelData ? root.modelData.summary : ""
                     color: Theme.text1
                     font.family: Theme.fontfamily
                     font.bold: true
@@ -132,7 +134,7 @@ Rectangle {
                 Text {
                     Layout.fillWidth: true
                     visible: text !== ""
-                    text: root.modelData.body
+                    text: root.modelData ? root.modelData.body : ""
                     color: Theme.text1
                     font.family: Theme.fontfamily
                     wrapMode: Text.WordWrap

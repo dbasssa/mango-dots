@@ -20,7 +20,7 @@ QtObject {
     property string alertcolor: ThemeState.alertcolor
     property string miconcolor: ThemeState.miconcolor
 
-    property string fontfamily: "GohuFont 11 Nerd Font Propo"
+    property string fontfamily: "Google Sans Code NF"
     property int fontxs: 10
     property int fontsm: 11
     property int fontmd: 12

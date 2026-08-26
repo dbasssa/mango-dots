@@ -2,292 +2,161 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Widgets
 import Quickshell.Io
 import Quickshell.Wayland
 
 PanelWindow {
     id: root
-    exclusionMode: ExclusionMode.Ignore
-    color: "transparent"
-    implicitHeight: launcherBody.implicitHeight + 24
-    implicitWidth: 650
 
+    visible: States.appOpen
+    focusable: true
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
     anchors {
         top: true
+        left: true
+        right: true
+        bottom: true
     }
+    color: "transparent"
 
-    margins {
-        top: States.frameVis ? 53 : 50
-    }
-
-    property bool animOpen: false
-    visible: animOpen
-    property string searchText: ""
-    property int selectedIndex: 0
-    property var filteredApps: []
-    readonly property int itemHeight: 36
-    readonly property int maxVisible: 8
-    readonly property int listMaxHeight: maxVisible * (itemHeight + 4) + 12
-
-    function doFilter() {
-        var apps = []
-        var all = DesktopEntries.applications.values
-        if (!all) {
-            filteredApps = []
-            return
-        }
-        for (var i = 0; i < all.length; i++) {
-            var entry = all[i]
-            if (entry.noDisplay) continue
-            if (searchText.length === 0) {
-                apps.push(entry)
-            } else {
-                var q = searchText.toLowerCase()
-                var n = entry.name ? entry.name.toLowerCase() : ""
-                var g = entry.genericName ? entry.genericName.toLowerCase() : ""
-                var id = entry.id ? entry.id.toLowerCase() : ""
-                if (n.indexOf(q) >= 0 || g.indexOf(q) >= 0 || id.indexOf(q) >= 0)
-                    apps.push(entry)
-            }
-        }
-        filteredApps = apps
-        if (selectedIndex >= apps.length)
-            selectedIndex = Math.max(0, apps.length - 1)
-    }
-
-    function scrollToSelected() {
-        var targetY = root.selectedIndex * (root.itemHeight + 4)
-        var currentY = appFlickable.contentY
-        var viewH = appFlickable.height
-        if (targetY < currentY)
-            appFlickable.contentY = targetY
-        else if (targetY + root.itemHeight > currentY + viewH)
-            appFlickable.contentY = targetY + root.itemHeight - viewH
-    }
-
-    function launch(entry) {
-        States.appOpen = false
-        searchText = ""
-        selectedIndex = 0
-        if (entry.execString) {
-            var cmd = entry.execString.replace(/%[FfUu]/g, "").trim()
-            if (cmd.length > 0) {
-                launchProc.command = ["sh", "-c", cmd + " &"]
-                launchProc.running = true
-            }
+    onVisibleChanged: {
+        if (root.visible) {
+            appSearch.text = ""
+            appList.currentIndex = 0
         }
     }
-
-    property var launchProc: Process {}
 
     IpcHandler {
-        target: "AppLauncher"
+        target: "app-launcher"
         function toggle() {
             States.appOpen = !States.appOpen
-            States.ctrlOpen = false
+        }
+        function invoke() {
+            States.appOpen = !States.appOpen
         }
     }
-
-    Connections {
-        function onAppOpenChanged() {
-            if (States.appOpen) {
-                root.animOpen = true
-                searchText = ""
-                selectedIndex = 0
-                doFilter()
-                Qt.callLater(openAnim.start)
-                Qt.callLater(searchInput.forceActiveFocus)
-            } else {
-                searchInput.text = ""
-                closeAnim.start()
-            }
-        }
-        target: States
-    }
-
-    onSearchTextChanged: doFilter()
-    onSelectedIndexChanged: scrollToSelected()
 
     Rectangle {
-        id: launcherBody
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        id: contentRect
+        anchors.centerIn: parent
         width: 650
-        implicitHeight: contentCol.implicitHeight + 24
+        height: Math.min(parent.height - 40, 500)
         color: Theme.bgcolor
+        radius: States.frameRounding
         border { width: 2; color: Theme.bordercolor }
-        radius: 12
-        opacity: 0
-        scale: 0.97
-
-        transform: Translate { id: launcherT; y: -20 }
 
         ColumnLayout {
-            id: contentCol
             anchors.fill: parent
-            anchors.margins: 12
-            spacing: 8
+            anchors.margins: 10
+            spacing: 10
+
+            TextField {
+                id: appSearch
+                placeholderText: "Search..."
+                focus: root.visible
+                color: Theme.recthovercolor
+                placeholderTextColor: Theme.textmuted
+                Layout.fillWidth: true
+                Layout.preferredHeight: 45
+                leftPadding: 12; rightPadding: 12
+                font { family: Theme.fontfamily; pixelSize: Theme.fontxxl; bold: true }
+                background: Rectangle {
+                    color: Theme.rectcolor
+                    radius: 8
+                    border { width: 1; color: Theme.bordercolor }
+                }
+                onTextChanged: appList.currentIndex = 0
+            }
 
             Rectangle {
+                clip: true
                 Layout.fillWidth: true
-                height: 36
-                radius: 6
-                color: Theme.rectcolor
-                border { width: 1; color: Theme.bordercolor }
+                Layout.fillHeight: true
+                color: "transparent"
 
-                RowLayout {
+                ListView {
+                    id: appList
                     anchors.fill: parent
-                    anchors.margins: 8
-                    spacing: 8
+                    spacing: 4
+                    currentIndex: 0
+                    highlightRangeMode: ListView.ApplyRange
+                    preferredHighlightBegin: 0
+                    preferredHighlightEnd: height - 50
 
-                    Text {
-                        text: "󰍜"
-                        color: Theme.textmuted
-                        font { family: Theme.fontfamily; pixelSize: Theme.fontmd }
+                    model: ScriptModel {
+                        values: DesktopEntries.applications.values.filter(x => {
+                            var q = appSearch.text.toLowerCase()
+                            return (q === "" || x.name.toLowerCase().includes(q)
+                                || x.keywords.some(k => k.toLowerCase().includes(q)))
+                                && !x.noDisplay && !x.runInTerminal
+                        })
                     }
 
-                    TextInput {
-                        id: searchInput
-                        Layout.fillWidth: true
-                        color: Theme.text1
-                        font { family: Theme.fontfamily; pixelSize: Theme.fontmd }
-                        clip: true
-                        focus: true
-                        cursorVisible: true
+                    delegate: Item {
+                        id: delegate
+                        width: appList.width
+                        height: 48
 
-                        onTextChanged: {
-                            root.searchText = text
-                            root.selectedIndex = 0
-                        }
-
-                        Keys.onDownPressed: {
-                            if (root.filteredApps.length > 0) {
-                                root.selectedIndex = Math.min(root.selectedIndex + 1, root.filteredApps.length - 1)
-                            }
-                        }
-                        Keys.onUpPressed: {
-                            root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
-                        }
-                        Keys.onReturnPressed: {
-                            if (root.filteredApps.length > 0 && root.selectedIndex < root.filteredApps.length)
-                                root.launch(root.filteredApps[root.selectedIndex])
-                        }
-                        Keys.onEscapePressed: {
+                        function launch() {
+                            modelData.execute()
                             States.appOpen = false
                         }
-                    }
-                }
-            }
 
-            Rectangle {
-                Layout.fillWidth: true
-                height: 1
-                color: Theme.bordercolor
-                visible: root.filteredApps.length > 0
-            }
+                        Rectangle {
+                            anchors.fill: parent
+                            color: delegate.ListView.isCurrentItem ? Theme.text1 : Theme.rectcolor
+                            radius: 8
 
-            Item {
-                Layout.fillWidth: true
-                Layout.preferredHeight: Math.min(root.filteredApps.length, root.maxVisible) * (root.itemHeight + 4) + 12
-                visible: root.filteredApps.length > 0
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.margins: 8
+                                spacing: 8
 
-                Flickable {
-                    id: appFlickable
-                    anchors.fill: parent
-                    anchors.margins: 2
-                    contentHeight: appColumn.implicitHeight
-                    clip: true
-                    boundsBehavior: Flickable.StopAtBounds
-                    flickableDirection: Flickable.VerticalFlick
-
-                    Column {
-                        id: appColumn
-                        width: parent.width
-                        spacing: 4
-
-                        Repeater {
-                            id: appRepeater
-                            model: root.filteredApps.length
-
-                            Rectangle {
-                                width: appColumn.width
-                                height: root.itemHeight
-                                radius: 6
-                                color: root.selectedIndex === index ? Theme.recthovercolor : "transparent"
-
-                                RowLayout {
-                                    anchors.fill: parent
-                                    anchors.margins: 4
-                                    spacing: 10
-
-                                    IconImage {
-                                        implicitSize: 22
-                                        source: "image://icon/" + (root.filteredApps[index] ? root.filteredApps[index].icon : "")
-                                    }
-
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: root.filteredApps[index] ? root.filteredApps[index].name : ""
-                                        color: Theme.text1
-                                        font { family: Theme.fontfamily; pixelSize: Theme.fontmd }
-                                        elide: Text.ElideRight
+                                Rectangle {
+                                    Layout.preferredWidth: 32
+                                    Layout.preferredHeight: 32
+                                    color: "transparent"
+                                    Image {
+                                        anchors.centerIn: parent
+                                        source: "image://icon/" + modelData.icon
+                                        sourceSize: Qt.size(24, 24)
+                                        fillMode: Image.PreserveAspectFit
                                     }
                                 }
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    onClicked: root.launch(root.filteredApps[index])
-                                    onEntered: root.selectedIndex = index
+                                Text {
+                                    text: modelData.name
+                                    color: delegate.ListView.isCurrentItem ? Theme.rectcolor : Theme.text1
+                                    font { family: Theme.fontfamily; pixelSize: Theme.fontxl; bold: true }
+                                    elide: Text.ElideRight
+                                    Layout.fillWidth: true
                                 }
                             }
                         }
-                    }
 
-                    ScrollBar.vertical: ScrollBar {
-                        policy: root.filteredApps.length > root.maxVisible ? ScrollBar.AsNeeded : ScrollBar.AlwaysOff
-                        contentItem: Rectangle {
-                            implicitWidth: 4
-                            radius: 2
-                            color: parent.pressed ? Theme.textactive : Theme.textmuted
-                            Behavior on color { ColorAnimation { duration: 150 } }
-                        }
-                        background: Rectangle {
-                            color: Theme.rectcolor
-                            radius: 2
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (delegate.ListView.isCurrentItem)
+                                    delegate.launch()
+                                else
+                                    appList.currentIndex = index
+                            }
                         }
                     }
                 }
             }
 
-            Text {
-                Layout.alignment: Qt.AlignHCenter
-                visible: root.filteredApps.length === 0 && root.searchText.length > 0
-                text: "no results"
-                color: Theme.textmuted
-                font { family: Theme.fontfamily; pixelSize: Theme.fontsm }
+            Keys.onPressed: (event) => {
+                if (event.key === Qt.Key_Escape) States.appOpen = false
+                else if (event.key === Qt.Key_Up) appList.decrementCurrentIndex()
+                else if (event.key === Qt.Key_Down) appList.incrementCurrentIndex()
+                else if (event.key === Qt.Key_Return && appList.currentItem)
+                    appList.currentItem.launch()
             }
         }
-    }
-
-    ParallelAnimation {
-        id: openAnim
-        NumberAnimation { target: launcherBody; property: "opacity"; to: 1; duration: 200; easing.type: Easing.OutCubic }
-        NumberAnimation { target: launcherT; property: "y"; to: 0; duration: 240; easing.type: Easing.OutCubic }
-        NumberAnimation { target: launcherBody; property: "scale"; to: 1; duration: 200; easing.type: Easing.OutCubic }
-    }
-
-    SequentialAnimation {
-        id: closeAnim
-        ParallelAnimation {
-            NumberAnimation { target: launcherBody; property: "opacity"; to: 0; duration: 150; easing.type: Easing.InCubic }
-            NumberAnimation { target: launcherT; property: "y"; to: -20; duration: 170; easing.type: Easing.InCubic }
-            NumberAnimation { target: launcherBody; property: "scale"; to: 0.97; duration: 150; easing.type: Easing.InCubic }
-        }
-        ScriptAction { script: root.animOpen = false }
     }
 }

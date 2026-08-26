@@ -7,8 +7,8 @@ PanelWindow {
     id: root
 
     required property var modelData
-    property int thickness: 10
-    property int rounding: 12
+    property int thickness: States.frameThickness
+    property int rounding: States.frameRounding
     property color frameColor: Theme.bgcolor
     visible: States.frameVis
     screen: modelData
@@ -29,7 +29,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        anchors.topMargin: 40
+        anchors.topMargin: States.barHeight
         color: "transparent"
         clip: true
         layer.enabled: true

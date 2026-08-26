@@ -7,11 +7,9 @@ import Quickshell.Widgets
 Item {
     id: root
 
-    readonly property var player: {
-        const values = Mpris.players.values;
-        values.length > 0 ? values[0] : null;
-    }
+    readonly property var player: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
     readonly property bool hasTitle: root.player && root.player.trackTitle
+    readonly property bool hasArtist: root.player && root.player.trackArtist
     readonly property url artUrl: root.player ? root.player.trackArtUrl : ""
     property bool artFailed: false
 

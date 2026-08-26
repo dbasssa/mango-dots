@@ -5,6 +5,7 @@ import Quickshell.Services.Pipewire
 
 Rectangle {
     id: root
+    visible: States.notchBar ? false : true
     Layout.alignment: Qt.AlignVCenter
     implicitHeight: 28
     implicitWidth: btnRow.implicitWidth + 24

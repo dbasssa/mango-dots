@@ -16,6 +16,7 @@ Item {
         color: States.islandBar ? Theme.bgcolor : Theme.text1
         font.family: Theme.fontfamily
         font.pixelSize: Theme.fontxxl
+        font.bold: true
         onTextChanged: clkFade.restart()
     }
 

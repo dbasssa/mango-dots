@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 
 PanelWindow {
     id: root
@@ -24,6 +25,12 @@ PanelWindow {
         top: States.frameVis ? 53 : 50
         right: States.fullBar ? 12 : 0
     }
+    IpcHandler {
+        target: "ctrlcntr-qs"
+        function toggle() {
+            States.ctrlOpen = !States.ctrlOpen
+        }
+    }
 
     Connections {
         function onCtrlOpenChanged() {
@@ -43,7 +50,7 @@ PanelWindow {
 
         anchors.fill: parent
         color: Theme.rectcolor
-        radius: 12
+        radius: States.frameRounding
         opacity: 0
         scale: 0.97
 

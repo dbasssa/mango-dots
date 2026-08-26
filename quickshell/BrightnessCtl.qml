@@ -60,7 +60,7 @@ Item {
                     left: parent.left
                 }
                 anchors.margins: 2
-                width: (parent.width - 4) * (root.ready ? root.brightness / root.maxBrightness : 0)
+                width: (parent.width - 4) * (root.ready && root.maxBrightness > 0 ? root.brightness / root.maxBrightness : 0)
                 radius: 3
                 color: root.on ? Theme.textactive : Theme.occupiedcolor
                 Behavior on width { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }

@@ -1,6 +1,6 @@
 import QtQuick
-import Quickshell
 import QtQuick.Layouts
+import Quickshell
 
 PanelWindow {
     required property var modelData
@@ -9,11 +9,13 @@ PanelWindow {
     implicitHeight: States.barHeight
     implicitWidth: States.barWidth
     color: "transparent"
+
     anchors {
         top: true
-        left: States.fullBar ? true: false
+        left: States.fullBar ? true : false
         right: States.fullBar ? true : false
     }
+
     margins {
         top: States.fullBar ? 0 : 5
     }
@@ -22,10 +24,12 @@ PanelWindow {
         anchors.fill: parent
         color: States.islandBar ? "transparent" : Theme.bgcolor
         radius: States.fullBar ? 0 : 10
+
         border {
             width: States.fullBar ? 0 : 2
             color: Theme.bordercolor
         }
+
     }
 
     RowLayout {
@@ -34,19 +38,23 @@ PanelWindow {
         spacing: 5
         anchors.fill: parent
 
-        Workspaces {monitorName: modelData.name }
-
         Item {
             Layout.fillWidth: true
+            visible: States.notchBar ? true : false
         }
+
         Clock {
         }
 
         Item {
             Layout.fillWidth: true
         }
-        SettingsBtn {}
-        CtrlCenterBtn{}
+
+        SettingsBtn {
+        }
+
+        CtrlCenterBtn {
+        }
 
     }
 

@@ -50,9 +50,9 @@ Scope {
                     borderWidth: 2
 
                     Timer {
-                        running: modelData.urgency !== NotificationUrgency.Critical
+                        running: modelData && modelData.urgency !== NotificationUrgency.Critical
                         interval: 5000
-                        onTriggered: modelData.dismiss()
+                        onTriggered: if (modelData) modelData.dismiss()
                     }
                 }
             }
