@@ -25,21 +25,24 @@ I run CachyOS, but any arch-based distro or arch itself should be fine (i have n
 
 **Updates:**
 
-v0.01 Changes:
-- Removed Workspaces from quickshell (personal preference, since i dont use more than one workspace. 
-- Updated the App Launcher to make it more efficient and smaller size.
-- Updated the Settings App to include "Notch" style instead of Pill. Island and Full Bar remain untouched
-- Added IPC tools to spawn Settings and Control Center which can be bound in the config (needed with Notch Bar style, optional with others)
+Commit #(i lost count) Changes:
+- Revamped Notifications (which now has its own menu, with IPC) and created a Lock Screen (called with IPC, bindable)
     ```
-    # calls for each menu 
+    # calls for control center 
     qs ipc call ctrlcntr-qs toggle
+    # call for settings app
     qs ipc call settings-qs toggle
+    # call for notifications menu
+    qs ipc call notifications-qs toggle
+    # call for lock screen
+    qs ipc call lockscreen-qs toggle
     ```
-- Added Screen Frame Settings to the Settings App, adjusting thickness and rounding, as well as toggling it on/off is now doable through the Settings app
+- Added a "Fun" setting in the last rectangle of the settings app. this will be staying there
+- Removed notification count from Control Center Button in full and island mode
+
 
 **TODO:**
 - Adding more functionality to the settings app (ability to change gaps, Bar length and height, and some other features)
 - Add more features to the Bar itself (suggestions welcome)
-- Revamp Notifications and the notification center (visible in the control center)
 - Change the way the Control center button looks in Full and Island Bar mode. (Smaller and more minimal)
 - figure out a way to have changes in settings persist
