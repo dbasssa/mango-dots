@@ -169,63 +169,7 @@ PanelWindow {
             LogoutMenu {
             }
 
-            Text {
-                text: "Notifications ======================================"
-                color: Theme.textmuted
-
-                font {
-                    family: Theme.fontfamily
-                    pixelSize: Theme.fontmd
-                }
-
-            }
-
-            ColumnLayout {
-                spacing: 6
-
-                Repeater {
-                    model: NotificationState.persistent
-
-                    delegate: NotificationCard {}
-                }
-
-                Text {
-                    Layout.alignment: Qt.AlignHCenter
-                    visible: NotificationState.persistent.length === 0
-                    text: "No notifications"
-                    color: Theme.textmuted
-                    font { family: Theme.fontfamily; pixelSize: Theme.fontsm }
-                }
-            }
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 28
-                radius: 6
-                visible: NotificationState.persistent.length > 0
-                color: clearMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
-                Behavior on color { ColorAnimation { duration: 150 } }
-
-                border {
-                    width: 1
-                    color: Theme.bordercolor
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Clear All"
-                    color: clearMouse.containsMouse ? Theme.textactive : Theme.text1
-                    font { family: Theme.fontfamily; pixelSize: Theme.fontbase }
-                    Behavior on color { ColorAnimation { duration: 150 } }
-                }
-
-                MouseArea {
-                    id: clearMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: NotificationState.clearAll()
-                }
-            }
+            
 
             Item {
                 Layout.fillHeight: true

@@ -17,7 +17,7 @@ PanelWindow {
     }
 
     margins {
-        top: States.fullBar ? 0 : 5
+        top: States.notchBar ? States.notchMargin : 0
     }
 
     Rectangle {
@@ -52,6 +52,7 @@ PanelWindow {
 
         SettingsBtn {
         }
+        NotifBtn {}
 
         CtrlCenterBtn {
         }

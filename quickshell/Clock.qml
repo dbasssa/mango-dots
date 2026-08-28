@@ -2,6 +2,8 @@ import QtQuick
 import Quickshell
 
 Item {
+    id: root
+    property int fontSize: Theme.fontxxl
     implicitHeight: clktxt.implicitHeight
     implicitWidth: clktxt.implicitWidth
     SystemClock {
@@ -15,7 +17,7 @@ Item {
         text: Qt.formatDateTime(clock.date, "hh:mm")
         color: States.islandBar ? Theme.bgcolor : Theme.text1
         font.family: Theme.fontfamily
-        font.pixelSize: Theme.fontxxl
+        font.pixelSize: root.fontSize
         font.bold: true
         onTextChanged: clkFade.restart()
     }

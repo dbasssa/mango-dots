@@ -7,6 +7,7 @@ ColumnLayout {
     id: root
     anchors.horizontalCenter: parent.horizontalCenter
     implicitWidth: 350
+    anchors.margins: 10
 
     Process {
         id: logoutProc
@@ -29,6 +30,8 @@ ColumnLayout {
     }
 
     RowLayout {
+        Layout.fillWidth: true
+        
         spacing: 10
 
         Rectangle {

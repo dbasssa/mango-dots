@@ -47,20 +47,6 @@ Rectangle {
         }
 
         Text {
-            text: NotificationState.persistent.length + " "
-            color: NotificationState.persistent.length > 0 ? Theme.textactive : Theme.textmuted
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontmd
-            Behavior on color { ColorAnimation { duration: 150 } }
-        }
-        Text {
-            text: " | "
-            color: Theme.bordercolor
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontxxl
-        }
-
-        Text {
             text: ""
             color: Theme.text1
             font.family: Theme.fontfamily

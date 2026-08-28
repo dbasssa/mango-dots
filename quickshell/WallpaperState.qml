@@ -31,7 +31,7 @@ QtObject {
     }
 
     property var pywalProc: Process {
-        command: ["sh", "-c", "wal -i " + root.currentWallpaper + " && pywalfox update && kitty @ set-colors --configured ~/.cache/wal/colors-kitty.conf"]
+        command: ["sh", "-c", "wal -i " + root.currentWallpaper + " && pywalfox update &"]
     }
 
     property bool pickRandom: false

@@ -4,7 +4,6 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
-
 FloatingWindow {
     id: root
 
@@ -14,10 +13,11 @@ FloatingWindow {
     onClosed: States.settingsOpen = false
 
     IpcHandler {
-        target: "settings-qs"
         function toggle() {
-            States.settingsOpen = true
+            States.settingsOpen = true;
         }
+
+        target: "settings-qs"
     }
 
     Rectangle {
@@ -53,9 +53,11 @@ FloatingWindow {
                     anchors.fill: parent
                     anchors.rightMargin: 12
                     anchors.leftMargin: 5
+
                     Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         implicitWidth: titleText.implicitWidth + 10
+
                         Text {
                             id: titleText
 
@@ -88,7 +90,7 @@ FloatingWindow {
                         }
 
                         MouseArea {
-                            anchors.fill:parent
+                            anchors.fill: parent
                             onClicked: States.settingsOpen = false
                         }
 
@@ -321,6 +323,7 @@ FloatingWindow {
                                     implicitHeight: 150
                                     implicitWidth: 150
                                     color: Theme.occupiedcolor
+                                    radius: 20
 
                                     Text {
                                         anchors.centerIn: parent
@@ -333,69 +336,93 @@ FloatingWindow {
                                     }
 
                                 }
+
                                 ColumnLayout {
                                     spacing: 7
+
                                     Text {
                                         text: "Frame Thickness:"
+                                        color: Theme.text1
+
                                         font {
                                             family: Theme.fontfamily
                                             pixelSize: fontxl
                                         }
-                                        color: Theme.text1
+
                                     }
 
                                     Rectangle {
                                         implicitWidth: 150
                                         implicitHeight: 50
-                                        color:"transparent"
+                                        color: "transparent"
+
                                         TextField {
-                                            anchors.fill:parent
+                                            anchors.fill: parent
                                             placeholderText: States.frameThickness + "..."
                                             placeholderTextColor: Theme.activecolor
+                                            text: States.frameThickness.toString()
+                                            onAccepted: {
+                                                var val = parseInt(text);
+                                                if (!isNaN(val) && val >= 0)
+                                                    States.frameThickness = val;
+
+                                            }
+
                                             background: Rectangle {
                                                 anchors.fill: parent
                                                 color: Theme.occupiedcolor
+                                                radius: 12
                                             }
-                                            text: States.frameThickness.toString()
-                                            onAccepted: { 
-                                                var val = parseInt(text)
-                                                if (!isNaN(val) && val >= 0) States.frameThickness = val
-                                            }
+
                                         }
+
                                     }
-                                    
+
                                 }
+
                                 ColumnLayout {
                                     spacing: 7
+
                                     Text {
                                         text: "Frame Rounding:"
+                                        color: Theme.text1
+
                                         font {
                                             family: Theme.fontfamily
                                             pixelSize: fontxl
                                         }
-                                        color: Theme.text1
+
                                     }
 
                                     Rectangle {
                                         implicitWidth: 150
                                         implicitHeight: 50
-                                        color:"transparent"
+                                        color: "transparent"
+
                                         TextField {
-                                            anchors.fill:parent
+                                            anchors.fill: parent
                                             placeholderText: States.frameRounding + "..."
                                             placeholderTextColor: Theme.activecolor
+                                            leftPadding: 10
+                                            rightPadding: 10
+                                            text: States.frameRounding.toString()
+                                            onAccepted: {
+                                                var val = parseInt(text);
+                                                if (!isNaN(val) && val >= 0)
+                                                    States.frameRounding = val;
+
+                                            }
+
                                             background: Rectangle {
                                                 anchors.fill: parent
                                                 color: Theme.occupiedcolor
+                                                radius: 12
                                             }
-                                            text: States.frameRounding.toString()
-                                            onAccepted: { 
-                                                var val = parseInt(text)
-                                                if (!isNaN(val) && val >= 0) States.frameRounding = val
-                                            }
+
                                         }
+
                                     }
-                                    
+
                                 }
 
                                 Item {
@@ -424,17 +451,52 @@ FloatingWindow {
                             color: Theme.bordercolor
                         }
 
+                        ColumnLayout {
+                            anchors.fill: parent
+                            Text {
+                                Layout.alignment: Qt.AlignHCenter
+                                text: "Under Construction (will have changeable margins and widths and more)"
+                                color: Theme.text1
+
+                                font {
+                                    family: Theme.fontfamily
+                                    pixelSize: Theme.fontxl
+                                    underline: true
+                                }
+
+                            }
+                            
+                            Rectangle {
+                                implicitHeight: 50
+                                implicitWidth: 150
+                                color: Theme.occupiedcolor
+                                radius: 12
+                                
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "have some haha"
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: States.funTime = !States.funTime
+                                }
+
+                            }
+
+                        }
+
                     }
 
-                }
+                    ScrollBar.vertical: ScrollBar {
+                        policy: ScrollBar.AlwaysOn
 
-                ScrollBar.vertical: ScrollBar {
-                    policy: ScrollBar.AlwaysOn
+                        contentItem: Rectangle {
+                            implicitWidth: 4
+                            radius: 2
+                            color: parent.pressed ? Theme.textactive : Theme.textmuted
+                        }
 
-                    contentItem: Rectangle {
-                        implicitWidth: 4
-                        radius: 2
-                        color: parent.pressed ? Theme.textactive : Theme.textmuted
                     }
 
                 }

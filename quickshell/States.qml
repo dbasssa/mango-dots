@@ -17,7 +17,17 @@ QtObject {
     property bool wallPickerOpen: false
 
     //Settings App opener
-    property bool settingsOpen: true
+    property bool settingsOpen: false
+
+    //Notification center opener
+    property bool notifOpen: false
+
+    //lock screen toggle
+    property bool lockScreen: false
+
+    property bool funTime: false
+
+
 
 
 
@@ -36,6 +46,11 @@ QtObject {
     property int frameRounding: 5
     //outer gap inside bar
     property int barMargin: 12
+    //Gap from top of screen to top of notch
+    property int notchMargin: 5
+
+    property int notifCardSideMargin: 10
+    property int notifTimeout: 5000
 
 
 }

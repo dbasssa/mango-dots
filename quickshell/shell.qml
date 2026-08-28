@@ -38,5 +38,7 @@ ShellRoot {
     AppLauncher {}
     ThemePicker {}
     Settings {}
+    Lockscreen {}
+    ActivateLinux {}
 
 }
