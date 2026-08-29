@@ -36,7 +36,7 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
 **Required programs/packages**
 
 - [```mangowm```](https://mangowm.github.io/) (Window Manager)
-- [quickshell](https://quickshell.org/) (Desktop Shell for wayland)
+- [```quickshell```](https://quickshell.org/) (Desktop Shell for wayland)
 - ```/home/$USER/walls/THEME-NAME``` (directory for wallpapers under themes)
 
 **Updates:**
