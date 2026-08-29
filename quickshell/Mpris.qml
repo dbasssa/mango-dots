@@ -180,6 +180,7 @@ Item {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
                         enabled: root.player && root.player.canGoPrevious
                         onClicked: {
                             if (root.player)
@@ -228,6 +229,7 @@ Item {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
                         enabled: root.player && root.player.canTogglePlaying
                         onClicked: {
                             if (root.player)
@@ -275,6 +277,7 @@ Item {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
                         enabled: root.player && root.player.canGoNext
                         onClicked: {
                             if (root.player)

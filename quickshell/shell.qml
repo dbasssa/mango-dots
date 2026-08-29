@@ -41,4 +41,6 @@ ShellRoot {
     Lockscreen {}
     ActivateLinux {}
 
+    SysMon {}
+
 }

@@ -1,11 +1,20 @@
 import QtQuick
 import Quickshell
 
-Item {
+Rectangle {
     id: root
     property int fontSize: Theme.fontxxl
-    implicitHeight: clktxt.implicitHeight
-    implicitWidth: clktxt.implicitWidth
+    property string rectColor: Theme.bgcolor
+
+    color: rectColor
+    implicitHeight: clktxt.implicitHeight + 5
+    implicitWidth: clktxt.implicitWidth + 20
+    radius: 8
+    border {
+        width: States.islandBar ? (States.lockScreen ? 0 : 2) : 0
+        color: Theme.bordercolor
+    }
+
     SystemClock {
         id: clock
 
@@ -13,9 +22,10 @@ Item {
     }
 
     Text {
-        id:clktxt
+        id: clktxt
+        anchors.centerIn: parent
         text: Qt.formatDateTime(clock.date, "hh:mm")
-        color: States.islandBar ? Theme.bgcolor : Theme.text1
+        color: Theme.text1
         font.family: Theme.fontfamily
         font.pixelSize: root.fontSize
         font.bold: true
@@ -24,7 +34,16 @@ Item {
 
     SequentialAnimation {
         id: clkFade
-        NumberAnimation { target: clktxt; property: "opacity"; from: 0.3; to: 1; duration: 350; easing.type: Easing.OutCubic }
+
+        NumberAnimation {
+            target: clktxt
+            property: "opacity"
+            from: 0.3
+            to: 1
+            duration: 350
+            easing.type: Easing.OutCubic
+        }
+
     }
 
 }

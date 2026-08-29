@@ -91,6 +91,7 @@ FloatingWindow {
 
                         MouseArea {
                             anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
                             onClicked: States.settingsOpen = false
                         }
 
@@ -181,6 +182,7 @@ FloatingWindow {
 
                                     MouseArea {
                                         anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
                                         onClicked: {
                                             States.fullBar = true;
                                             States.islandBar = false;
@@ -219,6 +221,7 @@ FloatingWindow {
 
                                     MouseArea {
                                         anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
                                         onClicked: {
                                             States.fullBar = false;
                                             States.islandBar = false;
@@ -257,6 +260,7 @@ FloatingWindow {
 
                                     MouseArea {
                                         anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
                                         onClicked: {
                                             States.islandBar = true;
                                             States.fullBar = true;
@@ -332,6 +336,7 @@ FloatingWindow {
 
                                     MouseArea {
                                         anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
                                         onClicked: States.frameVis = !States.frameVis
                                     }
 
@@ -341,12 +346,12 @@ FloatingWindow {
                                     spacing: 7
 
                                     Text {
-                                        text: "Frame Thickness:"
+                                        text: "Frame Thickness"
                                         color: Theme.text1
 
                                         font {
                                             family: Theme.fontfamily
-                                            pixelSize: fontxl
+                                            pixelSize: Theme.fontxl
                                         }
 
                                     }
@@ -384,12 +389,12 @@ FloatingWindow {
                                     spacing: 7
 
                                     Text {
-                                        text: "Frame Rounding:"
+                                        text: "Frame Rounding"
                                         color: Theme.text1
 
                                         font {
                                             family: Theme.fontfamily
-                                            pixelSize: fontxl
+                                            pixelSize: Theme.fontxl
                                         }
 
                                     }
@@ -453,9 +458,14 @@ FloatingWindow {
 
                         ColumnLayout {
                             anchors.fill: parent
+                            anchors.topMargin: 5
+                            anchors.bottomMargin: 10
+                            anchors.rightMargin: 10
+                            anchors.leftMargin: 10
+
                             Text {
                                 Layout.alignment: Qt.AlignHCenter
-                                text: "Under Construction (will have changeable margins and widths and more)"
+                                text: "General Bar Customization"
                                 color: Theme.text1
 
                                 font {
@@ -465,22 +475,237 @@ FloatingWindow {
                                 }
 
                             }
-                            
-                            Rectangle {
-                                implicitHeight: 50
-                                implicitWidth: 150
-                                color: Theme.occupiedcolor
-                                radius: 12
-                                
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: "have some haha"
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+
+                                Item {
+                                    Layout.fillWidth: true
                                 }
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: States.funTime = !States.funTime
+                                Item {
+                                    id: notchChanges
+
+                                    Layout.fillHeight: true
+                                    implicitWidth: notchRow.implicitWidth
+
+                                    RowLayout {
+                                        id: notchRow
+
+                                        ColumnLayout {
+                                            Text {
+                                                text: "Bar Height(All)"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            TextField {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                placeholderText: States.barHeight + "..."
+                                                placeholderTextColor: Theme.activecolor
+                                                leftPadding: 10
+                                                rightPadding: 10
+                                                text: States.barHeight.toString()
+                                                onAccepted: {
+                                                    var val = parseInt(text);
+                                                    if (!isNaN(val) && val >= 0)
+                                                        States.barHeight = val;
+
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.fill: parent
+                                                    color: Theme.occupiedcolor
+                                                    radius: 12
+                                                }
+
+                                            }
+
+                                            Text {
+                                                text: "Notch Width"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            TextField {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                placeholderText: States.barWidth + "..."
+                                                placeholderTextColor: Theme.activecolor
+                                                leftPadding: 10
+                                                rightPadding: 10
+                                                text: States.barWidth.toString()
+                                                onAccepted: {
+                                                    var val = parseInt(text);
+                                                    if (!isNaN(val) && val >= 0)
+                                                        States.barWidth = val;
+
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.fill: parent
+                                                    color: Theme.occupiedcolor
+                                                    radius: 12
+                                                }
+
+                                            }
+
+                                        }
+
+                                        ColumnLayout {
+                                            Text {
+                                                text: "Notch Gap (+/-)"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            TextField {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                placeholderText: States.notchMargin + "..."
+                                                placeholderTextColor: Theme.activecolor
+                                                leftPadding: 10
+                                                rightPadding: 10
+                                                text: States.notchMargin.toString()
+                                                onAccepted: {
+                                                    var val = parseInt(text);
+                                                    if (!isNaN(val))
+                                                        States.notchMargin = val;
+
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.fill: parent
+                                                    color: Theme.occupiedcolor
+                                                    radius: 12
+                                                }
+
+                                            }
+
+                                            Text {
+                                                text: "Notch Rounding"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            TextField {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                placeholderText: States.barRounding + "..."
+                                                placeholderTextColor: Theme.activecolor
+                                                leftPadding: 10
+                                                rightPadding: 10
+                                                text: States.barRounding.toString()
+                                                onAccepted: {
+                                                    var val = parseInt(text);
+                                                    if (!isNaN(val) && val >= 0)
+                                                        States.barRounding = val;
+
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.fill: parent
+                                                    color: Theme.occupiedcolor
+                                                    radius: 12
+                                                }
+
+                                            }
+
+                                        }
+
+                                        ColumnLayout {
+                                            Text {
+                                                text: "Bar Inner Gap"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            TextField {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                placeholderText: States.barMargin + "..."
+                                                placeholderTextColor: Theme.activecolor
+                                                leftPadding: 10
+                                                rightPadding: 10
+                                                text: States.barMargin.toString()
+                                                onAccepted: {
+                                                    var val = parseInt(text);
+                                                    if (!isNaN(val) && val >= 0)
+                                                        States.barMargin = val;
+
+                                                }
+
+                                                background: Rectangle {
+                                                    anchors.fill: parent
+                                                    color: Theme.occupiedcolor
+                                                    radius: 12
+                                                }
+
+                                            }
+
+                                            Text {
+                                                text: "Fun Time"
+                                                color: Theme.text1
+
+                                                font {
+                                                    family: Theme.fontfamily
+                                                    pixelSize: Theme.fontxl
+                                                }
+
+                                            }
+
+                                            Rectangle {
+                                                implicitHeight: 50
+                                                implicitWidth: 150
+                                                radius: 12
+                                                color: Theme.occupiedcolor
+
+                                                Text {
+                                                    anchors.centerIn: parent
+                                                    text: "Fun Time"
+                                                    color: Theme.text1
+
+                                                    font {
+                                                        family: Theme.fontfamily
+                                                        pixelSize: Theme.fontxl
+                                                    }
+
+                                                }
+
+                                            }
+                                        }
+
+                                    }
+
                                 }
+                                Item {Layout.fillWidth:true}
 
                             }
 

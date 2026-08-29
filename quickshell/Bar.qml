@@ -23,7 +23,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: States.islandBar ? "transparent" : Theme.bgcolor
-        radius: States.fullBar ? 0 : 10
+        radius: States.fullBar ? 0 : States.barRounding
 
         border {
             width: States.fullBar ? 0 : 2

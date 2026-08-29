@@ -10,7 +10,7 @@ PanelWindow {
     property int thickness: States.frameThickness
     property int rounding: States.frameRounding
     property color frameColor: Theme.bgcolor
-    visible: States.frameVis
+    visible: States.notchBar ? false : (States.frameVis)
     screen: modelData
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Top

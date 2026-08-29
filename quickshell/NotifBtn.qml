@@ -24,6 +24,7 @@ Rectangle {
     }
     MouseArea {
         anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
         onClicked: States.notifOpen = !States.notifOpen
     }
 }

@@ -96,7 +96,8 @@ Scope {
                 source: wallImg
                 blurEnabled: true
                 blurMax: 32
-                blur: 0.5
+                blur: 1
+                blurMultiplier: 2
             }
 
             Rectangle {
@@ -123,6 +124,7 @@ Scope {
                     Clock {
                         Layout.alignment: Qt.AlignHCenter
                         fontSize: 48
+                        rectColor: Theme.rectcolor
                     }
 
                     RowLayout {

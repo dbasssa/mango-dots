@@ -96,6 +96,7 @@ Item {
                 id: bMouse
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: root.toggle()
             }
 

@@ -119,6 +119,7 @@ PanelWindow {
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: ThemeState.setTheme(index)
+                                cursorShape: Qt.PointingHandCursor
                             }
                         }
                     }

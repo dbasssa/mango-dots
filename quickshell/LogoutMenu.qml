@@ -52,6 +52,7 @@ ColumnLayout {
                 id: logoutBtn
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: logoutProc.running = true
             }
         }
@@ -74,6 +75,7 @@ ColumnLayout {
                 id: shutdownBtn
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: shutdownProc.running = true
             }
         }
@@ -100,6 +102,7 @@ ColumnLayout {
                 id: rebootBtn
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: rebootProc.running = true
             }
         }
@@ -122,6 +125,7 @@ ColumnLayout {
                 id: hibernateBtn
                 anchors.fill: parent
                 hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
                 onClicked: hibernateProc.running = true
             }
         }
