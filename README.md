@@ -1,6 +1,7 @@
 Shell-Yeah: A Quickshell based shell made for mangowm...
 
 This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, please raise an issue.
+
 ---
 #**install steps**:
 - Create directory  ```mkdir -p /home/$USER/walls/{dark/,light/,catppuccin-mocha/,gruvbox-dark/,nord/,pink/,tokyo-night/}``` for wallpapers & sort them
@@ -11,15 +12,15 @@ This Shell is still a work in progress, and is currently being worked on/added t
 #**IPC Calls**
    
     ```
-    # call for control center 
+    # control center
     qs ipc call ctrlcntr-qs toggle
-    # call for settings app
+    # settings app
     qs ipc call settings-qs toggle
-    # call for notifications menu
+    # notifications menu
     qs ipc call notifications-qs toggle
-    # call for lock screen
+    # lock screen
     qs ipc call lockscreen-qs toggle
-    # call for system monitor
+    # system monitor
     qs ipc call systemmonitor-qs toggle
     ```
 ---
@@ -30,7 +31,7 @@ This Shell is still a work in progress, and is currently being worked on/added t
 ---
 #**Updates:**
 
-- Added a System Monitor triggered with Bindable IPC commands(RAM only, but CPU and GPU coming soon)
+- Added a System Monitor triggered with Bindable IPC commands
 - Added more options to the settings app
 - Changed the Volume icon in the control center to actual Volume %age.
 
