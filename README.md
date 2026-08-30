@@ -9,6 +9,7 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
 - Enjoy!
 
 **IPC Calls**
+   
     ```
     # call for control center 
     qs ipc call ctrlcntr-qs toggle
