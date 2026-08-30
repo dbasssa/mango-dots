@@ -2,7 +2,7 @@ Shell-Yeah: A Quickshell based shell made for mangowm...
 
 This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, please raise an issue.
 
-If you would like to Download and use Shell-Yeah, here's the **install steps**:
+#**install steps**:
 - Create directory  ```mkdir -p /home/$USER/walls/{dark/,light/,catppuccin-mocha/,gruvbox-dark/,nord/,pink/,tokyo-night/}``` for wallpapers & sort them
 - Clone this repo into ```/home/$USER/.config/```
 - launch using ```qs``` or ```qs -p /home/$USER/.config/quickshell/shell.qml```
