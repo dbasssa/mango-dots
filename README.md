@@ -8,7 +8,7 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
 - launch using ```qs``` or ```qs -p /home/$USER/.config/quickshell/shell.qml```
 - Enjoy!
 
-**IPC Calls**
+#**IPC Calls**
    
     ```
     # call for control center 
@@ -23,21 +23,19 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
     qs ipc call systemmonitor-qs toggle
     ```
 
-**Required programs/packages**
+#**Required programs/packages**
 
 - [```mangowm```](https://mangowm.github.io/) (Window Manager)
 - [```quickshell```](https://quickshell.org/) (Desktop Shell for wayland)
 
-**Updates:**
-
-Commit #(i lost count) Changes:
+#**Updates:**
 
 - Added a System Monitor triggered with Bindable IPC commands(RAM only, but CPU and GPU coming soon)
 - Added more options to the settings app
 - Changed the Volume icon in the control center to actual Volume %age.
 
 
-**TODO:**
+#**TODO:**
 - Add a Button to toggle System Monitor visibility in the Bar
 - Add CPU and GPU monitors to the System Monitor
 - figure out a way to have changes in settings persist
