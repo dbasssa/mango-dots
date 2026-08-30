@@ -9,7 +9,7 @@ This Shell is still a work in progress, and is currently being worked on/added t
 - launch using ```qs``` or ```qs -p /home/$USER/.config/quickshell/shell.qml```
 - Enjoy!
 ---
-#**IPC Calls**
+#**IPC Calls (Bound in WM)**
    
     ```
     # control center
