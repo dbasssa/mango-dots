@@ -7,6 +7,7 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
 - Clone this repo into ```/home/$USER/.config/```
 - launch using ```qs``` or ```qs -p /home/$USER/.config/quickshell/shell.qml```
 - Enjoy!
+
 **IPC Calls**
     ```
     # call for control center 
