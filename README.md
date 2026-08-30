@@ -1,25 +1,13 @@
-Hello! Welcome to the Official Repository for Shell-Yeah (until i move the quickshell directory into a different repo, that is).
+Shell-Yeah: A Quickshell based shell made for mangowm...
 
-Shell-Yeah is a Quickshell based Desktop shell built for mangowm. However, it should work on any other Wayland compositor with no issues (I have not tested this, so take it with a grain of salt). 
-
-Supported Operating Systems are those supported by both mangowm and quickshell. 
-
-Shell-Yeah handles a lot of different things, including Wallpaper & Wallpaper switching, Theme & Theme switching, Notifications, Bar Appearance, System Monitoring, Launching Apps, & System Controls, it is possible that some programs you may have installed (eg. Mako, awww, & others) may interfere with Shell-Yeah, so if there are any issues with installing and using the shell, please disable or close those programs, including possibly removing them from your autostart.
-
-This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, please raise an issue, and i will do my best to fix it as soon as possible.
+This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, please raise an issue.
 
 If you would like to Download and use Shell-Yeah, here's the **install steps**:
-- Install mangowm for your OS using [these](https://mangowm.github.io/docs/installation) instructions
-- Install Quickshell for your OS using [these](https://quickshell.org/docs/v0.3.0/guide/install-setup/) instructions
-- Create a directory using ```mkdir -p /home/$USER/walls/{dark/,light/,catppuccin-mocha/,gruvbox-dark/,nord/,pink/,tokyo-night/}``` for your wallpapers
-- Copy and sort all of your wallpapers
-- **That concludes the set up**
-- Clone this repo into ```~/.config/``` or ```/home/$USER/.config/```
-- launch Quickshell using ```qs```. if that doesnt work, use ```qs -p /home/$USER/quickshell/shell.qml``` instead
-- Once the bar (and possibly other elements) of the shell load, Shell-Yeah is ready to be used. Enjoy!
-
-**Recommended Steps to get the most out of Shell-Yeah**
-- in your mango config, bind the IPC commands for each call
+- Create directory  ```mkdir -p /home/$USER/walls/{dark/,light/,catppuccin-mocha/,gruvbox-dark/,nord/,pink/,tokyo-night/}``` for wallpapers & sort them
+- Clone this repo into ```/home/$USER/.config/```
+- launch using ```qs``` or ```qs -p /home/$USER/.config/quickshell/shell.qml```
+- Enjoy!
+**IPC Calls**
     ```
     # call for control center 
     qs ipc call ctrlcntr-qs toggle
@@ -29,7 +17,7 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
     qs ipc call notifications-qs toggle
     # call for lock screen
     qs ipc call lockscreen-qs toggle
-    #call for system monitor
+    # call for system monitor
     qs ipc call systemmonitor-qs toggle
     ```
 
@@ -37,7 +25,6 @@ If you would like to Download and use Shell-Yeah, here's the **install steps**:
 
 - [```mangowm```](https://mangowm.github.io/) (Window Manager)
 - [```quickshell```](https://quickshell.org/) (Desktop Shell for wayland)
-- ```/home/$USER/walls/THEME-NAME``` (directory for wallpapers under themes)
 
 **Updates:**
 
