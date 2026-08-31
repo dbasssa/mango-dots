@@ -10,8 +10,7 @@ This Shell is still a work in progress, and is currently being worked on/added t
 - Enjoy!
 ---
 #**IPC Calls (Bound in WM)**
-   
-    ```
+
     # control center
     qs ipc call ctrlcntr-qs toggle
     # settings app
@@ -22,7 +21,8 @@ This Shell is still a work in progress, and is currently being worked on/added t
     qs ipc call lockscreen-qs toggle
     # system monitor
     qs ipc call systemmonitor-qs toggle
-    ```
+    # app launcher
+    qs ipc call app-launcher toggle
 ---
 #**Required programs/packages**
 
