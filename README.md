@@ -28,6 +28,7 @@ This Shell is still a work in progress, and is currently being worked on/added t
 
 - [```mangowm```](https://mangowm.github.io/) (Window Manager)
 - [```quickshell```](https://quickshell.org/) (Desktop Shell for wayland)
+- Google Sans Code NF (Font and Icons)
 ---
 #**Updates:**
 
