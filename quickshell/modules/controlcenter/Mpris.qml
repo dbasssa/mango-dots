@@ -4,10 +4,15 @@ import Quickshell
 import Quickshell.Services.Mpris
 import Quickshell.Widgets
 
+import qs.modules.themeing
+
 Item {
     id: root
 
-    readonly property var player: Mpris.players.values.length > 0 ? Mpris.players.values[0] : null
+    property int playerIndex: 0
+    readonly property var playersList: Mpris.players.values
+
+    readonly property var player: root.playersList.length > 0 ? root.playersList[Math.min(root.playerIndex, root.playersList.length - 1)] : null
     readonly property bool hasTitle: root.player && root.player.trackTitle
     readonly property bool hasArtist: root.player && root.player.trackArtist
     readonly property url artUrl: root.player ? root.player.trackArtUrl : ""
@@ -16,6 +21,16 @@ Item {
     implicitHeight: 100
     implicitWidth: 350
     anchors.horizontalCenter: parent.horizontalCenter
+
+    MouseArea {
+        anchors.fill: parent
+        z: -1
+        onWheel: {
+            if (root.playersList.length <= 1)
+                return;
+            root.playerIndex = (root.playerIndex + (wheel.angleDelta.y > 0 ? 1 : root.playersList.length - 1)) % root.playersList.length;
+        }
+    }
 
     ClippingRectangle {
         id: box
@@ -27,6 +42,70 @@ Item {
         border {
             width: 2
             color: Theme.bordercolor
+        }
+
+        Rectangle {
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.verticalCenter: parent.verticalCenter
+            width: 6
+            radius: 3
+            color: "transparent"
+            z: 10
+
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 5
+
+                Repeater {
+                    model: root.playersList
+
+                    Rectangle {
+                        width: 6
+                        height: 16
+                        radius: 2
+                        color: index === root.playerIndex ? Theme.textactive : "transparent"
+                        border.color: index === root.playerIndex ? Theme.textactive : Theme.textmuted
+                        border.width: 2
+                        opacity: index === root.playerIndex ? 1 : 0.6
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 150
+                            }
+
+                        }
+
+                        Behavior on border.color {
+                            ColorAnimation {
+                                duration: 150
+                            }
+
+                        }
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 150
+                            }
+
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                if (index >= 0 && index < root.playersList.length)
+                                    root.playerIndex = index;
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
         }
 
         Image {

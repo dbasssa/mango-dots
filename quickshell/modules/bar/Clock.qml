@@ -1,19 +1,18 @@
 import QtQuick
 import Quickshell
 
+import qs.modules
+import qs.modules.themeing
+
 Rectangle {
     id: root
-    property int fontSize: Theme.fontxxl
-    property string rectColor: Theme.bgcolor
+    property int fontSize: Theme.fontxl
+    property string rectColor: Theme.rectcolor
 
     color: rectColor
-    implicitHeight: clktxt.implicitHeight + 5
+    implicitHeight: 25
     implicitWidth: clktxt.implicitWidth + 20
-    radius: 8
-    border {
-        width: States.islandBar ? (States.lockScreen ? 0 : 2) : 0
-        color: Theme.bordercolor
-    }
+    radius: 20
 
     SystemClock {
         id: clock

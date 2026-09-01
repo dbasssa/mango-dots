@@ -4,6 +4,9 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 
+import qs.modules
+import qs.modules.themeing
+
 PanelWindow {
     id: root
 

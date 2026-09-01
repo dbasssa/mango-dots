@@ -7,6 +7,10 @@ import Quickshell.Io
 import Quickshell.Services.Pam
 import Quickshell.Wayland
 
+import qs.modules
+import qs.modules.bar
+import qs.modules.themeing
+
 Scope {
     id: root
 
@@ -19,7 +23,7 @@ Scope {
     PamContext {
         id: passwdCheck
 
-        configDirectory: "pam"
+        configDirectory: Quickshell.shellDir + "/pam"
         config: "password.conf"
         onPamMessage: {
             if (passwdCheck.responseRequired)
@@ -168,7 +172,6 @@ Scope {
                                 Layout.alignment: Qt.AlignHCenter
                                 placeholderText: "Enter Password..."
                                 onTextChanged: {
-                                    root.userPass = text;
                                     root.showFailure = false;
                                 }
                                 onAccepted: {
@@ -176,6 +179,7 @@ Scope {
                                         States.lockScreen = false;
                                         root.wrongPwCounter = 0;
                                     } else {
+                                        root.userPass = text
                                         passwdCheck.start();
                                     }
                                 }

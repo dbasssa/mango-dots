@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 
+import qs.modules
 ShellRoot {
 	Variants {
 		// Create the panel once on each monitor.

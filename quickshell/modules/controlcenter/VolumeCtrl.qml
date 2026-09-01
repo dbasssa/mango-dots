@@ -3,6 +3,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
 
+import qs.modules
+import qs.modules.themeing
+
 Item {
     id: root
 

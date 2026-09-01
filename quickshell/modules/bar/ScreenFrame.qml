@@ -3,6 +3,9 @@ import QtQuick.Shapes
 import Quickshell
 import Quickshell.Wayland
 
+import qs.modules
+import qs.modules.themeing
+
 PanelWindow {
     id: root
 

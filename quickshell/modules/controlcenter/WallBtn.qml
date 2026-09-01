@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
+import qs.modules
+import qs.modules.themeing
+
 Item {
     anchors.horizontalCenter: parent.horizontalCenter
     Layout.preferredHeight: 40

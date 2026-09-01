@@ -4,6 +4,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
+import qs.modules
+import qs.modules.themeing
+
 FloatingWindow {
     id: root
 
@@ -332,6 +335,8 @@ FloatingWindow {
                                     Text {
                                         anchors.centerIn: parent
                                         text: States.frameVis ? "On" : "Off"
+                                        color: Theme.text1
+
                                     }
 
                                     MouseArea {
@@ -366,6 +371,7 @@ FloatingWindow {
                                             placeholderText: States.frameThickness + "..."
                                             placeholderTextColor: Theme.activecolor
                                             text: States.frameThickness.toString()
+                                            color: Theme.text1
                                             onAccepted: {
                                                 var val = parseInt(text);
                                                 if (!isNaN(val) && val >= 0)
@@ -411,6 +417,7 @@ FloatingWindow {
                                             leftPadding: 10
                                             rightPadding: 10
                                             text: States.frameRounding.toString()
+                                            color: Theme.text1
                                             onAccepted: {
                                                 var val = parseInt(text);
                                                 if (!isNaN(val) && val >= 0)
@@ -512,6 +519,7 @@ FloatingWindow {
                                                 placeholderTextColor: Theme.activecolor
                                                 leftPadding: 10
                                                 rightPadding: 10
+                                                color: Theme.text1
                                                 text: States.barHeight.toString()
                                                 onAccepted: {
                                                     var val = parseInt(text);
@@ -546,6 +554,7 @@ FloatingWindow {
                                                 placeholderTextColor: Theme.activecolor
                                                 leftPadding: 10
                                                 rightPadding: 10
+                                                color: Theme.text1
                                                 text: States.barWidth.toString()
                                                 onAccepted: {
                                                     var val = parseInt(text);
@@ -583,6 +592,7 @@ FloatingWindow {
                                                 placeholderTextColor: Theme.activecolor
                                                 leftPadding: 10
                                                 rightPadding: 10
+                                                color: Theme.text1
                                                 text: States.notchMargin.toString()
                                                 onAccepted: {
                                                     var val = parseInt(text);
@@ -617,6 +627,7 @@ FloatingWindow {
                                                 placeholderTextColor: Theme.activecolor
                                                 leftPadding: 10
                                                 rightPadding: 10
+                                                color: Theme.text1
                                                 text: States.barRounding.toString()
                                                 onAccepted: {
                                                     var val = parseInt(text);
@@ -654,6 +665,7 @@ FloatingWindow {
                                                 placeholderTextColor: Theme.activecolor
                                                 leftPadding: 10
                                                 rightPadding: 10
+                                                color: Theme.text1
                                                 text: States.barMargin.toString()
                                                 onAccepted: {
                                                     var val = parseInt(text);

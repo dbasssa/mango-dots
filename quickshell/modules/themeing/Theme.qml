@@ -16,6 +16,7 @@ QtObject {
     property string text1: ThemeState.text1
     property string textmuted: ThemeState.textmuted
     property string textactive: ThemeState.textactive
+    property string activecolor: ThemeState.textactive
 
     property string alertcolor: ThemeState.alertcolor
     property string miconcolor: ThemeState.miconcolor

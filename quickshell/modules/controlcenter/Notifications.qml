@@ -5,6 +5,9 @@ import Quickshell.Io
 import Quickshell.Services.Notifications
 import Quickshell.Wayland
 
+import qs.modules
+import qs.modules.themeing
+
 Scope {
     id: root
 

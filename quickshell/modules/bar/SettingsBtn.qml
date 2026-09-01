@@ -1,22 +1,21 @@
 import Quickshell
 import QtQuick
 
+import qs.modules
+import qs.modules.themeing
+
 Rectangle {
     visible: States.notchBar ? false : true
     implicitHeight: 27
     implicitWidth: 30
-    radius: 5
+    radius: 12
     color: Theme.rectcolor
-    border {
-        width: 1
-        color: Theme.bordercolor
 
-    }
 
     Text {
         anchors.centerIn: parent
         id: textId
-        text: "󰂚"
+        text: ""
         color: Theme.text1
         font {
             pixelSize: Theme.fontxl
@@ -25,6 +24,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: States.notifOpen = !States.notifOpen
+        onClicked: States.settingsOpen = !States.settingsOpen
     }
 }

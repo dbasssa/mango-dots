@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
+import qs.modules
+import qs.modules.themeing
+
 Rectangle {
     id: root
     visible: States.notchBar ? false : true
@@ -10,12 +13,7 @@ Rectangle {
     implicitWidth: btnRow.implicitWidth + 24
     color: ctrlMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
     Behavior on color { ColorAnimation { duration: 150 } }
-    radius: 5
-
-    border {
-        width: 1
-        color: Theme.bordercolor
-    }
+    radius: 12
 
 
     RowLayout {

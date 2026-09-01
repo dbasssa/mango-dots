@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.modules.themeing
 
 Rectangle {
     id: root
@@ -14,6 +15,11 @@ Rectangle {
     implicitHeight: 100
     radius: 20
     color: Theme.rectcolor
+
+    border {
+        width: 2
+        color: Theme.bordercolor
+    }
 
     Timer {
         interval: 1000
@@ -42,11 +48,6 @@ Rectangle {
 
     }
 
-    border {
-        width: 2
-        color: Theme.bordercolor
-    }
-
     ColumnLayout {
         anchors.fill: parent
         anchors.topMargin: 5
@@ -54,14 +55,13 @@ Rectangle {
 
         Text {
             Layout.alignment: Qt.AlignHCenter
-            text: "RAM Monitor"
+            text: "RAM"
             color: Theme.text1
 
             font {
                 family: Theme.fontfamily
                 pixelSize: Theme.fontlg
                 bold: true
-                underline: true
             }
 
         }

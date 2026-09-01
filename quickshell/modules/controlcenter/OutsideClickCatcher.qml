@@ -2,6 +2,8 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 
+import qs.modules
+
 // Fullscreen invisible window (one per screen) that closes the control
 // center and notification center when clicked anywhere outside them.
 // Needs a rendered (near-transparent) fullscreen rect to receive pointer

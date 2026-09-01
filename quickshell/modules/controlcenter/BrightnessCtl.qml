@@ -3,6 +3,9 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
+import qs.modules
+import qs.modules.themeing
+
 Item {
     id: root
 

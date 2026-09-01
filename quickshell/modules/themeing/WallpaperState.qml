@@ -2,6 +2,8 @@ pragma Singleton
 import QtQuick
 import Quickshell.Io
 
+import qs.modules
+
 QtObject {
     id: root
 

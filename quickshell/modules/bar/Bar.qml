@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
+import qs.modules
+import qs.modules.themeing
+
 PanelWindow {
     required property var modelData
 
@@ -45,11 +48,16 @@ PanelWindow {
 
         Clock {
         }
+        FocusedApp {}
 
         Item {
             Layout.fillWidth: true
         }
 
+        Workspaces { monitor: modelData.name}
+
+        Item {Layout.fillWidth: true}
+        
         SettingsBtn {
         }
         NotifBtn {}
