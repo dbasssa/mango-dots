@@ -1,5 +1,5 @@
 ## This project is still under heavy development and has known issues.
-**In the current state, it is unfortunately unusable, and I recommend not using Shel-Yeah. A future commit will be made so that the shell works as intended on any Software. Thanks, and See you Later..**
+**In the current state, it is unfortunately unusable, and I recommend not using Shel-Yeah. A future commit(s) will be made so that the shell works as intended on any Software. Thanks, and See you Later..**
 
 
 **Shell-Yeah**: A Quickshell based shell made for mangowm...
