@@ -2,24 +2,19 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    property string bgcolor: ThemeState.bgcolor
-    property string rectcolor: ThemeState.rectcolor
-    property string recthovercolor: ThemeState.recthovercolor
-
-    property string occupiedcolor: ThemeState.occupiedcolor
-    property string emptycolor: ThemeState.emptycolor
-    property string pilltextcolor: ThemeState.pilltextcolor
-
-    property string bordercolor: ThemeState.bordercolor
-    property string wsbordercolor: ThemeState.wsbordercolor
-
-    property string text1: ThemeState.text1
-    property string textmuted: ThemeState.textmuted
-    property string textactive: ThemeState.textactive
-    property string activecolor: ThemeState.textactive
-
-    property string alertcolor: ThemeState.alertcolor
-    property string miconcolor: ThemeState.miconcolor
+    property string bgcolor:  "#16161a"
+    property string rectcolor:  "#1e1e24"
+    property string recthovercolor:  "#24242c"
+    property string occupiedcolor:  "#3b3b44"
+    property string emptycolor:  "#26262e"
+    property string pilltextcolor:  "#0e0e10"
+    property string bordercolor:  "#2c2c34"
+    property string wsbordercolor:  "#e6e6ea"
+    property string text1:  "#e6e6ea"
+    property string textmuted:  "#8a8a94"
+    property string textactive:  "#7aa2f7"
+    property string alertcolor:  "#f7768e"
+    property string miconcolor:  "#9ece6a"
 
     property string fontfamily: "Google Sans Code NF"
     property int fontxs: 10

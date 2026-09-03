@@ -4,7 +4,6 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
 import Quickshell.Wayland
-
 import qs.modules
 import qs.modules.themeing
 
@@ -173,13 +172,13 @@ Scope {
     PanelWindow {
         visible: States.notifOpen
         color: "transparent"
-        implicitWidth: 380
-        implicitHeight: centerCol.implicitHeight + 24
         exclusionMode: ExclusionMode.Ignore
 
         anchors {
             top: true
             right: true
+            left: true
+            bottom: true
         }
 
         margins {
@@ -187,11 +186,18 @@ Scope {
             right: States.notifCardSideMargin
         }
 
-        Rectangle {
+        MouseArea {
             anchors.fill: parent
-            radius: 10
-            color: Theme.bgcolor
+            onClicked: States.notifOpen = !States.notifOpen
+        }
 
+        Rectangle {
+            implicitWidth: 380
+            implicitHeight: centerCol.implicitHeight + 24
+            anchors.top: parent.top
+            anchors.right: parent.right
+            radius: 20
+            color: Theme.bgcolor
             border {
                 width: 2
                 color: Theme.bordercolor
@@ -236,7 +242,6 @@ Scope {
                             anchors.margins: -4
                             cursorShape: Qt.PointingHandCursor
                             hoverEnabled: true
-
                             onClicked: history.clear()
                         }
 
@@ -277,9 +282,11 @@ Scope {
                                     }
 
                                 }
+
                                 Text {
                                     text: modelData.time
                                     color: Theme.textmuted
+
                                     font {
                                         family: Theme.fontfamily
                                         pixelSize: Theme.fontmd
@@ -294,12 +301,12 @@ Scope {
                                 visible: modelData.body !== ""
                                 text: modelData.body
                                 color: Theme.text1
+                                wrapMode: Text.WordWrap
 
                                 font {
                                     family: Theme.fontfamily
                                     pixelSize: Theme.fontmd
                                 }
-                                wrapMode: Text.WordWrap
 
                             }
 
@@ -307,10 +314,12 @@ Scope {
                                 visible: modelData.appName !== ""
                                 text: modelData.appName
                                 color: Theme.textmuted
+
                                 font {
                                     family: Theme.fontfamily
                                     pixelSize: Theme.fontsm
                                 }
+
                             }
 
                         }

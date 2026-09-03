@@ -1,65 +1,56 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-
 import qs.modules
 import qs.modules.themeing
 
 Rectangle {
-    id: root
     visible: States.notchBar ? false : true
-    Layout.alignment: Qt.AlignVCenter
-    implicitHeight: 28
-    implicitWidth: btnRow.implicitWidth + 24
-    color: ctrlMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
-    Behavior on color { ColorAnimation { duration: 150 } }
+    Layout.alignment: Qt.AlignHCenter
+    implicitHeight: 25
+    implicitWidth: btnRow.implicitWidth + 10
+    color: Theme.rectcolor
     radius: 12
-
+    clip: true
 
     RowLayout {
         id: btnRow
-        anchors.centerIn: parent
-        spacing: 0
-        VolumeBar {}
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
+        anchors.fill: parent
+        spacing: 2
 
-        Text {
-            text: " | "
-            color: Theme.bordercolor
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontxxl
+        VolumeBar {
         }
+        Battery {}
 
         Text {
-            text: ""
+            Layout.alignment: Qt.AlignHCenter
+            text: "|"
             color: Theme.text1
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontxxl
-        }        
-
-        Text {
-            text: " | "
-            color: Theme.bordercolor
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontxxl
+            font {
+                pixelSize: Theme.fontxl
+                family: Theme.fontfamily
+            }
         }
 
         Text {
-            text: "󰍜"
-            color: States.ctrlOpen ? Theme.textactive : Theme.text1
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontxxl
-            rotation: States.ctrlOpen ? 90 : 0
-            Behavior on rotation { NumberAnimation { duration: 350; easing.type: Easing.InOutCubic } }
-            Behavior on color { ColorAnimation { duration: 150 } }
+            text: ""
+            color: Theme.text1
+            font {
+                pixelSize: Theme.fontxl
+                family: Theme.fontfamily
+            }
         }
+
+
+
     }
 
     MouseArea {
-        id: ctrlMouse
         anchors.fill: parent
-        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: {States.ctrlOpen = !States.ctrlOpen; States.appOpen = false}
+        onClicked: States.ctrlOpen = !States.ctrlOpen
     }
 
 }

@@ -35,23 +35,11 @@ ShellRoot {
     }
 
     Notifications {}
-
-    Variants {
-        model: Quickshell.screens
-
-        OutsideClickCatcher {}
-
-    }
-
-    CtrlCenter {}
-
-    WallpaperPicker {}
     AppLauncher {}
-    ThemePicker {}
     Settings {}
     Lockscreen {}
     ActivateLinux {}
-
+    CtrlCenter{}
     SysMon {}
 
 }

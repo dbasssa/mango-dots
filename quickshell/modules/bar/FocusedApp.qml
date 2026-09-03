@@ -13,22 +13,22 @@ Rectangle {
     property string focusedApp: ""
     property string focusedTitle: ""
     implicitHeight: 25
-    implicitWidth: 200
+    implicitWidth: appTxt.implicitWidth + 20
+    Layout.alignment: Qt.AlignVCenter
 
     color: Theme.rectcolor
     radius: 12
 
     Text {
         id: appTxt
-        anchors.fill: parent
+        anchors.centerIn: parent
         anchors.leftMargin: 10
         anchors.rightMargin: 10
         anchors.topMargin: 2
         anchors.bottomMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
         color: Theme.text1
-        text: root.focusedApp + " | " + root.focusedTitle
-        elide: Text.ElideRight
+        text: root.focusedApp
         font {
             family: Theme.fontfamily
             pixelSize: Theme.fontxl
@@ -58,8 +58,11 @@ Rectangle {
                     console.log("PARSE FAIL: ", e);
                     return ;
                 }
-                if (obj && obj.appid && obj.appid !== "")
+                if (obj && obj.appid && obj.appid !== ""){
                     root.focusedApp = obj.appid;
+                }else if (obj.appid === ""){
+                    root.focusedApp = "Desktop"
+                }
                 if (obj && obj.title && obj.title !== "")
                     root.focusedTitle = obj.title;
 

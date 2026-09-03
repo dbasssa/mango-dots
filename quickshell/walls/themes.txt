@@ -1,0 +1,56 @@
+property var themes: [
+    {
+        name: "Light",
+        wallFolder: "light",
+        bgcolor: "#f0f0f5", rectcolor: "#e2e2ea", recthovercolor: "#d4d4de",
+        occupiedcolor: "#b4b4c0", emptycolor: "#d8d8e0", pilltextcolor: "#1e1e24",
+        bordercolor: "#c0c0ca", wsbordercolor: "#1e1e24",
+        text1: "#1e1e24", textmuted: "#6a6a78", textactive: "#4a6ee0",
+        alertcolor: "#d64550", miconcolor: "#2a9040"
+    },
+    {
+        name: "Tokyo Night",
+        wallFolder: "tokyo-night",
+        bgcolor: "#1a1b26", rectcolor: "#24283b", recthovercolor: "#2f344a",
+        occupiedcolor: "#414868", emptycolor: "#33384a", pilltextcolor: "#1a1b26",
+        bordercolor: "#3b4261", wsbordercolor: "#c0caf5",
+        text1: "#c0caf5", textmuted: "#565f89", textactive: "#7aa2f7",
+        alertcolor: "#f7768e", miconcolor: "#9ece6a"
+    },
+    {
+        name: "Catppuccin Mocha",
+        wallFolder: "catppuccin-mocha",
+        bgcolor: "#1e1e2e", rectcolor: "#313244", recthovercolor: "#45475a",
+        occupiedcolor: "#585b70", emptycolor: "#45475a", pilltextcolor: "#1e1e2e",
+        bordercolor: "#585b70", wsbordercolor: "#cdd6f4",
+        text1: "#cdd6f4", textmuted: "#6c7086", textactive: "#89b4fa",
+        alertcolor: "#f38ba8", miconcolor: "#a6e3a1"
+    },
+    {
+        name: "Nord",
+        wallFolder: "nord",
+        bgcolor: "#2e3440", rectcolor: "#3b4252", recthovercolor: "#434c5e",
+        occupiedcolor: "#4c566a", emptycolor: "#3b4252", pilltextcolor: "#2e3440",
+        bordercolor: "#4c566a", wsbordercolor: "#eceff4",
+        text1: "#eceff4", textmuted: "#7b88a1", textactive: "#88c0d0",
+        alertcolor: "#bf616a", miconcolor: "#a3be8c"
+    },
+    {
+        name: "Gruvbox Dark",
+        wallFolder: "gruvbox-dark",
+        bgcolor: "#282828", rectcolor: "#3c3836", recthovercolor: "#504945",
+        occupiedcolor: "#665c54", emptycolor: "#504945", pilltextcolor: "#282828",
+        bordercolor: "#665c54", wsbordercolor: "#ebdbb2",
+        text1: "#ebdbb2", textmuted: "#928374", textactive: "#83a598",
+        alertcolor: "#fb4934", miconcolor: "#b8bb26"
+    },
+    {
+        name: "Pink",
+        wallFolder: "pink",
+        bgcolor: "#fce4f0", rectcolor: "#f0c8d8", recthovercolor: "#e4b0c8",
+        occupiedcolor: "#d498b4", emptycolor: "#e4b0c8", pilltextcolor: "#1a1018",
+        bordercolor: "#d498b4", wsbordercolor: "#2a1a28",
+        text1: "#2a1a28", textmuted: "#8a6a7a", textactive: "#c04070",
+        alertcolor: "#d02050", miconcolor: "#408040"
+    }
+]

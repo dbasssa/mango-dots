@@ -2,10 +2,12 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.modules
 import qs.modules.themeing
 
 Rectangle {
     id: root
+    visible: States.notchBar ? false : true
 
     property string monitor: ""
 
@@ -48,7 +50,7 @@ Rectangle {
                 implicitWidth: 18
                 radius: 9
 
-                color: modelData.is_active ? Theme.textactive : (modelData.client_count > 0 ? Theme.recthovercolor : Theme.textmuted)
+                color: modelData.is_active ? Theme.textactive : (modelData.client_count > 0 ? Theme.textmuted : Theme.recthovercolor)
 
                 Text {
                     anchors.centerIn: parent

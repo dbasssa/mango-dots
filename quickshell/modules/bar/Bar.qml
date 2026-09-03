@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 
 import qs.modules
+import qs.modules.controlcenter
 import qs.modules.themeing
 
 PanelWindow {
@@ -25,13 +26,8 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: States.islandBar ? "transparent" : Theme.bgcolor
+        color: States.islandBar ? "transparent" : States.notchBar ? Theme.rectcolor : Theme.bgcolor
         radius: States.fullBar ? 0 : States.barRounding
-
-        border {
-            width: States.fullBar ? 0 : 2
-            color: Theme.bordercolor
-        }
 
     }
 
@@ -46,25 +42,20 @@ PanelWindow {
             visible: States.notchBar ? true : false
         }
 
-        Clock {
-        }
+        Workspaces { monitor: modelData.name}
+
         FocusedApp {}
 
-        Item {
-            Layout.fillWidth: true
-        }
-
-        Workspaces { monitor: modelData.name}
+        Clock {}
 
         Item {Layout.fillWidth: true}
         
         SettingsBtn {
         }
+
         NotifBtn {}
 
-        CtrlCenterBtn {
-        }
-
+        CtrlCenterBtn{}
     }
 
 }

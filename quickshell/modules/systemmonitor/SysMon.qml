@@ -28,17 +28,26 @@ Scope {
 
         anchors {
             top: true
+            right: true
+            left: true
+            bottom: true
+
         }
 
         margins {
             top: States.barHeight + States.frameThickness + 5
         }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: States.statsOpen = !States.statsOpen
+        }
 
         Rectangle {
-            anchors.fill: parent
+            implicitHeight: 400
+            implicitWidth: 700
             color: Theme.bgcolor
             radius: 20
-
+            anchors.centerIn: parent
             border {
                 width: 2
                 color: Theme.bordercolor

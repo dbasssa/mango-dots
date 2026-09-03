@@ -19,7 +19,7 @@ Item {
     property bool artFailed: false
 
     implicitHeight: 100
-    implicitWidth: 350
+    Layout.fillWidth: true
     anchors.horizontalCenter: parent.horizontalCenter
 
     MouseArea {
@@ -283,7 +283,6 @@ Item {
                         color: (playMouse.containsMouse || (root.player && root.player.isPlaying)) ? Theme.textactive : Theme.text1
                         font.family: Theme.fontfamily
                         font.pixelSize: root.player && root.player.isPlaying ? Theme.fontxl : Theme.fontlg
-                        font.bold: root.player && root.player.isPlaying ? true : false
                         scale: playMouse.pressed ? 0.8 : (playMouse.containsMouse ? 1.25 : 1)
 
                         Behavior on scale {

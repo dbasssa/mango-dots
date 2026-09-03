@@ -48,19 +48,19 @@ Item {
     }
 
     implicitHeight: col.implicitHeight
-    implicitWidth: parent.implicitWidth
+    Layout.fillWidth: true
+    
     anchors.horizontalCenter: parent.horizontalCenter
 
     ColumnLayout {
         id: col
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.fill: parent
         spacing: 10
 
         Rectangle {
             id: volbar
             Layout.preferredHeight: 50
-            Layout.preferredWidth: 350
+            Layout.fillWidth: true
             radius: 5
             color: volMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             Behavior on color { ColorAnimation { duration: 150 } }

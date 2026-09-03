@@ -16,7 +16,6 @@ PanelWindow {
     screen: modelData
     color: "transparent"
 
-    visible: States.ctrlOpen
 
     WlrLayershell.namespace: "quickshell:outside-click-catcher"
     WlrLayershell.layer: WlrLayer.Overlay

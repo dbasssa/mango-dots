@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import QtQuick.Layouts
 
 import qs.modules
 import qs.modules.themeing
@@ -8,6 +9,8 @@ Rectangle {
     id: root
     property int fontSize: Theme.fontxl
     property string rectColor: Theme.rectcolor
+
+    anchors.centerIn: parent
 
     color: rectColor
     implicitHeight: 25

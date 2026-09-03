@@ -92,7 +92,7 @@ Scope {
                 anchors.fill: parent
                 asynchronous: true
                 fillMode: Image.PreserveAspectCrop
-                source: WallpaperState.currentWallpaper
+                source: Quickshell.shellDir + "/walls/gruvbox-dark/door.png"
             }
 
             MultiEffect {
@@ -108,7 +108,7 @@ Scope {
                 id: loginRect
 
                 anchors.centerIn: parent
-                implicitHeight: loginCol.implicitHeight + 20
+                implicitHeight: loginCol.implicitHeight + 50
                 implicitWidth: 300
                 color: Theme.rectcolor
                 radius: 20
@@ -122,7 +122,8 @@ Scope {
                 ColumnLayout {
                     id: loginCol
 
-                    anchors.centerIn: parent
+                    anchors.fill: parent
+                    anchors.margins: 15
                     spacing: 5
 
                     Clock {

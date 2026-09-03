@@ -17,8 +17,8 @@ Item {
     readonly property bool micReady: mic && mic.ready
     readonly property bool micMuted: micReady && mic.audio.muted
 
-    implicitHeight: 40
-    implicitWidth: voltxt.implicitWidth +5
+    implicitHeight: 25
+    implicitWidth: 45
     anchors.verticalCenter: parent.verticalCenter
 
     RowLayout {
