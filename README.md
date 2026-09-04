@@ -1,19 +1,14 @@
-## This project is still under heavy development and has known issues.
-**In the current state, it is unfortunately unusable, and I recommend not using Shel-Yeah. A future commit(s) will be made so that the shell works as intended on any Software. Thanks, and See you Later..**
+**Shell-Yeah**: A Quickshell based shell made for mangowm... WE'RE BACK AND BETTER (sort of...)
 
-
-**Shell-Yeah**: A Quickshell based shell made for mangowm...
-
-This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, please raise an issue.
+This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, or just have a feature request, please raise an issue.
 
 ---
-# **install steps**:
-- `mkdir -p ~/walls/{dark,light,catppuccin-mocha,gruvbox-dark,nord,pink,tokyo-night} # sorted wallpaper dir`
+## **install steps**:
 - Clone this repo into `~/.config/`
 - `qs -p ~/.config/quickshell/shell.qml`
 - Enjoy!
 ---
-# **IPC Calls (Bound in mangowm)**
+## **IPC Calls (Bound in mangowm)**
 
     # control center
     qs ipc call ctrlcntr-qs toggle
@@ -28,21 +23,23 @@ This Shell is still a work in progress, and is currently being worked on/added t
     # app launcher
     qs ipc call app-launcher toggle
 ---
-# **Required programs/packages**
+## **Required programs/packages**
 
 - [`mangowm`](https://mangowm.github.io/) (Window Manager)
 - [`quickshell`](https://quickshell.org/) (Desktop Shell for wayland)
 - Google Sans Code NF (Font and Icons)
 ---
-# **Updates:**
-- Added a CPU Monitor to the System Monitor
-- Added a Workspaces module to show active workspace as well as occupied workspaces
-- Added a focused window titlebar
-- Changed some of the aesthetics of the bar
+## **Updates:**
+- Removed Theme and Wallpaper switcher due to a file search error on some devices.
+- Localized the walls directory. all wallpapers must be stored in `~/.config/quickshell/walls/`
+- Added a Battery and network monitor to the control center button.
+- Redid the control center and some other menus/functions
+- Optimized aand reworked a bunch of different problems with the whole shell
 
 
-# **TODO:**
+## **TODO:**
 - Add a Button to toggle System Monitor visibility in the Bar
 - Add GPU monitors to the System Monitor
 - figure out a way to have changes in settings persist
 - complete the install script to automate the setup and creation process
+- feel godly and love life again
