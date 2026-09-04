@@ -24,6 +24,8 @@ Rectangle {
         }
         Battery {}
 
+        NwRect {}
+
         Text {
             Layout.alignment: Qt.AlignHCenter
             text: "|"
