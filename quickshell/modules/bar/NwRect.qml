@@ -1,7 +1,6 @@
 import Quickshell
 import Quickshell.Networking
 import QtQuick
-
 import qs.modules
 import qs.modules.themeing
 //fuck this you are taking way too long to work 
@@ -42,11 +41,15 @@ Item {
     function wiredConnection() {
         if (wiredDev != null) {
             if (wiredDev.state === ConnectionState.Connected) {
-                return "suck my balls: "
+                return " 󰈁" //you heard me
             }
             if (wiredDev.state === ConnectionState.Disconnected || wiredDev.state === ConnectionState.Unknown) {
-                return "they killed kenny"
+                return " 󰈂"  //south park reference if your ethernet dies
+            } else {
+                return "󰈂 wait..."
             }
+        } else {
+            return;
         }
 
     }
@@ -72,7 +75,7 @@ Item {
             anchors.centerIn: parent
             visible: wiredDev != null
             id: wiredTxt
-            text: " " +  root.wiredConnection() + root.activeWiredName//pussy i hated writing this
+            text: root.activeWiredName + root.wiredConnection()  //pussy i hated writing this 
             color: Theme.text1
 
             font {

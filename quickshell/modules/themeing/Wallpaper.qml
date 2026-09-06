@@ -20,7 +20,7 @@ PanelWindow {
         anchors.fill: parent
         asynchronous: true
         fillMode: Image.PreserveAspectCrop
-        source: Quickshell.shellDir + "/walls/gruvbox-dark/door.png"
+        source: WallpaperState.currentWallpaper
     }
 
 }

@@ -41,5 +41,6 @@ ShellRoot {
     ActivateLinux {}
     CtrlCenter{}
     SysMon {}
+    ThemeSelector {}
 
 }

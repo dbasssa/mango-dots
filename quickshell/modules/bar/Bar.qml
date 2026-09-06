@@ -46,6 +46,7 @@ PanelWindow {
 
         FocusedApp {}
 
+        //big black clock
         Clock {}
 
         Item {Layout.fillWidth: true}

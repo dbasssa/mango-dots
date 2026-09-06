@@ -108,7 +108,9 @@ Scope {
                 id: loginRect
 
                 anchors.centerIn: parent
-                implicitHeight: loginCol.implicitHeight + 50
+                anchors.margins: 12
+
+                implicitHeight: 120
                 implicitWidth: 300
                 color: Theme.rectcolor
                 radius: 20
@@ -134,9 +136,10 @@ Scope {
 
                     RowLayout {
                         spacing: 7
+                        Layout.fillHeight: true
 
                         Text {
-                            Layout.alignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignHCenter
                             text: root.userN
                             color: Theme.text1
 
@@ -149,7 +152,7 @@ Scope {
                         }
 
                         Rectangle {
-                            Layout.alignment: Qt.AlignVCenter
+                            Layout.alignment: Qt.AlignHCenter
                             implicitHeight: 40
                             implicitWidth: 200
                             color: Theme.recthovercolor

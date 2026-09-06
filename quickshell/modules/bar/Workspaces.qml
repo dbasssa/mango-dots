@@ -11,8 +11,8 @@ Rectangle {
 
     property string monitor: ""
 
-    implicitHeight: 30
-    implicitWidth: 220
+    implicitHeight: 25
+    implicitWidth: row.implicitWidth +20
     color: Theme.rectcolor
     radius: 20
 
@@ -34,6 +34,11 @@ Rectangle {
             }
         }
     }
+    Process {
+        id: switchWS
+        command: [""]
+        running: false
+    }
 
     RowLayout {
         id: row
@@ -46,9 +51,10 @@ Rectangle {
         Repeater {
             model: root.tagModel
             Rectangle {
-                implicitHeight: 18
-                implicitWidth: 18
-                radius: 9
+                id: tag
+                implicitHeight: 15
+                implicitWidth: modelData.is_active ? 30 : 25
+                radius: 10
 
                 color: modelData.is_active ? Theme.textactive : (modelData.client_count > 0 ? Theme.textmuted : Theme.recthovercolor)
 
@@ -60,7 +66,16 @@ Rectangle {
                         pixelSize: Theme.fontmd
                         family: Theme.fontfamily
                     }
-                    text: modelData.is_active ? modelData.layout : ""
+                    text: modelData.is_active ? modelData.layout : model.index + 1
+                }
+
+                MouseArea {//MOTHERFUCKER JUST WORK BRO
+                    anchors.fill: parent
+                    onClicked: {
+                        switchWS.command = ["mmsg","dispatch","view,"+ (model.index+1) +",0"];
+                        switchWS.running = true;
+                    }
+
                 }
             }
         }

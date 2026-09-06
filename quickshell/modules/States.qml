@@ -28,6 +28,8 @@ QtObject {
     //System Monitor toggle
     property bool statsOpen: false
 
+    property bool themeOpen: false
+
 
     property bool funTime: false
 

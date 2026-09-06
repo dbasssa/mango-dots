@@ -42,7 +42,7 @@ PanelWindow {
         implicitWidth: 400
         anchors.right: parent.right
         anchors.top: parent.top
-        color: Theme.rectcolor
+        color: Theme.bgcolor
         radius: 20
 
         border {
@@ -67,6 +67,7 @@ PanelWindow {
 
             VolumeCtrl {
             }
+            ThemeBtn{}
 
             Item {
                 Layout.fillHeight: true

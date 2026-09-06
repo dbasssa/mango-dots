@@ -10,10 +10,12 @@ Rectangle {
     property int fontSize: Theme.fontxl
     property string rectColor: Theme.rectcolor
 
+    property bool dateShow: false
+
     anchors.centerIn: parent
 
     color: rectColor
-    implicitHeight: 25
+    implicitHeight: States.lockScreen ? clktxt.implicitHeight : 25
     implicitWidth: clktxt.implicitWidth + 20
     radius: 20
 
@@ -26,7 +28,7 @@ Rectangle {
     Text {
         id: clktxt
         anchors.centerIn: parent
-        text: Qt.formatDateTime(clock.date, "hh:mm")
+        text: root.dateShow ? Qt.formatDateTime(clock.date, "dd MMM yyyy") : Qt.formatDateTime(clock.date, "hh:mm")
         color: Theme.text1
         font.family: Theme.fontfamily
         font.pixelSize: root.fontSize
@@ -46,6 +48,10 @@ Rectangle {
             easing.type: Easing.OutCubic
         }
 
+    }
+    MouseArea {
+        anchors.fill: parent
+        onClicked: root.dateShow = !root.dateShow
     }
 
 }

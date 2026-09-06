@@ -38,7 +38,7 @@ Item {
                 if (root.muted)
                     return "0%";
 
-                return root.vol + "%";
+                return root.vol + "% 󰕾";
             }
             color: root.muted ? Theme.textmuted : Theme.text1
             font.family: Theme.fontfamily
