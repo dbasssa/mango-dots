@@ -10,6 +10,7 @@ QtObject {
     //save everything and make it happen again (i forgot the fuckin word)
     //rounding asaver
     //Bar style saver
+    //bar style saver
 
     id: root
 
@@ -48,31 +49,31 @@ QtObject {
     //notification Card timer & Margin
     property int notifCardSideMargin: 10
     property int notifTimeout: 5000
-
-    function saveWidth() {
-        widthSaver.command = [];
-        widthSaver.running = true;
-    }
-
-    function saveGap() {
-        gapSaver.command = [];
-        gapSaver.running = true;
-    }
-
-    function saveRound() {
-        roundingSaver.command = [];
-        roundingSaver.running = true;
-    }
-
     //bar height saver
-    property Process heightSaver: Process {
+    property Process heightSaver
+    property Process heightReader
+    //bar width
+    property Process widthSaver
+    property Process widthReader
+    //gap saver (yes 90% of this file is a copy pasta)
+    property Process gapSaver
+    property Process gapReader
+    property Process roundingSaver
+    property Process roundingReader
+    property Process notchStyle
+    property Process fullBarStyle
+    property Process islandStyle
+    property Process styleReader
+
+    heightSaver: Process {
         command: ["sh", "-c", "echo " + root.barHeight + " > " + Quickshell.shellDir + "/state/height"]
         running: false
     }
 
-    property Process heightReader: Process {
+    heightReader: Process {
         command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/height"]
         running: true
+
         stdout: StdioCollector {
             onStreamFinished: root.barHeight = parseInt(this.text)
         }
@@ -80,13 +81,12 @@ QtObject {
     }
     //end of height saver
 
-    //bar width
-    property Process widthSaver: Process {
+    widthSaver: Process {
         command: ["sh", "-c", "echo " + root.barWidth + " > " + Quickshell.shellDir + "/state/width"]
         running: false
     }
 
-    property Process widthReader: Process {
+    widthReader: Process {
         command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/width"]
         running: true
 
@@ -97,14 +97,12 @@ QtObject {
     }
     //end of width saver
 
-    //gap saver (yes 90% of this file is a copy pasta)
-    property Process gapSaver: Process {
-
+    gapSaver: Process {
         command: ["sh", "-c", "echo " + root.notchMargin + " > " + Quickshell.shellDir + "/state/gap"]
         running: false
     }
 
-    property Process gapReader: Process {
+    gapReader: Process {
         command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/gap"]
         running: true
 
@@ -115,12 +113,12 @@ QtObject {
     }
     //end of gap save
 
-    property Process roundingSaver: Process {
+    roundingSaver: Process {
         command: ["sh", "-c", "echo " + root.barRounding + " > " + Quickshell.shellDir + "/state/rounding"]
         running: false
     }
 
-    property Process roundingReader: Process {
+    roundingReader: Process {
         command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/rounding"]
         running: true
 
@@ -131,11 +129,49 @@ QtObject {
     }
     //end of rounding saver
 
-    //bar style saver 
-
-    property Process notchStyle: Process {
-        command: ["sh","-c","echo notch > " + Quickshell.shellDir + "/state/barstyle"]
+    //bar style you cunt
+    notchStyle: Process {
+        command: ["sh", "-c", "echo notch > " + Quickshell.shellDir + "/state/barstyle"]
         running: false
     }
+
+    fullBarStyle: Process {
+        command: ["sh", "-c", "echo full > " + Quickshell.shellDir + "/state/barstyle"]
+        running: false
+    }
+
+    islandStyle: Process {
+        command: ["sh", "-c", "echo island > " + Quickshell.shellDir + "/state/barstyle"]
+        running: false
+    }
+
+    styleReader: Process {
+        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/barstyle"]
+        running: true
+
+        stdout: StdioCollector {
+            onStreamFinished: {
+                if (this.text === "notch") {
+                    root.fullBar = false;
+                    root.islandBar = false;
+                    root.notchBar = true;
+                } else if (this.text === "island") {
+                    root.fullBar = true;
+                    root.islandBar = true;
+                    root.notchBar = false;
+                } else if (this.text === "full") {
+                    root.fullBar = true;
+                    root.islandBar = false;
+                    root.notchBar = false;
+                }
+            }
+        }
+
+    }
+
+    //end of bar style 
+
+
+    //frame settings 
 
 }

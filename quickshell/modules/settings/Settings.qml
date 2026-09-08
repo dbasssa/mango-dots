@@ -3,28 +3,44 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-
+import Quickshell.Wayland
 import qs.modules
 import qs.modules.themeing
 
-FloatingWindow {
+PanelWindow {
     id: root
 
-    minimumSize: Qt.size(800, 510)
-    maximumSize: Qt.size(900, 600)
+    color: "transparent"
     visible: States.settingsOpen
-    onClosed: States.settingsOpen = false
+    exclusionMode: ExclusionMode.Ignore
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+
+    anchors {
+        top: true
+        left: true
+        bottom: true
+        right: true
+    }
 
     IpcHandler {
         function toggle() {
-            States.settingsOpen = true;
+            States.settingsOpen = !States.settingsOpen;
         }
 
         target: "settings-qs"
     }
 
-    Rectangle {
+    MouseArea {
         anchors.fill: parent
+        onClicked: States.settingsOpen = false
+    }
+
+    property int currentPage: 0
+
+    Rectangle {
+        anchors.centerIn: parent
+        implicitHeight: 800
+        implicitWidth: 1200
         color: Theme.bgcolor
         radius: 20
 
@@ -52,698 +68,69 @@ FloatingWindow {
                     color: Theme.bordercolor
                 }
 
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.rightMargin: 12
-                    anchors.leftMargin: 5
+                Text {
+                    id: titleText
 
-                    Rectangle {
-                        Layout.alignment: Qt.AlignHCenter
-                        implicitWidth: titleText.implicitWidth + 10
+                    anchors.centerIn: parent
+                    text: "Settings Customization (Only Bar Style changes.)"
+                    color: Theme.text1
 
-                        Text {
-                            id: titleText
-
-                            anchors.centerIn: parent
-                            text: "Settings Customization (Only Bar Style changes.)"
-                            color: Theme.text1
-
-                            font {
-                                family: Theme.fontfamily
-                                pixelSize: Theme.fontxxl
-                            }
-
-                        }
-
-                    }
-
-                    Item {
-                        Layout.fillWidth: true
-                    }
-
-                    Rectangle {
-                        color: Theme.recthovercolor
-                        implicitHeight: 20
-                        implicitWidth: 20
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: "X"
-                            color: Theme.text1
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: States.settingsOpen = false
-                        }
-
+                    font {
+                        family: Theme.fontfamily
+                        pixelSize: Theme.fontxxl
                     }
 
                 }
 
             }
 
-            Flickable {
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignVCenter
+            RowLayout {
+                spacing: 1
                 Layout.fillHeight: true
-                contentHeight: column.implicitHeight
-                clip: true
-                boundsBehavior: Flickable.stopAtBounds
 
-                ColumnLayout {
-                    id: column
+                Rectangle {
+                    Layout.fillHeight: true
+                    implicitWidth: 70
 
-                    anchors.fill: parent
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 12
-                    spacing: 2
+                    color: Theme.rectcolor
+                    radius: 12
 
-                    Rectangle {
-                        implicitHeight: 250
-                        Layout.fillWidth: true
-                        anchors.topMargin: 5
-                        anchors.leftMargin: 5
-                        Layout.alignment: Qt.AlignVCenter
-                        color: Theme.rectcolor
-                        radius: 12
-
-                        border {
-                            width: 2
-                            color: Theme.bordercolor
-                        }
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.bottomMargin: 10
-                            anchors.topMargin: 5
-                            spacing: 2
-
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Bar Style"
-                                color: Theme.text1
-
-                                font {
-                                    family: Theme.fontfamily
-                                    pixelSize: Theme.fontxl
-                                    underline: true
-                                }
-
-                            }
-
-                            RowLayout {
-                                spacing: 10
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                Rectangle {
-                                    implicitHeight: 160
-                                    implicitWidth: 150
-                                    radius: 10
-                                    color: Theme.rectcolor
-
-                                    border {
-                                        width: 3
-                                        color: Theme.bordercolor
-                                    }
-
-                                    Text {
-                                        text: "Full Bar"
-                                        anchors.centerIn: parent
-                                        color: Theme.text1
-
-                                        font {
-                                            family: Theme.fontfamily
-                                            pixelSize: Theme.fontxxl
-                                        }
-
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            States.fullBar = true;
-                                            States.islandBar = false;
-                                            States.notchBar = false;
-                                        }
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                Rectangle {
-                                    implicitHeight: 160
-                                    implicitWidth: 150
-                                    radius: 10
-                                    color: Theme.rectcolor
-
-                                    border {
-                                        width: 3
-                                        color: Theme.bordercolor
-                                    }
-
-                                    Text {
-                                        text: "Notch"
-                                        anchors.centerIn: parent
-                                        color: Theme.text1
-
-                                        font {
-                                            family: Theme.fontfamily
-                                            pixelSize: Theme.fontxxl
-                                        }
-
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            States.fullBar = false;
-                                            States.islandBar = false;
-                                            States.notchBar = true;
-                                        }
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                Rectangle {
-                                    implicitHeight: 160
-                                    implicitWidth: 150
-                                    radius: 10
-                                    color: Theme.rectcolor
-
-                                    border {
-                                        width: 3
-                                        color: Theme.bordercolor
-                                    }
-
-                                    Text {
-                                        text: "Island"
-                                        anchors.centerIn: parent
-                                        color: Theme.text1
-
-                                        font {
-                                            family: Theme.fontfamily
-                                            pixelSize: Theme.fontxxl
-                                        }
-
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            States.islandBar = true;
-                                            States.fullBar = true;
-                                            States.notchBar = false;
-                                        }
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                            }
-
-                        }
-
+                    border {
+                        width: 1
+                        color: Theme.bordercolor
                     }
 
-                    Rectangle {
-                        implicitHeight: 200
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignVCenter
-                        color: Theme.rectcolor
-                        radius: 12
+                    ColumnLayout {
+                        anchors.margins: 5
+                        anchors.fill:parent
+                        spacing: 5
 
-                        border {
-                            width: 2
-                            color: Theme.bordercolor
+                        Repeater {
+                            model: ["Bar","Frame","Misc."]
+
+                            delegate: Rectangle {
+                                implicitHeight: 60
+                                implicitWidth: 60
+
+                                color: root.currentPage === model.index ? Theme.occupiedcolor : Theme.rectcolor
+                                radius: 12
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: modelData
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: root.currentPage = model.index
+                                }
+                            }
                         }
 
-                        ColumnLayout {
-                            spacing: 2
-                            anchors.fill: parent
-                            anchors.topMargin: 5
-                            anchors.bottomMargin: 12
-
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Frame Settings (Recommended only with Full Bar. Others will not look coherent)"
-                                color: Theme.text1
-
-                                font {
-                                    family: Theme.fontfamily
-                                    pixelSize: Theme.fontxl
-                                    underline: true
-                                }
-
-                            }
-
-                            Item {
-                                Layout.fillHeight: true
-                            }
-
-                            RowLayout {
-                                Layout.fillWidth: true
-                                spacing: 20
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                Rectangle {
-                                    implicitHeight: 150
-                                    implicitWidth: 150
-                                    color: Theme.occupiedcolor
-                                    radius: 20
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: States.frameVis ? "On" : "Off"
-                                        color: Theme.text1
-
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: States.frameVis = !States.frameVis
-                                    }
-
-                                }
-
-                                ColumnLayout {
-                                    spacing: 7
-
-                                    Text {
-                                        text: "Frame Thickness"
-                                        color: Theme.text1
-
-                                        font {
-                                            family: Theme.fontfamily
-                                            pixelSize: Theme.fontxl
-                                        }
-
-                                    }
-
-                                    Rectangle {
-                                        implicitWidth: 150
-                                        implicitHeight: 50
-                                        color: "transparent"
-
-                                        TextField {
-                                            anchors.fill: parent
-                                            placeholderText: States.frameThickness + "..."
-                                            placeholderTextColor: Theme.activecolor
-                                            text: States.frameThickness.toString()
-                                            color: Theme.text1
-                                            onAccepted: {
-                                                var val = parseInt(text);
-                                                if (!isNaN(val) && val >= 0)
-                                                    States.frameThickness = val;
-
-                                            }
-
-                                            background: Rectangle {
-                                                anchors.fill: parent
-                                                color: Theme.occupiedcolor
-                                                radius: 12
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-
-                                ColumnLayout {
-                                    spacing: 7
-
-                                    Text {
-                                        text: "Frame Rounding"
-                                        color: Theme.text1
-
-                                        font {
-                                            family: Theme.fontfamily
-                                            pixelSize: Theme.fontxl
-                                        }
-
-                                    }
-
-                                    Rectangle {
-                                        implicitWidth: 150
-                                        implicitHeight: 50
-                                        color: "transparent"
-
-                                        TextField {
-                                            anchors.fill: parent
-                                            placeholderText: States.frameRounding + "..."
-                                            placeholderTextColor: Theme.activecolor
-                                            leftPadding: 10
-                                            rightPadding: 10
-                                            text: States.frameRounding.toString()
-                                            color: Theme.text1
-                                            onAccepted: {
-                                                var val = parseInt(text);
-                                                if (!isNaN(val) && val >= 0)
-                                                    States.frameRounding = val;
-
-                                            }
-
-                                            background: Rectangle {
-                                                anchors.fill: parent
-                                                color: Theme.occupiedcolor
-                                                radius: 12
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                            }
-
-                            Item {
-                                Layout.fillWidth: true
-                            }
-
-                        }
-
+                        Item{Layout.fillHeight: true}
                     }
-
-                    Rectangle {
-                        implicitHeight: 200
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignVCenter
-                        color: Theme.rectcolor
-                        radius: 12
-
-                        border {
-                            width: 2
-                            color: Theme.bordercolor
-                        }
-
-                        ColumnLayout {
-                            anchors.fill: parent
-                            anchors.topMargin: 5
-                            anchors.bottomMargin: 10
-                            anchors.rightMargin: 10
-                            anchors.leftMargin: 10
-
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "General Bar Customization"
-                                color: Theme.text1
-
-                                font {
-                                    family: Theme.fontfamily
-                                    pixelSize: Theme.fontxl
-                                    underline: true
-                                }
-
-                            }
-
-                            RowLayout {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-
-                                Item {
-                                    Layout.fillWidth: true
-                                }
-
-                                Item {
-                                    id: notchChanges
-
-                                    Layout.fillHeight: true
-                                    implicitWidth: notchRow.implicitWidth
-
-                                    RowLayout {
-                                        id: notchRow
-
-                                        ColumnLayout {
-                                            Text {
-                                                text: "Bar Height(All)"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            TextField {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                placeholderText: States.barHeight + "..."
-                                                placeholderTextColor: Theme.activecolor
-                                                leftPadding: 10
-                                                rightPadding: 10
-                                                color: Theme.text1
-                                                text: States.barHeight.toString()
-                                                onAccepted: {
-                                                    var val = parseInt(text);
-                                                    if (!isNaN(val) && val >= 0)
-                                                        States.barHeight = val;
-                                                        States.heightSaver.running = true
-                                                }
-
-                                                background: Rectangle {
-                                                    anchors.fill: parent
-                                                    color: Theme.occupiedcolor
-                                                    radius: 12
-                                                }
-
-                                            }
-
-                                            Text {
-                                                text: "Notch Width"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            TextField {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                placeholderText: States.barWidth + "..."
-                                                placeholderTextColor: Theme.activecolor
-                                                leftPadding: 10
-                                                rightPadding: 10
-                                                color: Theme.text1
-                                                text: States.barWidth.toString()
-                                                onAccepted: {
-                                                    var val = parseInt(text);
-                                                    if (!isNaN(val) && val >= 0)
-                                                        States.barWidth = val;
-
-                                                }
-
-                                                background: Rectangle {
-                                                    anchors.fill: parent
-                                                    color: Theme.occupiedcolor
-                                                    radius: 12
-                                                }
-
-                                            }
-
-                                        }
-
-                                        ColumnLayout {
-                                            Text {
-                                                text: "Notch Gap (+/-)"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            TextField {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                placeholderText: States.notchMargin + "..."
-                                                placeholderTextColor: Theme.activecolor
-                                                leftPadding: 10
-                                                rightPadding: 10
-                                                color: Theme.text1
-                                                text: States.notchMargin.toString()
-                                                onAccepted: {
-                                                    var val = parseInt(text);
-                                                    if (!isNaN(val))
-                                                        States.notchMargin = val;
-
-                                                }
-
-                                                background: Rectangle {
-                                                    anchors.fill: parent
-                                                    color: Theme.occupiedcolor
-                                                    radius: 12
-                                                }
-
-                                            }
-
-                                            Text {
-                                                text: "Notch Rounding"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            TextField {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                placeholderText: States.barRounding + "..."
-                                                placeholderTextColor: Theme.activecolor
-                                                leftPadding: 10
-                                                rightPadding: 10
-                                                color: Theme.text1
-                                                text: States.barRounding.toString()
-                                                onAccepted: {
-                                                    var val = parseInt(text);
-                                                    if (!isNaN(val) && val >= 0)
-                                                        States.barRounding = val;
-
-                                                }
-
-                                                background: Rectangle {
-                                                    anchors.fill: parent
-                                                    color: Theme.occupiedcolor
-                                                    radius: 12
-                                                }
-
-                                            }
-
-                                        }
-
-                                        ColumnLayout {
-                                            Text {
-                                                text: "Bar Inner Gap"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            TextField {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                placeholderText: States.barMargin + "..."
-                                                placeholderTextColor: Theme.activecolor
-                                                leftPadding: 10
-                                                rightPadding: 10
-                                                color: Theme.text1
-                                                text: States.barMargin.toString()
-                                                onAccepted: {
-                                                    var val = parseInt(text);
-                                                    if (!isNaN(val) && val >= 0)
-                                                        States.barMargin = val;
-
-                                                }
-
-                                                background: Rectangle {
-                                                    anchors.fill: parent
-                                                    color: Theme.occupiedcolor
-                                                    radius: 12
-                                                }
-
-                                            }
-
-                                            Text {
-                                                text: "Fun Time"
-                                                color: Theme.text1
-
-                                                font {
-                                                    family: Theme.fontfamily
-                                                    pixelSize: Theme.fontxl
-                                                }
-
-                                            }
-
-                                            Rectangle {
-                                                implicitHeight: 50
-                                                implicitWidth: 150
-                                                radius: 12
-                                                color: Theme.occupiedcolor
-
-                                                Text {
-                                                    anchors.centerIn: parent
-                                                    text: "Fun Time"
-                                                    color: Theme.text1
-
-                                                    font {
-                                                        family: Theme.fontfamily
-                                                        pixelSize: Theme.fontxl
-                                                    }
-
-                                                }
-                                                MouseArea {
-                                                    anchors.fill: parent
-                                                    onClicked: States.funTime = !States.funTime
-                                                }
-
-                                            }
-                                        }
-
-                                    }
-
-                                }
-                                Item {Layout.fillWidth:true}
-
-                            }
-
-                        }
-
-                    }
-
-                    ScrollBar.vertical: ScrollBar {
-                        policy: ScrollBar.AlwaysOn
-
-                        contentItem: Rectangle {
-                            implicitWidth: 4
-                            radius: 2
-                            color: parent.pressed ? Theme.textactive : Theme.textmuted
-                        }
-
-                    }
-
                 }
-
             }
-
         }
 
     }
