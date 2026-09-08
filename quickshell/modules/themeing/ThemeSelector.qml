@@ -7,7 +7,7 @@ import qs.modules
 
 PanelWindow {
     visible: States.themeOpen
-    color: "transparent"
+    color: "#99000000"
     exclusionMode: ExclusionMode.Ignore
 
     anchors {
@@ -15,10 +15,6 @@ PanelWindow {
         right: true
         bottom: true
         left: true
-    }
-
-    margins {
-        top: States.barHeight + States.frameThickness + 5
     }
 
     IpcHandler {
@@ -37,7 +33,7 @@ PanelWindow {
     Rectangle {
         implicitHeight: 170
         implicitWidth: themeRow.implicitWidth + 120
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         color: Theme.bgcolor
         radius: 20
 

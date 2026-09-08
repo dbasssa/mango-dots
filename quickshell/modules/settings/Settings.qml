@@ -525,7 +525,7 @@ FloatingWindow {
                                                     var val = parseInt(text);
                                                     if (!isNaN(val) && val >= 0)
                                                         States.barHeight = val;
-
+                                                        States.heightSaver.running = true
                                                 }
 
                                                 background: Rectangle {
@@ -709,6 +709,10 @@ FloatingWindow {
                                                         pixelSize: Theme.fontxl
                                                     }
 
+                                                }
+                                                MouseArea {
+                                                    anchors.fill: parent
+                                                    onClicked: States.funTime = !States.funTime
                                                 }
 
                                             }

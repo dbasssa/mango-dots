@@ -42,5 +42,6 @@ ShellRoot {
     CtrlCenter{}
     SysMon {}
     ThemeSelector {}
+    WallSelector {}
 
 }

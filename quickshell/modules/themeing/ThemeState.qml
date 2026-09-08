@@ -34,7 +34,8 @@ Singleton {
         textmuted: "#8a8a94",
         textactive: "#7aa2f7",
         alertcolor: "#f7768e",
-        miconcolor: "#9ece6a"
+        miconcolor: "#9ece6a",
+        folder: "/dark"
     },
     {
         name: "Light",
@@ -47,7 +48,8 @@ Singleton {
         textmuted: "#6a6a78", 
         textactive: "#4a6ee0",
         alertcolor: "#d64550", 
-        miconcolor: "#2a9040"
+        miconcolor: "#2a9040",
+        folder: "/light"
         
     },
     {
@@ -61,7 +63,8 @@ Singleton {
         textmuted: "#565f89", 
         textactive: "#7aa2f7",
         alertcolor: "#f7768e", 
-        miconcolor: "#9ece6a"
+        miconcolor: "#9ece6a",
+        folder: "/tokyo-night"
     },
     {
         name: "Catppuccin Mocha",
@@ -74,7 +77,8 @@ Singleton {
         textmuted: "#6c7086", 
         textactive: "#89b4fa",
         alertcolor: "#f38ba8", 
-        miconcolor: "#a6e3a1"
+        miconcolor: "#a6e3a1",
+        folder: "/catppuccin-mocha"
     },
     {
         name: "Nord",
@@ -87,7 +91,8 @@ Singleton {
         textmuted: "#7b88a1", 
         textactive: "#88c0d0",
         alertcolor: "#bf616a", 
-        miconcolor: "#a3be8c"
+        miconcolor: "#a3be8c",
+        folder: "/nord"
     },
     {
         name: "Gruv Dark",
@@ -100,7 +105,8 @@ Singleton {
         textmuted: "#928374", 
         textactive: "#83a598",
         alertcolor: "#fb4934", 
-        miconcolor: "#b8bb26"
+        miconcolor: "#b8bb26",
+        folder: "/gruvbox-dark"
     },
     {
         name: "Pink",
@@ -113,6 +119,7 @@ Singleton {
         textmuted: "#8a6a7a", 
         textactive: "#c04070",
         alertcolor: "#d02050", 
-        miconcolor: "#408040"
+        miconcolor: "#408040",
+        folder: "/pink"
     }]
 }

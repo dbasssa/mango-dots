@@ -67,7 +67,16 @@ PanelWindow {
 
             VolumeCtrl {
             }
-            ThemeBtn{}
+
+            Item {
+                Layout.fillHeight: true
+            }
+
+            ThemeBtn {
+            }
+
+            WallBtn {
+            }
 
             Item {
                 Layout.fillHeight: true
