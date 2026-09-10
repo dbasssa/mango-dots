@@ -3,14 +3,10 @@ import Quickshell
 import Quickshell.Io
 pragma Singleton
 
+import qs.modules.themeing
+
 QtObject {
-    // Theme picker overlay open/closed
-    // Wallpaper picker overlay open/closed
-    //Appearance Settings (changeable in Settings app)
-    //save everything and make it happen again (i forgot the fuckin word)
-    //rounding asaver
-    //Bar style saver
-    //bar style saver
+
 
     id: root
 
@@ -49,6 +45,17 @@ QtObject {
     //notification Card timer & Margin
     property int notifCardSideMargin: 10
     property int notifTimeout: 5000
+
+    property bool wsVisible: true
+    property bool appsVisible: true
+    property bool clockVisible: true
+    property bool buttonsVisible: true
+
+
+
+
+
+
     //bar height saver
     property Process heightSaver
     property Process heightReader
@@ -64,6 +71,33 @@ QtObject {
     property Process fullBarStyle
     property Process islandStyle
     property Process styleReader
+        property Process readWal
+
+    readWal: Process {
+        command: ["sh","-c","cat " + Quickshell.shellDir + "/state/wallpaper"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: WallpaperState.currentWallpaper = this.text.trim()
+
+        }
+
+    }
+
+    function fullBarSelect() {
+        root.fullBar = true
+        root.islandBar = false
+        root.notchBar = false
+    }
+    function islandBarSelect() {
+        root.fullBar = true
+        root.islandBar = true
+        root.notchBar = false
+    }
+        function notchSelect() {
+        root.fullBar = false
+        root.islandBar = false
+        root.notchBar = true
+    }
 
     heightSaver: Process {
         command: ["sh", "-c", "echo " + root.barHeight + " > " + Quickshell.shellDir + "/state/height"]

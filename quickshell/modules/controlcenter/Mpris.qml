@@ -70,27 +70,6 @@ Item {
                         border.width: 2
                         opacity: index === root.playerIndex ? 1 : 0.6
 
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                            }
-
-                        }
-
-                        Behavior on border.color {
-                            ColorAnimation {
-                                duration: 150
-                            }
-
-                        }
-
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: 150
-                            }
-
-                        }
-
                         MouseArea {
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
@@ -125,14 +104,6 @@ Item {
                     root.artFailed = true;
             }
 
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 350
-                    easing.type: Easing.OutCubic
-                }
-
-            }
-
         }
 
         Rectangle {
@@ -159,7 +130,7 @@ Item {
                 font.pixelSize: Theme.fontxl
                 font.bold: true
                 elide: Text.ElideRight
-                onTextChanged: titleFade.restart()
+                
 
                 transform: Translate {
                     id: titleT
@@ -181,35 +152,12 @@ Item {
                 font.pixelSize: Theme.fontmd
                 font.bold: true
                 elide: Text.ElideRight
-                onTextChanged: titleFade.restart()
+                
 
                 transform: Translate {
                     id: artistT
 
                     y: 0
-                }
-
-            }
-
-            ParallelAnimation {
-                id: titleFade
-
-                NumberAnimation {
-                    target: title
-                    property: "opacity"
-                    from: 0
-                    to: 1
-                    duration: 280
-                    easing.type: Easing.OutCubic
-                }
-
-                NumberAnimation {
-                    target: titleT
-                    property: "y"
-                    from: 6
-                    to: 0
-                    duration: 320
-                    easing.type: Easing.OutCubic
                 }
 
             }
@@ -237,20 +185,9 @@ Item {
                         font.pixelSize: Theme.fontxxl
                         scale: prevMouse.pressed ? 0.8 : (prevMouse.containsMouse ? 1.25 : 1)
 
-                        Behavior on scale {
-                            NumberAnimation {
-                                duration: 150
-                                easing.type: Easing.OutBack
-                            }
+                        
 
-                        }
-
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                            }
-
-                        }
+                        
 
                     }
 
@@ -285,20 +222,9 @@ Item {
                         font.pixelSize: root.player && root.player.isPlaying ? Theme.fontxl : Theme.fontlg
                         scale: playMouse.pressed ? 0.8 : (playMouse.containsMouse ? 1.25 : 1)
 
-                        Behavior on scale {
-                            NumberAnimation {
-                                duration: 150
-                                easing.type: Easing.OutBack
-                            }
+                        
 
-                        }
-
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                            }
-
-                        }
+                        
 
                     }
 
@@ -333,20 +259,9 @@ Item {
                         font.pixelSize: Theme.fontxxl
                         scale: nextMouse.pressed ? 0.8 : (nextMouse.containsMouse ? 1.25 : 1)
 
-                        Behavior on scale {
-                            NumberAnimation {
-                                duration: 150
-                                easing.type: Easing.OutBack
-                            }
+                        
 
-                        }
-
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                            }
-
-                        }
+                        
 
                     }
 

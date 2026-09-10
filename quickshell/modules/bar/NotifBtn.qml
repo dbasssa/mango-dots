@@ -5,11 +5,12 @@ import qs.modules
 import qs.modules.themeing
 
 Rectangle {
-    visible: States.notchBar ? false : true
+    visible: States.notchBar ? false : (States.buttonsVisible)
     implicitHeight: 27
     implicitWidth: 30
     radius: 12
     color: Theme.rectcolor
+
 
     Text {
         anchors.centerIn: parent

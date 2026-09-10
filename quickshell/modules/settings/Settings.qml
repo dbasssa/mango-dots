@@ -14,6 +14,7 @@ PanelWindow {
     visible: States.settingsOpen
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    focusable: true
 
     anchors {
         top: true
@@ -85,7 +86,7 @@ PanelWindow {
             }
 
             RowLayout {
-                spacing: 1
+                spacing: 5
                 Layout.fillHeight: true
 
                 Rectangle {
@@ -129,6 +130,9 @@ PanelWindow {
 
                         Item{Layout.fillHeight: true}
                     }
+                }
+                BarPage {
+                    visible: root.currentPage ===0
                 }
             }
         }

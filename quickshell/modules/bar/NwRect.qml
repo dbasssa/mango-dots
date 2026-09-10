@@ -20,17 +20,17 @@ Item {
     function wifiConnection() {
         if (wifiDev != null) {
             if (wifiDev.state === ConnectionState.Connected) {
-                return "󰖩" 
+                return " 󰖩" 
             }
             if (wifiDev.state === ConnectionState.Connecting) {
-                return "󱛆"
+                return " 󱛆"
 
             }
             if (wifiDev.state === ConnectionState.Disconnected) {
-                return "󱛅"
+                return " 󱛅"
             }
             if (wifiDev.state === ConnectionState.Disconnecting) {
-                return "󱛆"
+                return " 󱛆"
             }
         } else {
             return;
@@ -67,7 +67,7 @@ Item {
             id:wifiTxt
             visible: wifiDev != null
             anchors.centerIn: parent
-            text: root.wifiConnection()
+            text: root.activeNetName + root.wifiConnection()
             color: Theme.text1
         }
         //wired network shitu

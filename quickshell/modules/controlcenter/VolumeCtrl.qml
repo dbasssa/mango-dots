@@ -63,7 +63,7 @@ Item {
             Layout.fillWidth: true
             radius: 5
             color: volMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
-            Behavior on color { ColorAnimation { duration: 150 } }
+            
 
             border {
                 width: 2
@@ -81,8 +81,6 @@ Item {
                 width: (parent.width - 4) * root.vol / 100
                 radius: 3
                 color: root.muted ? Theme.occupiedcolor : Theme.textactive
-                Behavior on width { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
-                Behavior on color { ColorAnimation { duration: 200 } }
             }
 
             Text {
@@ -97,18 +95,10 @@ Item {
 
                     return root.vol + "%";
                 }
-                color: root.muted ? Theme.textmuted : Theme.text1
+color: root.muted ? Theme.textmuted : Theme.text1
                 font.family: Theme.fontfamily
                 font.pixelSize: Theme.fontlg
                 font.bold: true
-                Behavior on color { ColorAnimation { duration: 150 } }
-                onTextChanged: voltxtPop.restart()
-            }
-
-            SequentialAnimation {
-                id: voltxtPop
-                NumberAnimation { target: voltxt; property: "scale"; from: 0.94; to: 1.04; duration: 110; easing.type: Easing.OutCubic }
-                NumberAnimation { target: voltxt; property: "scale"; to: 1.0; duration: 200; easing.type: Easing.OutCubic }
             }
 
             MouseArea {
@@ -130,7 +120,7 @@ Item {
                 Layout.preferredWidth: 52
                 radius: 5
                 color: micMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
-                Behavior on color { ColorAnimation { duration: 150 } }
+                
                 border.width: 1
                 border.color: Theme.bordercolor
 
@@ -140,10 +130,8 @@ Item {
                     font.family: Theme.fontfamily
                     font.pixelSize: Theme.fontlg
                     font.bold: true
-                    color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
-                    Behavior on color { ColorAnimation { duration: 150 } }
+color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
                     scale: micMouse.containsMouse ? 1.15 : 1.0
-                    Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
                 }
 
                 MouseArea {
@@ -165,7 +153,7 @@ Item {
                 Layout.preferredHeight: 28
                 radius: 5
                 color: outMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
-                Behavior on color { ColorAnimation { duration: 150 } }
+                
                 border.width: 1
                 border.color: Theme.bordercolor
 
@@ -190,12 +178,10 @@ Item {
 
                     Text {
                         text: ""
-                        color: root.outOpen ? Theme.textactive : Theme.textmuted
+color: root.outOpen ? Theme.textactive : Theme.textmuted
                         font.family: Theme.fontfamily
                         font.pixelSize: Theme.fontxs
                         rotation: root.outOpen ? 180 : 0
-                        Behavior on rotation { NumberAnimation { duration: 220; easing.type: Easing.InOutCubic } }
-                        Behavior on color { ColorAnimation { duration: 150 } }
                     }
                 }
 
@@ -236,29 +222,20 @@ Item {
                 visible: root.outOpen
                 radius: 4
                 color: sinkMouse.containsMouse ? Theme.bordercolor : (modelData === root.sink ? Theme.bordercolor : "transparent")
-                Behavior on color { ColorAnimation { duration: 150 } }
+                
                 opacity: 0
                 transform: Translate { id: sinkRowT; y: -10 }
 
                 Component.onCompleted: root.outOpen && sinkrow.show()
 
                 function show() {
-                    sinkRowAnim.restart();
+                    sinkrow.opacity = 1;
+                    sinkRowT.y = 0;
                 }
 
                 function hide() {
-                    sinkRowAnim.stop();
                     sinkrow.opacity = 0;
                     sinkRowT.y = -10;
-                }
-
-                SequentialAnimation {
-                    id: sinkRowAnim
-                    PauseAnimation { duration: sinkrow.index * 45 }
-                    ParallelAnimation {
-                        NumberAnimation { target: sinkrow; property: "opacity"; to: 1; duration: 180; easing.type: Easing.OutCubic }
-                        NumberAnimation { target: sinkRowT; property: "y"; to: 0; duration: 220; easing.type: Easing.OutCubic }
-                    }
                 }
 
                 Text {
@@ -272,7 +249,7 @@ Item {
                     color: modelData === root.sink ? Theme.textactive : Theme.text1
                     font.family: Theme.fontfamily
                     font.pixelSize: Theme.fontmd
-                    Behavior on color { ColorAnimation { duration: 150 } }
+                    
                 }
 
                 MouseArea {

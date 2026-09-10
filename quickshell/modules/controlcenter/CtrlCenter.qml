@@ -20,8 +20,8 @@ PanelWindow {
     }
 
     margins {
-        top: States.barHeight + States.frameThickness
-        right: States.frameThickness + 2
+        top: States.barHeight + States.frameThickness + 5
+        right: States.frameThickness + 5
     }
 
     MouseArea {

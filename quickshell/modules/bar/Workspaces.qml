@@ -7,7 +7,8 @@ import qs.modules.themeing
 
 Rectangle {
     id: root
-    visible: States.notchBar ? false : true
+    visible: States.notchBar ? false : (States.wsVisible ? true : false)
+    
 
     property string monitor: ""
 
@@ -17,6 +18,24 @@ Rectangle {
     radius: 20
 
     property var tagModel: []
+
+    function tagWidth(i) {
+        return root.tagModel[i] && root.tagModel[i].is_active ? 30 : 25
+    }
+    function activeIndex() {
+        for (let i = 0; i < root.tagModel.length; i++)
+            if (root.tagModel[i].is_active) return i;
+        return -1;
+    }
+
+    function accentX() {
+        const idx = root.activeIndex();
+        if (idx < 0) return 0;
+        let x = 0; 
+        for (let i = 0 ; i < idx; i++) 
+            x += root.tagWidth(i) + row.spacing;
+        return x;
+    }
 
     Process {
         id: getWorkspaceInfo
@@ -56,11 +75,11 @@ Rectangle {
                 implicitWidth: modelData.is_active ? 30 : 25
                 radius: 10
 
-                color: modelData.is_active ? Theme.textactive : (modelData.client_count > 0 ? Theme.textmuted : Theme.recthovercolor)
+                color: modelData.client_count > 0 ? Theme.textmuted : Theme.recthovercolor
 
                 Text {
                     anchors.centerIn: parent
-                    color: modelData.is_active ? Theme.bgcolor : Theme.text1
+                    color: Theme.text1
 
                     font {
                         pixelSize: Theme.fontmd
@@ -79,6 +98,19 @@ Rectangle {
                 }
             }
         }
+    }
+    Rectangle {
+        id: accent
+        visible: root.activeIndex() >= 0
+        color: Theme.textactive
+        height: 3
+        radius: 1.5
+        width: 20
+        anchors.bottom: row.bottom
+        anchors.bottomMargin: 4
+        x: 12 + root.accentX()
+        Behavior on x { NumberAnimation { duration: 260; easing.type: Easing.InOutCubic } }
+        Behavior on width { NumberAnimation { duration: 260; easing.type: Easing.InOutCubic } }
     }
 
 }

@@ -8,8 +8,8 @@ import qs.modules.themeing
 Rectangle {
     id: root
     clip: true
-
-    visible: States.notchBar ? false : true
+    
+    visible: States.notchBar ? false : (States.appsVisible ? true: false)
     property string focusedApp: ""
     property string focusedTitle: ""
     implicitHeight: 25

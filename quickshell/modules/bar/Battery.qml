@@ -10,6 +10,7 @@ Item {
     implicitWidth: batRect.implicitWidth
     id: root
     visible: root.exists
+    property int chargeNotif: 0
 
     property bool exists: UPower.displayDevice.isLaptopBattery
 
@@ -24,7 +25,7 @@ Item {
     }
     Process {
         id: chargingBat
-        running: root.exists ? (root.isCharging ? true: false) : false
+        running: root.exists ? (root.isCharging && root.chargeNotif <= 1? true: false) : false
         command: ["sh","-c","notify-send 'Battery is charging' 'Thank you for not killing me'"]
     }
 

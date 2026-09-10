@@ -18,7 +18,7 @@ Item {
     readonly property bool micMuted: micReady && mic.audio.muted
 
     implicitHeight: 25
-    implicitWidth: 45
+    implicitWidth: rwolyt.implicitWidth + 5
     anchors.verticalCenter: parent.verticalCenter
 
     RowLayout {
@@ -43,37 +43,6 @@ Item {
             color: root.muted ? Theme.textmuted : Theme.text1
             font.family: Theme.fontfamily
             font.pixelSize: Theme.fontlg
-            onTextChanged: volPop.restart()
-
-            Behavior on color {
-                ColorAnimation {
-                    duration: 150
-                }
-
-            }
-
-        }
-
-        SequentialAnimation {
-            id: volPop
-
-            NumberAnimation {
-                target: voltxt
-                property: "scale"
-                from: 0.9
-                to: 1.04
-                duration: 110
-                easing.type: Easing.OutCubic
-            }
-
-            NumberAnimation {
-                target: voltxt
-                property: "scale"
-                to: 1
-                duration: 180
-                easing.type: Easing.OutCubic
-            }
-
         }
 
         MouseArea {

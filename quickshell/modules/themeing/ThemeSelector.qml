@@ -107,9 +107,12 @@ PanelWindow {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {ThemeState.themeIndex = model.index; 
-                        States.themeOpen = false; 
-                        ThemeState.saveTheme()}
+                        onClicked: {
+                            ThemeState.themeIndex = model.index; 
+                            States.themeOpen = false; 
+                            ThemeState.saveTheme();
+                            WallpaperState.randomWal();
+                        }
                     }
 
                 }
