@@ -25,7 +25,7 @@ Rectangle {
     anchors.centerIn: parent
 
     color: rectColor
-    implicitHeight: States.lockScreen ? root.cellH : 25
+    implicitHeight: States.lockScreen ? root.cellH : Math.round(States.barHeight* 0.75)
     implicitWidth: txtRow.implicitWidth + 20
     radius: 20
 

@@ -6,7 +6,7 @@ import qs.modules
 import qs.modules.themeing
 
 Item {
-    implicitHeight: 20
+    implicitHeight: parent.implicitHeight - 5
     implicitWidth: batRect.implicitWidth
     id: root
     visible: root.exists

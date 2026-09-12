@@ -15,7 +15,7 @@ QtObject {
     // Control center open/closed
     property bool ctrlOpen: false
     //Settings App opener
-    property bool settingsOpen: true
+    property bool settingsOpen: false
     //Notification center opener
     property bool notifOpen: false
     //lock screen toggle
@@ -26,14 +26,14 @@ QtObject {
     property bool funTime: false
     property bool wallOpen: false
     //Bar dimensions when in pill/island mode (bound)
-    property int barHeight: 40
+    property int barHeight: 10
     property int barWidth: 200
     //Bars Available Types (Bound)
     property bool fullBar: true
     property bool islandBar: false
     property bool notchBar: false
     //toggles the screen frame along the edges of the monitor (Bound)
-    property bool frameVis: true
+    property bool frameVis: false
     property int frameThickness: 5
     property int frameRounding: 5
     //outer gap inside bar (Bound)

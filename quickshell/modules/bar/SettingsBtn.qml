@@ -6,7 +6,7 @@ import qs.modules.themeing
 
 Rectangle {
     visible: States.notchBar ? false : States.buttonsVisible
-    implicitHeight: 27
+    implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: 30
     radius: 12
     color: Theme.rectcolor

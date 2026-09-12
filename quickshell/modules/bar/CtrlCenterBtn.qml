@@ -7,7 +7,7 @@ import qs.modules.themeing
 Rectangle {
     visible: States.notchBar ? false : true
     Layout.alignment: Qt.AlignHCenter
-    implicitHeight: 25
+    implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: btnRow.implicitWidth + 10
     color: Theme.rectcolor
     radius: 12

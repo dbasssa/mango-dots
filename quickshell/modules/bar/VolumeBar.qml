@@ -17,15 +17,9 @@ Item {
     readonly property bool micReady: mic && mic.ready
     readonly property bool micMuted: micReady && mic.audio.muted
 
-    implicitHeight: 25
-    implicitWidth: rwolyt.implicitWidth + 5
+    implicitHeight: parent.implicitHeight - 5
+    implicitWidth: voltxt.implicitWidth + 10
     anchors.verticalCenter: parent.verticalCenter
-
-    RowLayout {
-        id: rwolyt
-
-        anchors.fill: parent
-        spacing: 2
 
         Text {
             id: voltxt
@@ -52,7 +46,6 @@ Item {
             hoverEnabled: true
         }
 
-    }
 
     PwObjectTracker {
         objects: [root.sink]

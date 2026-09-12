@@ -12,7 +12,7 @@ Rectangle {
 
     property string monitor: ""
 
-    implicitHeight: 25
+    implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: row.implicitWidth +20
     color: Theme.rectcolor
     radius: 20

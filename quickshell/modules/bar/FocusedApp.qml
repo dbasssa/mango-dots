@@ -12,7 +12,7 @@ Rectangle {
     visible: States.notchBar ? false : (States.appsVisible ? true: false)
     property string focusedApp: ""
     property string focusedTitle: ""
-    implicitHeight: 25
+    implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: appTxt.implicitWidth + 20
     Layout.alignment: Qt.AlignVCenter
 

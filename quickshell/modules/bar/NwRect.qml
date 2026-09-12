@@ -1,13 +1,15 @@
 import Quickshell
 import Quickshell.Networking
 import QtQuick
+import QtQuick.Layouts
 import qs.modules
 import qs.modules.themeing
 //fuck this you are taking way too long to work 
 Item {
+    anchors.verticalCenter: parent.verticalCenter
     id: root
-    implicitHeight: netRect.implicitHeight
-    implicitWidth: netRect.implicitWidth + 5
+    implicitHeight: parent.implicitHeight -5
+    implicitWidth: wiredTxt.visible ? wiredTxt.implicitWidth + 10 : wifiTxt.implicitWidth + 10
     property bool wifiEnabled: Networking.wifiEnabled
     readonly property list<NetworkDevice> devices: Networking.devices.values
     property WifiDevice wifiDev: devices.find(dev => dev.type === DeviceType.Wifi) ?? null
@@ -54,14 +56,6 @@ Item {
 
     }
 
-    Rectangle {
-        id: netRect
-        anchors.centerIn: parent
-        implicitHeight: 25
-        implicitWidth: wiredTxt.visible ? wiredTxt.implicitWidth + 5 : wifiTxt.implicitWidth + 5
-        color: "transparent"
-
-
         //wifi network shit
         Text {
             id:wifiTxt
@@ -69,6 +63,11 @@ Item {
             anchors.centerIn: parent
             text: root.activeNetName + root.wifiConnection()
             color: Theme.text1
+
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontlg
+            }
         }
         //wired network shitu
         Text {
@@ -84,4 +83,3 @@ Item {
             }
         }
     }
-}
