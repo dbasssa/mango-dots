@@ -68,7 +68,7 @@ Scope {
     Timer {
         id: wrongPwTimer
 
-        interval: 5000
+        interval: 60000
         running: root.wrongPwCounter === 3
         onRunningChanged: {
             if (running)
@@ -92,7 +92,7 @@ Scope {
                 anchors.fill: parent
                 asynchronous: true
                 fillMode: Image.PreserveAspectCrop
-                source: Quickshell.shellDir + "/walls/gruvbox-dark/door.png"
+                source: WallpaperState.currentWallpaper
             }
 
             MultiEffect {
@@ -108,9 +108,10 @@ Scope {
                 id: loginRect
 
                 anchors.centerIn: parent
-                anchors.margins: 12
+                anchors.leftMargin: 12
+                anchors.rightMargin: 12
 
-                implicitHeight: 120
+                implicitHeight: 150
                 implicitWidth: 300
                 color: Theme.rectcolor
                 radius: 20
@@ -125,21 +126,19 @@ Scope {
                     id: loginCol
 
                     anchors.fill: parent
-                    anchors.margins: 15
-                    spacing: 5
+                    spacing: 30
 
                     Clock {
-                        Layout.alignment: Qt.AlignHCenter
                         fontSize: 48
                         rectColor: Theme.rectcolor
                     }
 
                     RowLayout {
                         spacing: 7
-                        Layout.fillHeight: true
+                        Layout.alignment: Qt.AlignHCenter
+                        anchors.margins:5
 
                         Text {
-                            Layout.alignment: Qt.AlignHCenter
                             text: root.userN
                             color: Theme.text1
 
@@ -152,7 +151,6 @@ Scope {
                         }
 
                         Rectangle {
-                            Layout.alignment: Qt.AlignHCenter
                             implicitHeight: 40
                             implicitWidth: 200
                             color: Theme.recthovercolor
@@ -212,6 +210,7 @@ Scope {
                         }
 
                     }
+                    Item {Layout.fillHeight: true}
 
                 }
 

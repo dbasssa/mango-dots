@@ -75,11 +75,11 @@ Rectangle {
                 implicitWidth: modelData.is_active ? 30 : 25
                 radius: 10
 
-                color: modelData.client_count > 0 ? Theme.textmuted : Theme.recthovercolor
+                color: modelData.client_count > 0 ? Theme.text1 : Theme.recthovercolor
 
                 Text {
                     anchors.centerIn: parent
-                    color: Theme.text1
+                    color: modelData.client_count > 0 ? Theme.bgcolo : Theme.text1
 
                     font {
                         pixelSize: Theme.fontmd

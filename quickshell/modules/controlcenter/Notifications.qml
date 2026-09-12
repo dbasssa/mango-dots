@@ -55,6 +55,7 @@ Scope {
         implicitWidth: 380
         implicitHeight: Math.max(1, column.implicitHeight)
         exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
 
         anchors {
             top: true

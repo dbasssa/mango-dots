@@ -16,12 +16,12 @@ Rectangle {
     property string rectColor: Theme.rectcolor
 
     property bool dateShow: false
-    property real cellH: Math.max(14, root.fontSize * 1.25)
+    property real cellH: Math.max(14, root.fontSize * 1.50)
     property real cellW: root.fontSize * (root.dateShow ? 0.9 : 0.62)
-    property string timeText: root.dateShow
+    property string timeText: {root.dateShow
         ? Qt.formatDateTime(clock.date, "dd MMM yyyy")
         : Qt.formatDateTime(clock.date, "hh:mm")
-
+    }
     anchors.centerIn: parent
 
     color: rectColor
@@ -52,7 +52,7 @@ Row {
 
                 Text {
                     id: cur
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     y: 0
                     text: cell.shown
                     color: Theme.text1
