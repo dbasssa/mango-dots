@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Services.Mpris
 import Quickshell.Widgets
 
+import qs.modules
 import qs.modules.themeing
 
 Item {
@@ -36,11 +37,11 @@ Item {
         id: box
 
         anchors.fill: parent
-        radius: 6
+        radius: States.tagRounding
         color: Theme.rectcolor
 
         border {
-            width: 2
+            width: States.borderOn ? 2:0
             color: Theme.bordercolor
         }
 
@@ -49,7 +50,7 @@ Item {
             anchors.leftMargin: 5
             anchors.verticalCenter: parent.verticalCenter
             width: 6
-            radius: 3
+            radius: States.sliderRounding
             color: "transparent"
             z: 10
 
@@ -64,9 +65,9 @@ Item {
                     Rectangle {
                         width: 6
                         height: 16
-                        radius: 2
-                        color: index === root.playerIndex ? Theme.textactive : "transparent"
-                        border.color: index === root.playerIndex ? Theme.textactive : Theme.textmuted
+                        radius: States.sliderRounding
+                        color: index === root.playerIndex ? Theme.miconcolor : "transparent"
+                        border.color: Theme.bordercolor
                         border.width: 2
                         opacity: index === root.playerIndex ? 1 : 0.6
 
@@ -217,7 +218,7 @@ Item {
 
                         anchors.centerIn: parent
                         text: ""
-                        color: (playMouse.containsMouse || (root.player && root.player.isPlaying)) ? Theme.textactive : Theme.text1
+                        color: (playMouse.containsMouse || (root.player && root.player.isPlaying)) ? Theme.miconcolor : Theme.text1
                         font.family: Theme.fontfamily
                         font.pixelSize: root.player && root.player.isPlaying ? Theme.fontxl : Theme.fontlg
                         scale: playMouse.pressed ? 0.8 : (playMouse.containsMouse ? 1.25 : 1)

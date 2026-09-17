@@ -116,7 +116,7 @@ PanelWindow {
 
                 width: wallList.currentIndex === index ? 516 : 430
                 height: wallList.currentIndex === index ? 288 : 240
-                radius: 10
+                radius: States.tagRounding
                 color: Theme.rectcolor
 
                 border {

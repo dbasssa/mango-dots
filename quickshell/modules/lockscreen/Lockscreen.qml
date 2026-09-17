@@ -114,7 +114,7 @@ Scope {
                 implicitHeight: 150
                 implicitWidth: 300
                 color: Theme.rectcolor
-                radius: 20
+                radius: States.panelRounding
                 clip: true
 
                 border {
@@ -154,7 +154,7 @@ Scope {
                             implicitHeight: 40
                             implicitWidth: 200
                             color: Theme.recthovercolor
-                            radius: 20
+                            radius: States.panelRounding
 
                             border {
                                 width: 2
@@ -189,7 +189,7 @@ Scope {
                                 background: Rectangle {
                                     anchors.fill: parent
                                     color: "transparent"
-                                    radius: 20
+                                    radius: States.panelRounding
                                 }
 
                             }

@@ -8,9 +8,23 @@ import qs.modules
 import qs.modules.themeing
 
 PanelWindow {
+    id: root
     visible: States.ctrlOpen
     exclusionMode: ExclusionMode.Ignore
     color: "transparent"
+
+    NumberAnimation {
+        id: openAnim
+        target: ctrlrect
+        property: "implicitHeight"
+        duration: 400
+        easing.type: Easing.OutCubic
+    }
+    onVisibleChanged: {
+        openAnim.from = 0
+        openAnim.to = ctrlrect.implicitHeight
+        openAnim.restart()
+    }
 
     anchors {
         top: true
@@ -38,16 +52,18 @@ PanelWindow {
     }
 
     Rectangle {
-        implicitHeight: centerCol.implicitHeight + 40
+        id:ctrlrect
+        implicitHeight: 400
         implicitWidth: 400
-        anchors.right: parent.right
+        anchors.right:  parent.right 
         anchors.top: parent.top
         color: Theme.bgcolor
-        radius: 20
+        radius: States.panelRounding
+        clip: true
 
         border {
             color: Theme.bordercolor
-            width: 2
+            width: States.borderOn ? 2 : 0
         }
 
         ColumnLayout {

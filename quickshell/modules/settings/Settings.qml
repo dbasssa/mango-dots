@@ -43,7 +43,12 @@ PanelWindow {
         implicitHeight: 800
         implicitWidth: 1200
         color: Theme.bgcolor
-        radius: 20
+        radius: States.panelRounding
+
+        border {
+            width: States.borderOn ? States.borderThick : 0
+            color: Theme.bordercolor
+        }
 
         ColumnLayout {
             //alignment code
@@ -54,6 +59,7 @@ PanelWindow {
             anchors.bottomMargin: 8
             spacing: 5
 
+
             Rectangle {
                 id: titleRect
 
@@ -62,13 +68,7 @@ PanelWindow {
                 implicitHeight: 50
                 Layout.fillWidth: true
                 color: Theme.rectcolor
-                radius: 12
-
-                border {
-                    width: 2
-                    color: Theme.bordercolor
-                }
-
+                radius: States.itemRounding
                 Text {
                     id: titleText
 
@@ -94,12 +94,8 @@ PanelWindow {
                     implicitWidth: 70
 
                     color: Theme.rectcolor
-                    radius: 12
+                    radius: States.itemRounding
 
-                    border {
-                        width: 1
-                        color: Theme.bordercolor
-                    }
 
                     ColumnLayout {
                         anchors.margins: 5
@@ -114,11 +110,16 @@ PanelWindow {
                                 implicitWidth: 60
 
                                 color: root.currentPage === model.index ? Theme.occupiedcolor : Theme.rectcolor
-                                radius: 12
+                                radius: States.itemRounding
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: modelData
+                                    color: Theme.text1
+                                    font {
+                                        family: Theme.fontfamily
+                                        pixelSize: Theme.fontxl
+                                    }
                                 }
 
                                 MouseArea {
@@ -133,6 +134,9 @@ PanelWindow {
                 }
                 BarPage {
                     visible: root.currentPage ===0
+                }
+                FramePage {
+                    visible: root.currentPage === 1
                 }
             }
         }

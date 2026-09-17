@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 
+import qs.modules
 import qs.modules.themeing
 
 Item {
@@ -36,25 +37,14 @@ Item {
             }
             color: root.muted ? Theme.textmuted : Theme.text1
             font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontlg
+            font.pixelSize: Theme.fontlg * States.fontScale
         }
 
-        MouseArea {
-            id: volMouse
-
-            anchors.fill: parent
-            hoverEnabled: true
-        }
 
 
     PwObjectTracker {
         objects: [root.sink]
     }
 
-    Process {
-        id: volumeLauncher
-
-        command: ["pavucontrol"]
-    }
 
 }

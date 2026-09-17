@@ -5,14 +5,10 @@ import QtQuick.Layouts
 import qs.modules
 import qs.modules.themeing
 
-
-
-
-
 Rectangle {
     visible: States.clockVisible
     id: root
-    property int fontSize: Theme.fontxl
+    property real fontSize: Theme.fontxl * States.fontScale
     property string rectColor: Theme.rectcolor
 
     property bool dateShow: false
@@ -24,10 +20,15 @@ Rectangle {
     }
     anchors.centerIn: parent
 
+    border {
+        width: States.borderOn ? 1 : 0
+        color: Theme.bordercolor
+    }
+
     color: rectColor
     implicitHeight: States.lockScreen ? root.cellH : Math.round(States.barHeight* 0.75)
     implicitWidth: txtRow.implicitWidth + 20
-    radius: 20
+    radius: States.panelRounding
 
     SystemClock {
         id: clock
@@ -35,7 +36,7 @@ Rectangle {
         precision: SystemClock.Seconds
     }
 
-Row {
+    Row {
         id: txtRow
         anchors.centerIn: parent
         spacing: 0

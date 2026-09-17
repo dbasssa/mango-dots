@@ -10,10 +10,10 @@ Rectangle {
     Layout.fillWidth: true
     implicitHeight: 30
     color: Theme.rectcolor
-    radius: 20
+    radius: States.panelRounding
 
     border {
-        width:1
+        width: States.borderOn ? 1 : 0
         color: Theme.bordercolor
     }
 

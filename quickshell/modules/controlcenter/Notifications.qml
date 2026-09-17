@@ -181,6 +181,18 @@ Scope {
             left: true
             bottom: true
         }
+        NumberAnimation {
+            id: openAnim
+            target: notifrect
+            property: "implicitHeight"
+            duration: 400
+            easing.type: Easing.OutCubic
+        }
+        onVisibleChanged: {
+            openAnim.from = 0
+            openAnim.to = notifrect.implicitHeight
+            openAnim.restart()
+        }
 
         margins {
             top: States.barHeight + States.frameThickness + 5
@@ -193,14 +205,15 @@ Scope {
         }
 
         Rectangle {
+            id:notifrect
             implicitWidth: 380
             implicitHeight: centerCol.implicitHeight + 24
             anchors.top: parent.top
             anchors.right: parent.right
-            radius: 20
+            radius: States.panelRounding
             color: Theme.bgcolor
             border {
-                width: 2
+                width: States.borderOn ? 1:0
                 color: Theme.bordercolor
             }
 

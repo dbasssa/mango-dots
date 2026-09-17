@@ -14,6 +14,14 @@ PanelWindow {
     implicitWidth: States.barWidth
     color: "transparent"
 
+
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 100
+            easing.type: Easing.OutCubic
+        }
+    }
+
     anchors {
         top: true
         left: States.fullBar ? true : false
@@ -55,6 +63,7 @@ PanelWindow {
         }
 
         NotifBtn {}
+        SysTray {}
 
         CtrlCenterBtn{}
     }

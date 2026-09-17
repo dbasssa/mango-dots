@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 
+import qs.modules
 import qs.modules.themeing
 
 ColumnLayout {
@@ -40,8 +41,8 @@ ColumnLayout {
             Layout.fillWidth: true
             color: logoutBtn.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             implicitHeight: 30
-            radius: 8
-            border { width: 1; color: Theme.bordercolor }
+            radius: States.tagRounding
+            border { width: States.borderOn ? 1:0; color: Theme.bordercolor }
 
             Text {
                 anchors.centerIn: parent
@@ -63,8 +64,8 @@ ColumnLayout {
             Layout.fillWidth: true
             color: shutdownBtn.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             implicitHeight: 30
-            radius: 8
-            border { width: 1; color: Theme.bordercolor }
+            radius: States.tagRounding
+            border { width: States.borderOn ? 1:0; color: Theme.bordercolor }
 
             Text {
                 anchors.centerIn: parent
@@ -90,8 +91,8 @@ ColumnLayout {
             Layout.fillWidth: true
             color: rebootBtn.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             implicitHeight: 30
-            radius: 8
-            border { width: 1; color: Theme.bordercolor }
+            radius: States.tagRounding
+            border { width: States.borderOn ? 1:0; color: Theme.bordercolor }
 
             Text {
                 anchors.centerIn: parent
@@ -113,8 +114,8 @@ ColumnLayout {
             Layout.fillWidth: true
             color: hibernateBtn.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             implicitHeight: 30
-            radius: 8
-            border { width: 1; color: Theme.bordercolor }
+            radius: States.tagRounding
+            border { width: States.borderOn ? 1:0 ; color: Theme.bordercolor }
 
             Text {
                 anchors.centerIn: parent

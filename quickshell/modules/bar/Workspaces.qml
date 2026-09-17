@@ -8,31 +8,38 @@ import qs.modules.themeing
 Rectangle {
     id: root
     visible: States.notchBar ? false : (States.wsVisible ? true : false)
-    
+    border {
+        width: States.borderOn ? 1 : 0
+        color: Theme.bordercolor
+    }
 
     property string monitor: ""
 
     implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: row.implicitWidth +20
     color: Theme.rectcolor
-    radius: 20
+    radius: States.itemRounding
 
-    property var tagModel: []
+    ListModel {
+        id: tagModel
+        ListElement { tag_id: 0; name: ""; layout: ""; is_active: false; client_count: 0 }
+    }
 
     function tagWidth(i) {
-        return root.tagModel[i] && root.tagModel[i].is_active ? 30 : 25
+        const t = i >= 0 && i < tagModel.count ? tagModel.get(i) : null;
+        return t && t.is_active ? 30 : 25
     }
     function activeIndex() {
-        for (let i = 0; i < root.tagModel.length; i++)
-            if (root.tagModel[i].is_active) return i;
+        for (let i = 0; i < tagModel.count; i++)
+            if (tagModel.get(i).is_active) return i;
         return -1;
     }
 
     function accentX() {
         const idx = root.activeIndex();
         if (idx < 0) return 0;
-        let x = 0; 
-        for (let i = 0 ; i < idx; i++) 
+        let x = 0;
+        for (let i = 0; i < idx; i++)
             x += root.tagWidth(i) + row.spacing;
         return x;
     }
@@ -49,7 +56,21 @@ Rectangle {
                 if (line === "") return; 
                 let obj=null; 
                 try {obj = JSON.parse(line); } catch(e) {return;}
-                if (obj && obj.tags) root.tagModel = obj.tags
+                if (obj && obj.tags) {
+                    const tags = obj.tags;
+                    if (tags.length !== tagModel.count) {
+                        tagModel.clear();
+                        for (const t of tags)
+                            tagModel.append({ tag_id: t.id, name: t.name, layout: t.layout, is_active: t.is_active, client_count: t.client_count });
+                    } else {
+                        for (let i = 0; i < tags.length; i++) {
+                            if (tagModel.get(i).is_active !== tags[i].is_active)
+                                tagModel.setProperty(i, "is_active", tags[i].is_active);
+                            if (tagModel.get(i).client_count !== tags[i].client_count)
+                                tagModel.setProperty(i, "client_count", tags[i].client_count);
+                        }
+                    }
+                }
             }
         }
     }
@@ -68,24 +89,26 @@ Rectangle {
         spacing: 4
 
         Repeater {
-            model: root.tagModel
+            model: tagModel
             Rectangle {
                 id: tag
-                implicitHeight: 15
-                implicitWidth: modelData.is_active ? 30 : 25
-                radius: 10
+                implicitHeight: Math.round(States.barHeight * 0.50)
+                implicitWidth: model.is_active ? 30 : 20
+                radius: States.tagRounding
 
-                color: modelData.client_count > 0 ? Theme.text1 : Theme.recthovercolor
+                color: model.is_active ? Theme.text1 : (model.client_count > 0 ? Theme.occupiedcolor : Theme.recthovercolor)
 
                 Text {
+                    property bool fresh
                     anchors.centerIn: parent
-                    color: modelData.client_count > 0 ? Theme.bgcolo : Theme.text1
+                    color: model.is_active ? Theme.bgcolor : Theme.text1
 
+                    onTextChanged: fresh = true
                     font {
-                        pixelSize: Theme.fontmd
+                        pixelSize: fresh ? Theme.fontmd * States.fontScale : 0
                         family: Theme.fontfamily
                     }
-                    text: modelData.is_active ? modelData.layout : model.index + 1
+                    text: model.is_active ? model.layout : model.index + 1
                 }
 
                 MouseArea {//MOTHERFUCKER JUST WORK BRO
@@ -96,21 +119,21 @@ Rectangle {
                     }
 
                 }
+                Behavior on implicitWidth {
+                    NumberAnimation {
+                        easing.type: Easing.OutCubic
+                        duration: 300
+                    }
+                }
+
+                Behavior on color {
+                    ColorAnimation {
+                        easing.type: Easing.OutCubic
+                        duration: 300
+                    }
+                }
             }
         }
-    }
-    Rectangle {
-        id: accent
-        visible: root.activeIndex() >= 0
-        color: Theme.textactive
-        height: 3
-        radius: 1.5
-        width: 20
-        anchors.bottom: row.bottom
-        anchors.bottomMargin: 4
-        x: 12 + root.accentX()
-        Behavior on x { NumberAnimation { duration: 260; easing.type: Easing.InOutCubic } }
-        Behavior on width { NumberAnimation { duration: 260; easing.type: Easing.InOutCubic } }
     }
 
 }

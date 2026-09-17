@@ -17,7 +17,12 @@ Rectangle {
     Layout.alignment: Qt.AlignVCenter
 
     color: Theme.rectcolor
-    radius: 12
+    radius: States.itemRounding
+
+    border {
+        width: States.borderOn ? 1 : 0
+        color: Theme.bordercolor
+    }
 
     Text {
         id: appTxt
@@ -31,7 +36,7 @@ Rectangle {
         text: root.focusedApp
         font {
             family: Theme.fontfamily
-            pixelSize: Theme.fontxl
+            pixelSize: Theme.fontxl * States.fontScale
             
 
             bold: true

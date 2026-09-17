@@ -61,12 +61,12 @@ Item {
             id: volbar
             Layout.preferredHeight: 50
             Layout.fillWidth: true
-            radius: 5
+            radius: States.sliderRounding
             color: volMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
             
 
             border {
-                width: 2
+                width: States.borderOn ? 2 : 0
                 color: Theme.bordercolor
             }
 
@@ -79,7 +79,7 @@ Item {
                 }
                 anchors.margins: 2
                 width: (parent.width - 4) * root.vol / 100
-                radius: 3
+                radius: States.sliderRounding
                 color: root.muted ? Theme.occupiedcolor : Theme.textactive
             }
 
@@ -95,7 +95,7 @@ Item {
 
                     return root.vol + "%";
                 }
-color: root.muted ? Theme.textmuted : Theme.text1
+                color: root.muted ? Theme.textmuted : Theme.text1
                 font.family: Theme.fontfamily
                 font.pixelSize: Theme.fontlg
                 font.bold: true
@@ -118,10 +118,10 @@ color: root.muted ? Theme.textmuted : Theme.text1
             Rectangle {
                 Layout.preferredHeight: 28
                 Layout.preferredWidth: 52
-                radius: 5
+                radius: States.sliderRounding
                 color: micMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
                 
-                border.width: 1
+                border.width: States.borderOn ? 1 : 0
                 border.color: Theme.bordercolor
 
                 Text {
@@ -151,10 +151,10 @@ color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
                 id: outchip
                 Layout.fillWidth: true
                 Layout.preferredHeight: 28
-                radius: 5
+                radius: States.sliderRounding
                 color: outMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor
                 
-                border.width: 1
+                border.width: States.borderOn ? 2 : 0
                 border.color: Theme.bordercolor
 
                 RowLayout {
@@ -220,7 +220,7 @@ color: root.outOpen ? Theme.textactive : Theme.textmuted
                 Layout.fillWidth: true
                 Layout.preferredHeight: 26
                 visible: root.outOpen
-                radius: 4
+                radius: States.sliderRounding
                 color: sinkMouse.containsMouse ? Theme.bordercolor : (modelData === root.sink ? Theme.bordercolor : "transparent")
                 
                 opacity: 0

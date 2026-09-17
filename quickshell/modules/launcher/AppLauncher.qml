@@ -24,12 +24,7 @@ PanelWindow {
     }
     color: "transparent"
 
-    onVisibleChanged: {
-        if (root.visible) {
-            appSearch.text = ""
-            appList.currentIndex = 0
-        }
-    }
+
 
     IpcHandler {
         target: "app-launcher"
@@ -40,15 +35,30 @@ PanelWindow {
             States.appOpen = !States.appOpen
         }
     }
+    NumberAnimation {
+        id: openAnim
+        target: contentRect
+        property: "height"
+        duration: 600
+        easing.type: Easing.OutCubic
+    }
+    onVisibleChanged: {
+        appSearch.text = "";
+        appList.currentIndex = 0;
+        openAnim.from = 0;
+        openAnim.to = contentRect.height;
+        openAnim.restart() ;
+    }
 
     Rectangle {
         id: contentRect
-        anchors.centerIn: parent
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
         width: 650
-        height: Math.min(parent.height - 40, 500)
+        height: 500
         color: Theme.bgcolor
-        radius: States.frameRounding
-        border { width: 2; color: Theme.bordercolor }
+        radius: States.panelRounding
+        border { width: States.borderOn ? 2: 0; color: Theme.bordercolor }
 
         ColumnLayout {
             anchors.fill: parent
@@ -59,7 +69,7 @@ PanelWindow {
                 id: appSearch
                 placeholderText: "Search..."
                 focus: root.visible
-                color: Theme.recthovercolor
+                color: Theme.textactive
                 placeholderTextColor: Theme.textmuted
                 Layout.fillWidth: true
                 Layout.preferredHeight: 45
@@ -67,8 +77,8 @@ PanelWindow {
                 font { family: Theme.fontfamily; pixelSize: Theme.fontxxl; bold: true }
                 background: Rectangle {
                     color: Theme.rectcolor
-                    radius: 8
-                    border { width: 1; color: Theme.bordercolor }
+                    radius: States.tagRounding
+                    border { width: States.borderOn ? 2 : 0; color: Theme.bordercolor }
                 }
                 onTextChanged: appList.currentIndex = 0
             }
@@ -110,7 +120,7 @@ PanelWindow {
                         Rectangle {
                             anchors.fill: parent
                             color: delegate.ListView.isCurrentItem ? Theme.text1 : Theme.rectcolor
-                            radius: 8
+                            radius: States.tagRounding
 
                             RowLayout {
                                 anchors.fill: parent

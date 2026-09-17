@@ -15,7 +15,7 @@ Rectangle {
 
     Layout.fillWidth: true
     implicitHeight: 100
-    radius: 20
+    radius: States.panelRounding
     color: Theme.rectcolor
 
     border {
@@ -131,7 +131,7 @@ Rectangle {
             implicitHeight: 10
             Layout.alignment: Qt.AlignHCenter
             color: Theme.recthovercolor
-            radius: 10
+            radius: States.tagRounding
 
             border {
                 width: 1
@@ -142,7 +142,7 @@ Rectangle {
                 anchors.left: parent.left
                 implicitHeight: 9
                 implicitWidth: parent.implicitWidth * (root.cpuUsage / 100)
-                radius: 10
+                radius: States.tagRounding
                 color: root.cpuUsage > 80 ? "red" : "green"
             }
 

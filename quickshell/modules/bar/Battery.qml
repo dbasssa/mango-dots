@@ -41,7 +41,7 @@ Item {
             text: root.isCharging ? root.percentage + "% 󰂄" : root.percentage + "% 󰁹"
             color: root.isCharging ? Theme.miconcolor : (root.percentage <= 15 ? Theme.alertcolor : Theme.text1)
             font {
-                pixelSize: Theme.fontlg
+                pixelSize: Theme.fontlg * States.fontScale
                 family: Theme.fontfamily
             }
         }

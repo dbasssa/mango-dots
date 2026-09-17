@@ -10,8 +10,13 @@ Rectangle {
     implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: btnRow.implicitWidth + 10
     color: Theme.rectcolor
-    radius: 12
+    radius: States.itemRounding
     clip: true
+
+    border {
+        width: States.borderOn ? 1 : 0
+        color: Theme.bordercolor
+    }
 
     RowLayout {
         id: btnRow
@@ -31,7 +36,7 @@ Rectangle {
             text: "|"
             color: Theme.text1
             font {
-                pixelSize: Theme.fontxl
+                pixelSize: Theme.fontxl * States.fontScale
                 family: Theme.fontfamily
             }
         }
@@ -40,7 +45,7 @@ Rectangle {
             text: ""
             color: Theme.text1
             font {
-                pixelSize: Theme.fontxl
+                pixelSize: Theme.fontxl * States.fontScale
                 family: Theme.fontfamily
             }
         }

@@ -27,7 +27,7 @@ PanelWindow {
     function runTransition() {
         imgA.opacity = 1;
         imgB.opacity = 0;
-        imgB.scale = 0.5;
+        imgB.scale = 0.8;
         swapAnim.restart();
     }
 
@@ -79,7 +79,7 @@ PanelWindow {
         fillMode: Image.PreserveAspectCrop
         source: ""
         opacity: 0
-        scale: 0.5
+        scale: 0.8
         onStatusChanged: {
             if (root.transitioning && root.pendingUrl !== root.activeWall) {
                 if (status === Image.Ready)

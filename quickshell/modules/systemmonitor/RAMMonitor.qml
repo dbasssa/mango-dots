@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.modules
 import qs.modules.themeing
 
 Rectangle {
@@ -13,7 +14,7 @@ Rectangle {
 
     Layout.fillWidth: true
     implicitHeight: 100
-    radius: 20
+    radius: States.panelRounding
     color: Theme.rectcolor
 
     border {
@@ -98,7 +99,7 @@ Rectangle {
                 implicitHeight: 10
                 Layout.alignment: Qt.AlignHCenter
                 color: Theme.recthovercolor
-                radius: 10
+                radius: States.tagRounding
 
                 border {
                     width: 1
@@ -109,7 +110,7 @@ Rectangle {
                     anchors.left: parent.left
                     implicitHeight: 9
                     implicitWidth: parent.implicitWidth * (root.ramPercent / 100)
-                    radius: 10
+                    radius: States.tagRounding
                     color: root.ramPercent > 80 ? "red" : "green"
                 }
 

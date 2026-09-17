@@ -50,6 +50,7 @@ PanelWindow {
             readonly property int brx: parent.width - root.thickness
             readonly property int bry: parent.height - root.thickness
             readonly property int r: root.rounding
+            readonly property real bh: States.borderOn ? 0.5 * States.borderThick : 0
 
             antialiasing: true
             anchors.fill: parent
@@ -143,6 +144,22 @@ PanelWindow {
 
             }
 
+        }
+
+        Rectangle {
+            id: frameBorder
+            visible: States.borderOn
+            x: root.thickness - frameShape.bh
+            y: root.thickness - frameShape.bh
+            width: parent.width - 2 * root.thickness + 2 * frameShape.bh
+            height: parent.height - 2 * root.thickness + 2 * frameShape.bh
+            radius: root.rounding + frameShape.bh
+            color: "transparent"
+            antialiasing: true
+            border {
+                width: States.borderOn ? States.borderThick : 0
+                color: Theme.bordercolor
+            }
         }
 
     }

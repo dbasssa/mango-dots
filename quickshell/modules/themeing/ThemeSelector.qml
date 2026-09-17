@@ -35,7 +35,7 @@ PanelWindow {
         implicitWidth: themeRow.implicitWidth + 120
         anchors.centerIn: parent
         color: Theme.bgcolor
-        radius: 20
+        radius: States.panelRounding
 
         border {
             width: 2
@@ -56,7 +56,7 @@ PanelWindow {
                     implicitHeight: 150
                     implicitWidth: 170
                     color: modelData.rectcolor
-                    radius: 10
+                    radius: States.tagRounding
 
                     border {
                         width: 4
@@ -90,7 +90,7 @@ PanelWindow {
                                     height: 20
                                     width: 20
                                     color: modelData
-                                    radius: 20
+                                    radius: States.panelRounding
 
                                     border {
                                         width: 1

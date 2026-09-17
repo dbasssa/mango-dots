@@ -46,7 +46,7 @@ Scope {
             implicitHeight: 400
             implicitWidth: 700
             color: Theme.bgcolor
-            radius: 20
+            radius: States.panelRounding
             anchors.centerIn: parent
             border {
                 width: 2

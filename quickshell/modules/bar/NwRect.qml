@@ -66,7 +66,7 @@ Item {
 
             font {
                 family: Theme.fontfamily
-                pixelSize: Theme.fontlg
+                pixelSize: Theme.fontlg * States.fontScale
             }
         }
         //wired network shitu
@@ -79,7 +79,7 @@ Item {
 
             font {
                 family: Theme.fontfamily
-                pixelSize: Theme.fontlg
+                pixelSize: Theme.fontlg * States.fontScale
             }
         }
     }
