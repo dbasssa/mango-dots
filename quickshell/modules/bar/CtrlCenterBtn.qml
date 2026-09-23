@@ -57,7 +57,16 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: States.ctrlOpen = !States.ctrlOpen
+        onClicked: {
+            if (States.ctrlOpen) {
+                if (States.ctrlCloser)
+                    States.ctrlCloser();
+                else
+                    States.ctrlOpen = false;
+            } else {
+                States.ctrlOpen = true
+            }
+        }
     }
 
 }

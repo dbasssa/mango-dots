@@ -6,7 +6,7 @@ import QtQuick.Layouts
 import qs.modules
 import qs.modules.themeing
 Rectangle {
-    visible: SystemTray.items.count > 0
+    visible: SystemTray.items.values.length > 0
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: row.implicitWidth + 10

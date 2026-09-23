@@ -13,7 +13,7 @@ QtObject {
     property string alertcolor:  ThemeState.themes[ThemeState.themeIndex].alertcolor
     property string miconcolor:  ThemeState.themes[ThemeState.themeIndex].miconcolor
 
-    property string fontfamily: "Google Sans Code NF"
+    property string fontfamily: "MesloLGL Nerd Font Propo"
     property int fontxs: 10
     property int fontsm: 11
     property int fontmd: 12

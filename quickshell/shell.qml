@@ -8,7 +8,6 @@ import "modules"
 import "modules/launcher"
 import "modules/bar"
 import "modules/controlcenter"
-import "modules/systemmonitor"
 import "modules/settings"
 import "modules/lockscreen"
 import "modules/themeing"
@@ -41,7 +40,6 @@ ShellRoot {
     Lockscreen {}
     ActivateLinux {}
     CtrlCenter{}
-    SysMon {}
     ThemeSelector {}
     WallSelector {}
 

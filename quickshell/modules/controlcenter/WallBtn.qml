@@ -30,7 +30,13 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {States.wallOpen = !States.wallOpen; States.ctrlOpen = false}
+        onClicked: {
+            States.wallOpen = !States.wallOpen;
+            if (States.ctrlCloser)
+                States.ctrlCloser();
+            else
+                States.ctrlOpen = false;
+        }
     }
 
 }

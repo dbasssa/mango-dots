@@ -16,15 +16,15 @@ QtObject {
     property bool ctrlOpen: false
     //Settings App opener
     property bool settingsOpen: false
-    //Notification center opener
-    property bool notifOpen: false
     //lock screen toggle
     property bool lockScreen: false
-    //System Monitor toggle
-    property bool statsOpen: false
     property bool themeOpen: false
     property bool funTime: false
     property bool wallOpen: false
+    //registered by CtrlCenter so modules can animate its close instead of hard-hiding it
+    property var ctrlCloser: null
+    //registered by CtrlCenter; call when page content grows/shrinks so it resizes to fit
+    property var reheight: null
     //Bar dimensions when in pill/island mode (bound)
     property int barHeight: 40
     property int barWidth: 200

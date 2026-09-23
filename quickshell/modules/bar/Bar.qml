@@ -61,8 +61,6 @@ PanelWindow {
         
         SettingsBtn {
         }
-
-        NotifBtn {}
         SysTray {}
 
         CtrlCenterBtn{}

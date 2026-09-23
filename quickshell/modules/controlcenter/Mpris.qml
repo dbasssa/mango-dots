@@ -21,7 +21,6 @@ Item {
 
     implicitHeight: 100
     Layout.fillWidth: true
-    anchors.horizontalCenter: parent.horizontalCenter
 
     MouseArea {
         anchors.fill: parent

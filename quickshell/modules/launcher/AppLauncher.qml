@@ -11,7 +11,8 @@ import qs.modules.themeing
 PanelWindow {
     id: root
 
-    visible: States.appOpen
+    property bool closing: false
+    visible: States.appOpen || root.closing
     focusable: true
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
@@ -29,10 +30,10 @@ PanelWindow {
     IpcHandler {
         target: "app-launcher"
         function toggle() {
-            States.appOpen = !States.appOpen
+            root.toggleLauncher();
         }
         function invoke() {
-            States.appOpen = !States.appOpen
+            root.toggleLauncher();
         }
     }
     NumberAnimation {
@@ -42,12 +43,56 @@ PanelWindow {
         duration: 600
         easing.type: Easing.OutCubic
     }
+    NumberAnimation {
+        id: closeAnim
+        target: contentRect
+        property: "height"
+        duration: 600
+        easing.type: Easing.OutCubic
+        onRunningChanged: {
+            if (!running && root.closing) {
+                root.closing = false;
+                States.appOpen = false;
+            }
+        }
+    }
+
+    function closeLauncher() {
+        if (root.closing || !States.appOpen)
+            return;
+        root.closing = true;
+        openAnim.stop();
+        closeAnim.from = contentRect.height;
+        closeAnim.to = 0;
+        closeAnim.restart();
+    }
+
+    function toggleLauncher() {
+        if (States.appOpen) {
+            if (root.closing) {
+                root.closing = false;
+                closeAnim.stop();
+                openAnim.from = 0;
+                openAnim.to = 500;
+                openAnim.restart();
+            } else {
+                root.closeLauncher();
+            }
+        } else {
+            States.appOpen = true;
+        }
+    }
+
     onVisibleChanged: {
         appSearch.text = "";
         appList.currentIndex = 0;
-        openAnim.from = 0;
-        openAnim.to = contentRect.height;
-        openAnim.restart() ;
+        if (root.visible) {
+            closeAnim.stop();
+            contentRect.height = 0;
+            openAnim.from = 0;
+            openAnim.to = 500;
+            openAnim.restart();
+        }
     }
 
     Rectangle {
@@ -114,7 +159,7 @@ PanelWindow {
 
                         function launch() {
                             modelData.execute()
-                            States.appOpen = false
+                            root.closeLauncher()
                         }
 
                         Rectangle {
@@ -164,7 +209,7 @@ PanelWindow {
             }
 
             Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Escape) States.appOpen = false
+                if (event.key === Qt.Key_Escape) root.closeLauncher()
                 else if (event.key === Qt.Key_Up) appList.decrementCurrentIndex()
                 else if (event.key === Qt.Key_Down) appList.incrementCurrentIndex()
                 else if (event.key === Qt.Key_Return && appList.currentItem)

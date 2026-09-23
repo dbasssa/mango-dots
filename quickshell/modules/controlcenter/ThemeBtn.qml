@@ -30,7 +30,13 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: {States.themeOpen = !States.themeOpen; States.ctrlOpen = false}
+        onClicked: {
+            States.themeOpen = !States.themeOpen;
+            if (States.ctrlCloser)
+                States.ctrlCloser();
+            else
+                States.ctrlOpen = false;
+        }
     }
 
 }

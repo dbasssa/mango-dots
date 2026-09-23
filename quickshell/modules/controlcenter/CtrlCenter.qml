@@ -9,21 +9,103 @@ import qs.modules.themeing
 
 PanelWindow {
     id: root
-    visible: States.ctrlOpen
+
+    property bool closing: false
+    visible: States.ctrlOpen || root.closing
     exclusionMode: ExclusionMode.Ignore
     color: "transparent"
 
+    //animated height of the control center panel
+    property real ctrlH: 0
+
+    //chrome height: margins 10+10 + tab row 20 + column spacing 10
+    function desiredHeight() {
+        let pageH = 0;
+        if (root.currentPage === 0) pageH = audioPage.implicitHeight;
+        else if (root.currentPage === 1) pageH = connectionsPage.implicitHeight;
+        else if (root.currentPage === 2) pageH = appearancePage.implicitHeight;
+        else if (root.currentPage === 3) pageH = systemPage.implicitHeight;
+        else if (root.currentPage === 4) pageH = powerPage.implicitHeight;
+        else if (root.currentPage === 5) pageH = notificationsPage.implicitHeight;
+        return Math.max(1, pageH + 50);
+    }
+
     NumberAnimation {
         id: openAnim
-        target: ctrlrect
-        property: "implicitHeight"
+
+        target: root
+        property: "ctrlH"
         duration: 400
         easing.type: Easing.OutCubic
     }
+
+    NumberAnimation {
+        id: closeAnim
+
+        target: root
+        property: "ctrlH"
+        duration: 400
+        easing.type: Easing.OutCubic
+        onRunningChanged: {
+            if (!running && root.closing) {
+                root.closing = false;
+                States.ctrlOpen = false;
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        States.ctrlCloser = () => root.closePanel();
+        States.reheight = () => root.reheight();
+    }
+
+    function closePanel() {
+        if (root.closing || !States.ctrlOpen)
+            return;
+        root.closing = true;
+        openAnim.stop();
+        closeAnim.to = 0;
+        closeAnim.restart();
+    }
+
+    function togglePanel() {
+        if (States.ctrlOpen) {
+            if (root.closing) {
+                root.closing = false;
+                closeAnim.stop();
+                openAnim.to = root.desiredHeight();
+                openAnim.restart();
+            } else {
+                root.closePanel();
+            }
+        } else {
+            States.ctrlOpen = true;
+        }
+    }
+
+    function reheight() {
+        if (!root.visible || root.closing)
+            return;
+        openAnim.stop();
+        openAnim.to = root.desiredHeight();
+        openAnim.restart();
+    }
+
     onVisibleChanged: {
-        openAnim.from = 0
-        openAnim.to = ctrlrect.implicitHeight
-        openAnim.restart()
+        if (root.visible) {
+            closeAnim.stop();
+            root.ctrlH = 0;
+            openAnim.to = root.desiredHeight();
+            openAnim.restart();
+        }
+    }
+
+    onCurrentPageChanged: {
+        if (root.visible && !root.closing) {
+            openAnim.stop();
+            openAnim.to = root.desiredHeight();
+            openAnim.restart();
+        }
     }
 
     anchors {
@@ -40,24 +122,27 @@ PanelWindow {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: States.ctrlOpen = !States.ctrlOpen
+        onClicked: root.togglePanel()
     }
 
     IpcHandler {
         function toggle() {
-            States.ctrlOpen = !States.ctrlOpen;
+            root.togglePanel();
         }
 
         target: "ctrlcntr-qs"
     }
 
+    property int currentPage: 0
+
     Rectangle {
-        id:ctrlrect
-        implicitHeight: 400
-        implicitWidth: 400
-        anchors.right:  parent.right 
-        anchors.top: parent.top
+        id: ctrlrect
+
         color: Theme.bgcolor
+        implicitHeight: root.ctrlH
+        implicitWidth: 460
+        anchors.right: parent.right
+        anchors.top: parent.top
         radius: States.panelRounding
         clip: true
 
@@ -72,33 +157,86 @@ PanelWindow {
             anchors.fill: parent
             anchors.margins: 10
             spacing: 10
-            Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Escape)
-                    States.ctrlOpen = false;
 
+            RowLayout {
+                spacing: 2
+                Layout.fillWidth: true
+                Repeater {
+                    model: ["Audio","Connections","Appearance","System","Power","Notifications"]
+
+                    delegate: Rectangle {
+                        implicitHeight: 20
+                        implicitWidth: modelTxt.implicitWidth + 7
+                        radius: States.sliderRounding
+                        color: root.currentPage === model.index ? Theme.occupiedcolor : Theme.bgcolor
+
+                        border {
+                            width: States.borderOn ? 1 : 0
+                            color: Theme.bordercolor
+                        }
+
+                        Text {
+                            id: modelTxt
+
+                            anchors.centerIn: parent
+                            text: modelData
+                            color: Theme.text1
+
+                            font {
+                                family: Theme.fontfamily
+                                pixelSize: Theme.fontmd
+                            }
+
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: root.currentPage = model.index
+                        }
+                    }
+                }
             }
 
-            Mpris {
+            AudioPage {
+                id: audioPage
+
+                Layout.fillWidth: true
+                visible: root.currentPage === 0
             }
 
-            VolumeCtrl {
+            ConnectionsPage {
+                id: connectionsPage
+
+                Layout.fillWidth: true
+                visible: root.currentPage === 1
             }
 
-            Item {
-                Layout.fillHeight: true
+            AppearancePage {
+                id: appearancePage
+
+                Layout.fillWidth: true
+                visible: root.currentPage === 2
             }
 
-            ThemeBtn {
+            SystemPage {
+                id: systemPage
+
+                Layout.fillWidth: true
+                visible: root.currentPage === 3
             }
 
-            WallBtn {
+            PowerPage {
+                id: powerPage
+
+                Layout.fillWidth: true
+                visible: root.currentPage === 4
             }
 
-            Item {
-                Layout.fillHeight: true
-            }
+            NotificationsPage {
+                id: notificationsPage
 
-            LogoutMenu {
+                Layout.fillWidth: true
+                visible: root.currentPage === 5
             }
 
         }

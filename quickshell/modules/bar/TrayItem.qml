@@ -16,7 +16,7 @@ Item {
     IconImage {
         id: trayIcon
         anchors.centerIn: parent
-        visible: !modelData.onlyMenu
+        //visible: !modelData.onlyMenu
         source: modelData.icon
         width: Math.round(States.barHeight * 0.5)
         height: Math.round(States.barHeight * 0.5)

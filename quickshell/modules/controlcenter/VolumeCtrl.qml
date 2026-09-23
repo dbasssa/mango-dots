@@ -18,6 +18,10 @@ Item {
     readonly property bool micMuted: micReady && mic.audio.muted
     property bool outOpen: false
 
+
+
+
+
     function setVolume(posX) {
         if (!root.sinkReady)
             return
@@ -49,8 +53,6 @@ Item {
 
     implicitHeight: col.implicitHeight
     Layout.fillWidth: true
-    
-    anchors.horizontalCenter: parent.horizontalCenter
 
     ColumnLayout {
         id: col
@@ -130,7 +132,7 @@ Item {
                     font.family: Theme.fontfamily
                     font.pixelSize: Theme.fontlg
                     font.bold: true
-color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
+                    color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
                     scale: micMouse.containsMouse ? 1.15 : 1.0
                 }
 
@@ -178,7 +180,7 @@ color: root.micMuted ? Theme.alertcolor : Theme.miconcolor
 
                     Text {
                         text: ""
-color: root.outOpen ? Theme.textactive : Theme.textmuted
+                        color: root.outOpen ? Theme.textactive : Theme.textmuted
                         font.family: Theme.fontfamily
                         font.pixelSize: Theme.fontxs
                         rotation: root.outOpen ? 180 : 0
@@ -218,7 +220,7 @@ color: root.outOpen ? Theme.textactive : Theme.textmuted
                 required property var modelData
                 required property int index
                 Layout.fillWidth: true
-                Layout.preferredHeight: 26
+                implicitHeight: 26
                 visible: root.outOpen
                 radius: States.sliderRounding
                 color: sinkMouse.containsMouse ? Theme.bordercolor : (modelData === root.sink ? Theme.bordercolor : "transparent")
@@ -239,11 +241,9 @@ color: root.outOpen ? Theme.textactive : Theme.textmuted
                 }
 
                 Text {
-                    anchors {
-                        left: parent.left
-                        verticalCenter: parent.verticalCenter
-                    }
-                    anchors.leftMargin: 10
+                    anchors.left: parent.left
+                    anchors.leftMargin: 7
+                    anchors.fill: parent
                     text: modelData.description
                     elide: Text.ElideRight
                     color: modelData === root.sink ? Theme.textactive : Theme.text1
@@ -278,6 +278,8 @@ color: root.outOpen ? Theme.textactive : Theme.textmuted
                 root.showRows();
             else
                 root.hideRows();
+            if (States.reheight)
+                States.reheight();
         }
     }
 

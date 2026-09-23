@@ -127,7 +127,7 @@ Rectangle {
         }
 
         Rectangle {
-            implicitWidth: 500
+            Layout.fillWidth: true
             implicitHeight: 10
             Layout.alignment: Qt.AlignHCenter
             color: Theme.recthovercolor
@@ -140,9 +140,11 @@ Rectangle {
 
             Rectangle {
                 anchors.left: parent.left
-                implicitHeight: 9
-                implicitWidth: parent.implicitWidth * (root.cpuUsage / 100)
-                radius: States.tagRounding
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.leftMargin: 2
+                width: (parent.width - 4) * Math.max(0, Math.min(1, root.cpuUsage / 100))
+                height: parent.height - 4
+                radius: States.tagRounding - 2
                 color: root.cpuUsage > 80 ? "red" : "green"
             }
 
