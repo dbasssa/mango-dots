@@ -8,8 +8,8 @@ import qs.modules.themeing
 Rectangle {
     id: root
     clip: true
-    
-    visible: States.notchBar ? false : (States.appsVisible ? true: false)
+
+    visible: States.notchBar ? false : (States.appsVisible ? true : false)
     property string focusedApp: ""
     property string focusedTitle: ""
     implicitHeight: Math.round(States.barHeight * 0.75)
@@ -36,9 +36,7 @@ Rectangle {
         text: root.focusedApp
         font {
             family: Theme.fontfamily
-            pixelSize: Theme.fontxl * States.fontScale
-            
-
+            pixelSize: Theme.fontxl
             bold: true
         }
     }
@@ -51,29 +49,26 @@ Rectangle {
 
         stdout: SplitParser {
             splitMarker: "\n"
-            onRead: (data) => {
+            onRead: data => {
                 const line = String(data).trim();
                 if (line === "")
-                    return ;
+                    return;
 
                 let obj = null;
                 try {
                     obj = JSON.parse(line);
                 } catch (e) {
                     console.log("PARSE FAIL: ", e);
-                    return ;
+                    return;
                 }
-                if (obj && obj.appid && obj.appid !== ""){
+                if (obj && obj.appid && obj.appid !== "") {
                     root.focusedApp = obj.appid;
-                }else if (obj.appid === ""){
-                    root.focusedApp = "Desktop"
+                } else if (obj.appid === "") {
+                    root.focusedApp = "Desktop";
                 }
                 if (obj && obj.title && obj.title !== "")
                     root.focusedTitle = obj.title;
-
             }
         }
-
     }
-
 }

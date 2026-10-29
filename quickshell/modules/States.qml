@@ -1,13 +1,11 @@
+pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
-pragma Singleton
 
 import qs.modules.themeing
 
 QtObject {
-
-
     id: root
 
     // App launcher open/closed
@@ -25,14 +23,18 @@ QtObject {
     property var ctrlCloser: null
     //registered by CtrlCenter; call when page content grows/shrinks so it resizes to fit
     property var reheight: null
-    //Bar dimensions when in pill/island mode (bound)
+    //extra height the audio page needs on top of its own layout height.
+    //set by the audio page (e.g. the output dropdown) and added by CtrlCenter.
+    property int ctrlExtraHeight: 0
+    //Bar dimensions when in pill mode (bound)
     property int barHeight: 40
     property int barWidth: 200
-    property real fontScale: Math.max(0.75, Math.min(2.0, root.barHeight / 30.0))
     //Bars Available Types (Bound)
     property bool fullBar: true
     property bool islandBar: false
     property bool notchBar: false
+    //item rectangle color in bar
+    property bool flushItems: false
     //toggles the screen frame along the edges of the monitor (Bound)
     property bool frameVis: false
     property int frameThickness: 5
@@ -57,13 +59,8 @@ QtObject {
     property bool clockVisible: true
     property bool buttonsVisible: true
     property bool trayVisible: true
-    property bool borderOn: false
+    property bool borderOn: true
     property int borderThick: 2
-
-
-
-
-
 
     //bar height
     property Process heightReader
@@ -83,41 +80,40 @@ QtObject {
     property Process stateSaver
 
     readWal: Process {
-        command: ["sh","-c","cat " + Quickshell.shellDir + "/state/wallpaper"]
+        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/wallpaper"]
         running: true
         stdout: StdioCollector {
             onStreamFinished: WallpaperState.currentWallpaper = this.text.trim()
-
         }
-
     }
 
     //universal save: echo <value> > state/<file>
     function saveState(file, value) {
-        if (!root.stateSaver) return
+        if (!root.stateSaver)
+            return;
         if (root.stateSaver.running)
-            root.stateSaver.running = false
-        root.stateSaver.command = ["sh", "-c", "echo " + value + " > " + Quickshell.shellDir + "/state/" + file]
-        root.stateSaver.running = true
+            root.stateSaver.running = false;
+        root.stateSaver.command = ["sh", "-c", "echo " + value + " > " + Quickshell.shellDir + "/state/" + file];
+        root.stateSaver.running = true;
     }
 
     function fullBarSelect() {
-        root.fullBar = true
-        root.islandBar = false
-        root.notchBar = false
-        root.saveState("barstyle", "full")
+        root.fullBar = true;
+        root.islandBar = false;
+        root.notchBar = false;
+        root.saveState("barstyle", "full");
     }
     function islandBarSelect() {
-        root.fullBar = true
-        root.islandBar = true
-        root.notchBar = false
-        root.saveState("barstyle", "island")
+        root.fullBar = true;
+        root.islandBar = true;
+        root.notchBar = false;
+        root.saveState("barstyle", "island");
     }
-        function notchSelect() {
-        root.fullBar = false
-        root.islandBar = false
-        root.notchBar = true
-        root.saveState("barstyle", "notch")
+    function notchSelect() {
+        root.fullBar = false;
+        root.islandBar = false;
+        root.notchBar = true;
+        root.saveState("barstyle", "notch");
     }
 
     heightReader: Process {
@@ -126,11 +122,11 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.barHeight = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.barHeight = v;
             }
         }
-
     }
     //end of height saver
 
@@ -140,11 +136,11 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.barWidth = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.barWidth = v;
             }
         }
-
     }
     //end of width saver
 
@@ -154,11 +150,11 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.notchMargin = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.notchMargin = v;
             }
         }
-
     }
     //end of gap save
 
@@ -168,11 +164,11 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.barRounding = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.barRounding = v;
             }
         }
-
     }
     //end of rounding saver
 
@@ -198,10 +194,9 @@ QtObject {
                 }
             }
         }
-
     }
 
-    //end of bar style 
+    //end of bar style
 
     //universal state saver (runs echo <value> > state/<file> via saveState())
     stateSaver: Process {
@@ -225,8 +220,9 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.frameThickness = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.frameThickness = v;
             }
         }
     }
@@ -237,10 +233,10 @@ QtObject {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var v = parseInt(this.text)
-                if (!isNaN(v)) root.frameRounding = v
+                var v = parseInt(this.text);
+                if (!isNaN(v))
+                    root.frameRounding = v;
             }
         }
     }
-
 }

@@ -1,8 +1,8 @@
+pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import Qt.labs.folderlistmodel
-pragma Singleton
 
 Singleton {
     id: root
@@ -14,24 +14,27 @@ Singleton {
     property FolderListModel randomModel: FolderListModel {
         folder: "file://" + root.wallsPath
         showDirs: false
-        nameFilters: ["*.jpg","*.png","*.jpeg","*.webp","*.bmp"]
+        nameFilters: ["*.jpg", "*.png", "*.jpeg", "*.webp", "*.bmp"]
     }
     property bool randomPending: false
 
     Connections {
         target: root.randomModel
-        function onStatusChanged() {root.tryPickRandom()}
-        function onCountChanged() {root.tryPickRandom()}
+        function onStatusChanged() {
+            root.tryPickRandom();
+        }
+        function onCountChanged() {
+            root.tryPickRandom();
+        }
     }
-
 
     saveWalProc: Process {
         command: []
         running: false
     }
     function saveWal(path) {
-        saveWalProc.command = ["sh","-c","echo " + path + " > " + Quickshell.shellDir + "/state/wallpaper"]
-        saveWalProc.running = true
+        saveWalProc.command = ["sh", "-c", "echo " + path + " > " + Quickshell.shellDir + "/state/wallpaper"];
+        saveWalProc.running = true;
     }
 
     pywalProc: Process {
@@ -40,7 +43,7 @@ Singleton {
     }
 
     function colorWal(path) {
-        pywalProc.command = ["wal", "-i", path, "-n", "-q"];
+        pywalProc.command = ["sh", "-c", "wal -i " + path + " -n -q && bash ~/.config/mango/mango-wal.sh"];
         pywalProc.running = true;
     }
 
@@ -50,19 +53,20 @@ Singleton {
 
     function select(pathOrName) {
         if (!pathOrName)
-            return ;
+            return;
 
         const value = pathOrName.toString();
         root.currentWallpaper = value.startsWith("file:") ? value : root.wallsPath + "/" + value;
         root.colorWal(value.replace("file://", ""));
-        root.saveWal(value.replace("file://", ""))
+        root.saveWal(value.replace("file://", ""));
     }
 
     function tryPickRandom() {
-        if (!root.randomPending || root.randomModel.status !== FolderListModel.Ready || root.randomModel.count <= 0) return;
+        if (!root.randomPending || root.randomModel.status !== FolderListModel.Ready || root.randomModel.count <= 0)
+            return;
         root.randomPending = false;
         const i = Math.floor(Math.random() * root.randomModel.count);
-        root.select(root.randomModel.get(i,"fileUrl"));
+        root.select(root.randomModel.get(i, "fileUrl"));
     }
 
     function randomWal() {
@@ -72,5 +76,4 @@ Singleton {
     function isCurrent(name) {
         return root.fileBasename(root.currentWallpaper) === name;
     }
-
 }

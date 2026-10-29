@@ -5,14 +5,14 @@ import Quickshell.Services.Notifications
 import Quickshell.Wayland
 import qs.modules
 import qs.modules.themeing
-
+import qs.services
 Scope {
     id: root
 
     PanelWindow {
         color: "transparent"
         implicitWidth: 380
-        implicitHeight: Math.max(1, column.implicitHeight)
+        implicitHeight:column.implicitHeight
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
 
@@ -47,7 +47,6 @@ Scope {
 
                     Timer {
                         id: timer
-
                         running: card.modelData.urgency !== NotificationUrgency.Critical
                         interval: States.notifTimeout
                         onTriggered: card.modelData.dismiss()
@@ -79,6 +78,7 @@ Scope {
                             spacing: 2
 
                             Text {
+                                id: headTxt
                                 Layout.fillWidth: true
                                 text: modelData.summary
                                 color: Theme.text1
@@ -93,6 +93,7 @@ Scope {
                             }
 
                             Text {
+                              id:bodyTxt
                                 Layout.fillWidth: true
                                 visible: text !== ""
                                 text: modelData.body

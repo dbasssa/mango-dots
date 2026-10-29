@@ -7,7 +7,7 @@ import qs.modules.themeing
 Rectangle {
     visible: States.notchBar ? false : States.buttonsVisible
     implicitHeight: Math.round(States.barHeight * 0.75)
-    implicitWidth:Math.round(States.barHeight * 0.75)
+    implicitWidth: Math.round(States.barHeight * 0.75)
     radius: States.itemRounding
     color: Theme.rectcolor
     border {
@@ -16,12 +16,12 @@ Rectangle {
     }
 
     Text {
-        anchors.centerIn: parent
         id: textId
+        anchors.centerIn: parent
         text: ""
         color: Theme.text1
         font {
-            pixelSize: Theme.fontxl * States.fontScale
+            pixelSize: Theme.fontxl
         }
     }
     MouseArea {

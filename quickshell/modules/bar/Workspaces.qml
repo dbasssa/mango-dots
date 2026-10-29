@@ -16,61 +16,70 @@ Rectangle {
     property string monitor: ""
 
     implicitHeight: Math.round(States.barHeight * 0.75)
-    implicitWidth: row.implicitWidth +20
+    implicitWidth: row.implicitWidth + 20
     color: Theme.rectcolor
     radius: States.itemRounding
 
     ListModel {
         id: tagModel
-        ListElement { tag_id: 0; name: ""; layout: ""; is_active: false; client_count: 0 }
+        ListElement {
+            tag_id: 0
+            layout: ""
+            is_active: false
+            is_urgent: false
+            client_count: 0
+        }
     }
 
-    function tagWidth(i) {
-        const t = i >= 0 && i < tagModel.count ? tagModel.get(i) : null;
-        return t && t.is_active ? 30 : 25
-    }
-    function activeIndex() {
-        for (let i = 0; i < tagModel.count; i++)
-            if (tagModel.get(i).is_active) return i;
-        return -1;
-    }
-
-    function accentX() {
-        const idx = root.activeIndex();
-        if (idx < 0) return 0;
-        let x = 0;
-        for (let i = 0; i < idx; i++)
-            x += root.tagWidth(i) + row.spacing;
-        return x;
+    // Rebuild the model when the tag set itself changed, otherwise patch only the
+    // fields that actually differ. layout MUST be part of the diff, otherwise it
+    // stays frozen at whatever the compositor reported on the very first event.
+    function syncTags(tags) {
+        const sameTags = tags.length === tagModel.count
+            && tags.every((t, i) => tagModel.get(i).tag_id === t.index);
+        if (!sameTags) {
+            tagModel.clear();
+            for (const t of tags)
+                tagModel.append({
+                    tag_id: t.index,
+                    layout: t.layout,
+                    is_active: t.is_active,
+                    is_urgent: t.is_urgent,
+                    client_count: t.client_count
+                });
+            return;
+        }
+        for (let i = 0; i < tags.length; i++) {
+            const cur = tagModel.get(i);
+            const t = tags[i];
+            if (cur.layout !== t.layout)
+                tagModel.setProperty(i, "layout", t.layout);
+            if (cur.is_active !== t.is_active)
+                tagModel.setProperty(i, "is_active", t.is_active);
+            if (cur.is_urgent !== t.is_urgent)
+                tagModel.setProperty(i, "is_urgent", t.is_urgent);
+            if (cur.client_count !== t.client_count)
+                tagModel.setProperty(i, "client_count", t.client_count);
+        }
     }
 
     Process {
-        id: getWorkspaceInfo
-
         command: ["mmsg", "watch", "tags", root.monitor]
         running: true
         stdout: SplitParser {
             splitMarker: "\n"
-            onRead: (data) => {
+            onRead: data => {
                 const line = String(data).trim();
-                if (line === "") return; 
-                let obj=null; 
-                try {obj = JSON.parse(line); } catch(e) {return;}
-                if (obj && obj.tags) {
-                    const tags = obj.tags;
-                    if (tags.length !== tagModel.count) {
-                        tagModel.clear();
-                        for (const t of tags)
-                            tagModel.append({ tag_id: t.id, name: t.name, layout: t.layout, is_active: t.is_active, client_count: t.client_count });
-                    } else {
-                        for (let i = 0; i < tags.length; i++) {
-                            if (tagModel.get(i).is_active !== tags[i].is_active)
-                                tagModel.setProperty(i, "is_active", tags[i].is_active);
-                            if (tagModel.get(i).client_count !== tags[i].client_count)
-                                tagModel.setProperty(i, "client_count", tags[i].client_count);
-                        }
-                    }
+                if (line === "")
+                    return;
+                let obj = null;
+                try {
+                    obj = JSON.parse(line);
+                } catch (e) {
+                    return;
                 }
+                if (obj && obj.tags)
+                    root.syncTags(obj.tags);
             }
         }
     }
@@ -91,12 +100,11 @@ Rectangle {
         Repeater {
             model: tagModel
             Rectangle {
-                id: tag
                 implicitHeight: Math.round(States.barHeight * 0.50)
                 implicitWidth: model.is_active ? 30 : 20
                 radius: States.tagRounding
 
-                color: model.is_active ? Theme.text1 : (model.client_count > 0 ? Theme.occupiedcolor : Theme.recthovercolor)
+                color: model.is_active ? Theme.text1 : (model.is_urgent ? Theme.alertcolor : (model.client_count > 0 ? Theme.occupiedcolor : Theme.recthovercolor))
 
                 Text {
                     property bool fresh
@@ -105,19 +113,18 @@ Rectangle {
 
                     onTextChanged: fresh = true
                     font {
-                        pixelSize: fresh ? Theme.fontmd * States.fontScale : 0
+                        pixelSize: fresh ? Theme.fontmd : 0
                         family: Theme.fontfamily
                     }
-                    text: model.is_active ? model.layout : model.index + 1
+                    text: model.is_active ? (model.layout || "") : model.index + 1
                 }
 
                 MouseArea {//MOTHERFUCKER JUST WORK BRO
                     anchors.fill: parent
                     onClicked: {
-                        switchWS.command = ["mmsg","dispatch","view,"+ (model.index+1) +",0"];
+                        switchWS.command = ["mmsg", "dispatch", "view," + (model.index + 1) + ",0"];
                         switchWS.running = true;
                     }
-
                 }
                 Behavior on implicitWidth {
                     NumberAnimation {
@@ -135,5 +142,4 @@ Rectangle {
             }
         }
     }
-
 }

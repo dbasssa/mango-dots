@@ -18,15 +18,15 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             width: 200
             height: 50
-            model: ["Full Bar","Island Bar", "Notch"]
+            model: ["Full Bar", "Island Bar", "Notch"]
             currentIndex: States.notchBar ? 2 : (States.islandBar ? 1 : 0)
             onActivated: {
                 if (index === 0) {
-                    States.fullBarSelect()
-                } else if (index === 1){
-                    States.islandBarSelect()
+                    States.fullBarSelect();
+                } else if (index === 1) {
+                    States.islandBarSelect();
                 } else if (index === 2) {
-                    States.notchSelect()
+                    States.notchSelect();
                 }
             }
             background: Rectangle {
@@ -45,7 +45,7 @@ Rectangle {
             radius: States.itemRounding
 
             RowLayout {
-                anchors.fill:parent
+                anchors.fill: parent
                 anchors.margins: 10
                 Text {
                     text: "Tag Module: "
@@ -63,8 +63,10 @@ Rectangle {
                         pixelSize: Theme.fontxl
                     }
                 }
-                Item{Layout.fillWidth: true}
-                Switch {
+                Item {
+                    Layout.fillWidth: true
+                }
+                ThemeSwitch {
                     checked: States.wsVisible
                     onClicked: States.wsVisible = checked
                 }
@@ -76,7 +78,7 @@ Rectangle {
             color: Theme.bgcolor
             radius: States.itemRounding
             RowLayout {
-                anchors.fill:parent
+                anchors.fill: parent
                 anchors.margins: 10
                 Text {
                     text: "App Name Module: "
@@ -94,8 +96,10 @@ Rectangle {
                         pixelSize: Theme.fontxl
                     }
                 }
-                Item{Layout.fillWidth: true}
-                Switch {
+                Item {
+                    Layout.fillWidth: true
+                }
+                ThemeSwitch {
                     checked: States.appsVisible
                     onClicked: States.appsVisible = checked
                 }
@@ -108,7 +112,7 @@ Rectangle {
             radius: States.itemRounding
 
             RowLayout { // dk why you would want no clock but sure
-                anchors.fill:parent
+                anchors.fill: parent
                 anchors.margins: 10
                 Text {
                     text: "Clock Module: "
@@ -126,8 +130,10 @@ Rectangle {
                         pixelSize: Theme.fontxl
                     }
                 }
-                Item{Layout.fillWidth: true}
-                Switch {
+                Item {
+                    Layout.fillWidth: true
+                }
+                ThemeSwitch {
                     checked: States.clockVisible
                     onClicked: States.clockVisible = checked
                 }
@@ -140,7 +146,7 @@ Rectangle {
             radius: States.itemRounding
 
             RowLayout { // dk why you would want no clock but sure
-                anchors.fill:parent
+                anchors.fill: parent
                 anchors.margins: 10
                 Text {
                     text: "Buttons: "
@@ -158,8 +164,10 @@ Rectangle {
                         pixelSize: Theme.fontxl
                     }
                 }
-                Item{Layout.fillWidth: true}
-                Switch {
+                Item {
+                    Layout.fillWidth: true
+                }
+                ThemeSwitch {
                     checked: States.buttonsVisible
                     onClicked: States.buttonsVisible = checked
                 }
@@ -172,10 +180,10 @@ Rectangle {
             color: Theme.bgcolor
             radius: States.itemRounding
             RowLayout {
-                anchors.fill:parent
+                anchors.fill: parent
                 spacing: 10
 
-                Text{
+                Text {
                     Layout.alignment: Qt.AlignVCenter
                     text: "Bar Height: "
                     color: Theme.text1
@@ -187,7 +195,7 @@ Rectangle {
 
                 Text {
                     Layout.alignment: Qt.AlignVCenter
-                    text:"change the top-bottom length of the bar"
+                    text: "change the top-bottom length of the bar"
                     color: Theme.textmuted
 
                     font {
@@ -196,34 +204,34 @@ Rectangle {
                     }
                 }
 
-                Item {Layout.fillWidth: true}
+                Item {
+                    Layout.fillWidth: true
+                }
 
                 TextField {
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.barHeight
                     placeholderTextColor: Theme.textmuted
-                    font{
+                    font {
                         family: Theme.fontfamily
                         pixelSize: Theme.fontxl
-                    } 
+                    }
                     color: Theme.text1
 
                     background: Rectangle {
                         anchors.fill: parent
                         color: Theme.rectcolor
                         radius: States.tagRounding
-
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null
+                        var val = parseInt(text) ?? null;
                         if (val >= 0) {
-                            States.barHeight = val
-                            States.saveState("height", val)
+                            States.barHeight = val;
+                            States.saveState("height", val);
                         }
                     }
-
                 }
             }
         }
@@ -237,7 +245,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: 10
 
-                Text{
+                Text {
                     Layout.alignment: Qt.AlignVCenter
                     text: "Bar Width: "
                     color: Theme.text1
@@ -252,27 +260,25 @@ Rectangle {
                     implicitWidth: 100
                     placeholderText: States.barWidth
                     placeholderTextColor: Theme.textmuted
-                    font{
+                    font {
                         family: Theme.fontfamily
                         pixelSize: Theme.fontxl
-                    } 
+                    }
                     color: Theme.text1
 
                     background: Rectangle {
                         anchors.fill: parent
                         color: Theme.rectcolor
                         radius: States.tagRounding
-
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null
+                        var val = parseInt(text) ?? null;
                         if (val >= 0) {
-                            States.barWidth = val
-                            States.saveState("width", val)
+                            States.barWidth = val;
+                            States.saveState("width", val);
                         }
                     }
-
                 }
             }
         }
@@ -286,7 +292,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: 10
 
-                Text{
+                Text {
                     Layout.alignment: Qt.AlignVCenter
                     text: "Bar Rounding: "
                     color: Theme.text1
@@ -301,30 +307,27 @@ Rectangle {
                     implicitWidth: 100
                     placeholderText: States.barRounding
                     placeholderTextColor: Theme.textmuted
-                    font{
+                    font {
                         family: Theme.fontfamily
                         pixelSize: Theme.fontxl
-                    } 
+                    }
                     color: Theme.text1
 
                     background: Rectangle {
                         anchors.fill: parent
                         color: Theme.rectcolor
                         radius: States.tagRounding
-
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null
+                        var val = parseInt(text) ?? null;
                         if (val >= 0) {
-                            States.barRounding = val
-                            States.saveState("rounding", val)
+                            States.barRounding = val;
+                            States.saveState("rounding", val);
                         }
                     }
-
                 }
             }
         }
-
     }
 }

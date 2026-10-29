@@ -40,7 +40,7 @@ Item {
         color: Theme.rectcolor
 
         border {
-            width: States.borderOn ? 2:0
+            width: States.borderOn ? 2 : 0
             color: Theme.bordercolor
         }
 
@@ -65,8 +65,8 @@ Item {
                         width: 6
                         height: 16
                         radius: States.sliderRounding
-                        color: index === root.playerIndex ? Theme.miconcolor : "transparent"
-                        border.color: Theme.bordercolor
+                        color: index === root.playerIndex ? Theme.text1 : Theme.bordercolor
+                        border.color: index === root.playerIndex ? Theme.text1 : Theme.bordercolor
                         border.width: 2
                         opacity: index === root.playerIndex ? 1 : 0.6
 
@@ -78,13 +78,9 @@ Item {
                                     root.playerIndex = index;
                             }
                         }
-
                     }
-
                 }
-
             }
-
         }
 
         Image {
@@ -103,7 +99,6 @@ Item {
                 else if (status === Image.Error)
                     root.artFailed = true;
             }
-
         }
 
         Rectangle {
@@ -130,14 +125,12 @@ Item {
                 font.pixelSize: Theme.fontxl
                 font.bold: true
                 elide: Text.ElideRight
-                
 
                 transform: Translate {
                     id: titleT
 
                     y: 0
                 }
-
             }
 
             Text {
@@ -152,14 +145,12 @@ Item {
                 font.pixelSize: Theme.fontmd
                 font.bold: true
                 elide: Text.ElideRight
-                
 
                 transform: Translate {
                     id: artistT
 
                     y: 0
                 }
-
             }
 
             RowLayout {
@@ -184,11 +175,6 @@ Item {
                         font.family: Theme.fontfamily
                         font.pixelSize: Theme.fontxxl
                         scale: prevMouse.pressed ? 0.8 : (prevMouse.containsMouse ? 1.25 : 1)
-
-                        
-
-                        
-
                     }
 
                     MouseArea {
@@ -201,10 +187,8 @@ Item {
                         onClicked: {
                             if (root.player)
                                 root.player.previous();
-
                         }
                     }
-
                 }
 
                 Rectangle {
@@ -221,11 +205,6 @@ Item {
                         font.family: Theme.fontfamily
                         font.pixelSize: root.player && root.player.isPlaying ? Theme.fontxl : Theme.fontlg
                         scale: playMouse.pressed ? 0.8 : (playMouse.containsMouse ? 1.25 : 1)
-
-                        
-
-                        
-
                     }
 
                     MouseArea {
@@ -238,10 +217,8 @@ Item {
                         onClicked: {
                             if (root.player)
                                 root.player.togglePlaying();
-
                         }
                     }
-
                 }
 
                 Rectangle {
@@ -258,11 +235,6 @@ Item {
                         font.family: Theme.fontfamily
                         font.pixelSize: Theme.fontxxl
                         scale: nextMouse.pressed ? 0.8 : (nextMouse.containsMouse ? 1.25 : 1)
-
-                        
-
-                        
-
                     }
 
                     MouseArea {
@@ -275,16 +247,10 @@ Item {
                         onClicked: {
                             if (root.player)
                                 root.player.next();
-
                         }
                     }
-
                 }
-
             }
-
         }
-
     }
-
 }

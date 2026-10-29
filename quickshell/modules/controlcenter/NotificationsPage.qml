@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import qs.modules
 import qs.modules.themeing
-
+import qs.services
 ColumnLayout {
     id: root
 

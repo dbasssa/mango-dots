@@ -9,7 +9,7 @@ Rectangle {
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: btnRow.implicitWidth + 10
-    color: Theme.rectcolor
+    color: States.flushItems ? Theme.bgcolor : Theme.rectcolor
     radius: States.itemRounding
     clip: true
 
@@ -25,8 +25,7 @@ Rectangle {
         anchors.fill: parent
         spacing: 2
 
-        VolumeBar {
-        }
+        VolumeBar {}
         Battery {}
 
         NwRect {}
@@ -36,7 +35,7 @@ Rectangle {
             text: "|"
             color: Theme.text1
             font {
-                pixelSize: Theme.fontxl * States.fontScale
+                pixelSize: Theme.fontxl
                 family: Theme.fontfamily
             }
         }
@@ -45,13 +44,10 @@ Rectangle {
             text: ""
             color: Theme.text1
             font {
-                pixelSize: Theme.fontxl * States.fontScale
+                pixelSize: Theme.fontxl
                 family: Theme.fontfamily
             }
         }
-
-
-
     }
 
     MouseArea {
@@ -64,9 +60,8 @@ Rectangle {
                 else
                     States.ctrlOpen = false;
             } else {
-                States.ctrlOpen = true
+                States.ctrlOpen = true;
             }
         }
     }
-
 }

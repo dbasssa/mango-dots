@@ -27,7 +27,6 @@ ColumnLayout {
             pixelSize: Theme.fontxxl
             bold: true
         }
-
     }
 
     //theme cycler
@@ -55,7 +54,6 @@ ColumnLayout {
                     family: Theme.fontfamily
                     pixelSize: Theme.fontlg
                 }
-
             }
 
             MouseArea {
@@ -63,7 +61,6 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: root.cycle(-1)
             }
-
         }
 
         Rectangle {
@@ -87,9 +84,7 @@ ColumnLayout {
                     pixelSize: Theme.fontlg
                     bold: true
                 }
-
             }
-
         }
 
         Rectangle {
@@ -112,7 +107,6 @@ ColumnLayout {
                     family: Theme.fontfamily
                     pixelSize: Theme.fontlg
                 }
-
             }
 
             MouseArea {
@@ -120,9 +114,7 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: root.cycle(1)
             }
-
         }
-
     }
 
     //theme color preview
@@ -143,11 +135,8 @@ ColumnLayout {
                     width: 1
                     color: Theme.bordercolor
                 }
-
             }
-
         }
-
     }
 
     Text {
@@ -159,7 +148,6 @@ ColumnLayout {
             pixelSize: Theme.fontxl
             bold: true
         }
-
     }
 
     RowLayout {
@@ -189,7 +177,6 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: States.fullBarSelect()
             }
-
         }
 
         Rectangle {
@@ -215,7 +202,6 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: States.islandBarSelect()
             }
-
         }
 
         Rectangle {
@@ -241,9 +227,7 @@ ColumnLayout {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: States.notchSelect()
             }
-
         }
-
     }
 
     RowLayout {
@@ -259,17 +243,15 @@ ColumnLayout {
                 family: Theme.fontfamily
                 pixelSize: Theme.fontlg
             }
-
         }
 
-        Switch {
+        ThemeSwitch {
             checked: States.frameVis
             onClicked: {
-                States.frameVis = checked
-                States.saveState("framevis", checked)
+                States.frameVis = checked;
+                States.saveState("framevis", checked);
             }
         }
-
     }
 
     Text {
@@ -281,7 +263,6 @@ ColumnLayout {
             pixelSize: Theme.fontxl
             bold: true
         }
-
     }
 
     Rectangle {
@@ -307,9 +288,7 @@ ColumnLayout {
                 family: Theme.fontfamily
                 pixelSize: Theme.fontmd
             }
-
         }
-
     }
 
     WallBtn {}
@@ -317,5 +296,4 @@ ColumnLayout {
     Item {
         Layout.fillHeight: true
     }
-
 }

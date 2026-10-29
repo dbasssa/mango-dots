@@ -21,7 +21,7 @@ Rectangle {
             radius: States.itemRounding
 
             RowLayout {
-                anchors.fill:parent
+                anchors.fill: parent
                 anchors.margins: 10
                 Text {
                     text: "Screen Frame: "
@@ -39,12 +39,14 @@ Rectangle {
                         pixelSize: Theme.fontxl
                     }
                 }
-                Item{Layout.fillWidth: true}
-                Switch {
+                Item {
+                    Layout.fillWidth: true
+                }
+                ThemeSwitch {
                     checked: States.frameVis
                     onClicked: {
-                        States.frameVis = checked
-                        States.saveState("framevis", checked)
+                        States.frameVis = checked;
+                        States.saveState("framevis", checked);
                     }
                 }
             }
@@ -59,7 +61,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: 10
 
-                Text{
+                Text {
                     Layout.alignment: Qt.AlignVCenter
                     text: "Frame Rounding: "
                     color: Theme.text1
@@ -74,27 +76,25 @@ Rectangle {
                     implicitWidth: 100
                     placeholderText: States.frameRounding
                     placeholderTextColor: Theme.textmuted
-                    font{
+                    font {
                         family: Theme.fontfamily
                         pixelSize: Theme.fontxl
-                    } 
+                    }
                     color: Theme.text1
 
                     background: Rectangle {
                         anchors.fill: parent
                         color: Theme.rectcolor
                         radius: States.tagRounding
-
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null
+                        var val = parseInt(text) ?? null;
                         if (val >= 0) {
-                            States.frameRounding = val
-                            States.saveState("framerounding", val)
+                            States.frameRounding = val;
+                            States.saveState("framerounding", val);
                         }
                     }
-
                 }
             }
         }
@@ -108,7 +108,7 @@ Rectangle {
                 anchors.centerIn: parent
                 spacing: 10
 
-                Text{
+                Text {
                     Layout.alignment: Qt.AlignVCenter
                     text: "Frame Thickness: "
                     color: Theme.text1
@@ -123,30 +123,27 @@ Rectangle {
                     implicitWidth: 100
                     placeholderText: States.frameThickness
                     placeholderTextColor: Theme.textmuted
-                    font{
+                    font {
                         family: Theme.fontfamily
                         pixelSize: Theme.fontxl
-                    } 
+                    }
                     color: Theme.text1
 
                     background: Rectangle {
                         anchors.fill: parent
                         color: Theme.rectcolor
                         radius: States.tagRounding
-
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null
+                        var val = parseInt(text) ?? null;
                         if (val >= 0) {
-                            States.frameThickness = val
-                            States.saveState("framethickness", val)
+                            States.frameThickness = val;
+                            States.saveState("framethickness", val);
                         }
                     }
-
                 }
             }
         }
-
     }
 }

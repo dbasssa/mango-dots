@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Networking
 import qs.modules
 import qs.modules.themeing
+import qs.services
 
 ColumnLayout {
     id: root
@@ -21,7 +22,6 @@ ColumnLayout {
             pixelSize: Theme.fontxxl
             bold: true
         }
-
     }
 
     readonly property list<NetworkDevice> devices: Networking.devices.values
@@ -53,7 +53,7 @@ ColumnLayout {
                 Layout.preferredWidth: 24
                 Layout.alignment: Qt.AlignHCenter
                 text: "󰖩"
-                color: root.wifiDev?.state === ConnectionState.Connected ? Theme.miconcolor : Theme.text1
+                color: Theme.text1
                 font.family: Theme.fontfamily
             }
 
@@ -70,9 +70,7 @@ ColumnLayout {
                 elide: Text.ElideRight
                 font.family: Theme.fontfamily
             }
-
         }
-
     }
 
     //ethernet row
@@ -113,9 +111,7 @@ ColumnLayout {
                 elide: Text.ElideRight
                 font.family: Theme.fontfamily
             }
-
         }
-
     }
 
     //bluetooth placeholder
@@ -139,7 +135,7 @@ ColumnLayout {
                 Layout.preferredWidth: 24
                 Layout.alignment: Qt.AlignHCenter
                 text: "󰂯"
-                color: Theme.textmuted
+                color: Theme.text1
                 font.family: Theme.fontfamily
             }
 
@@ -151,17 +147,14 @@ ColumnLayout {
             }
 
             Text {
-                text: "Coming soon"
+                text: BluetoothState.status + BluetoothState.connectedDev
                 color: Theme.textmuted
                 font.family: Theme.fontfamily
             }
-
         }
-
     }
 
     Item {
         Layout.fillHeight: true
     }
-
 }

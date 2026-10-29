@@ -1,34 +1,13 @@
 import QtQuick
-import Quickshell
-import Quickshell.Io
-import Quickshell.Services.UPower
 import qs.modules
 import qs.modules.themeing
+import qs.services
 
 Item {
+    id: root
     implicitHeight: parent.implicitHeight - 5
     implicitWidth: batRect.implicitWidth
-    id: root
-    visible: root.exists
-    property int chargeNotif: 0
-
-    property bool exists: UPower.displayDevice.isLaptopBattery
-
-    property int percentage: Math.round(UPower.displayDevice.percentage * 100)
-
-    property bool isCharging: UPower.displayDevice.state === UPowerDeviceState.Charging
-    //why the fuck are you running with no battery??? are you hihg???? nevermind NOW you work after i made the same damn edit
-    Process {
-        id: lowBatProc
-        running: root.exists ? (root.percentage < 15 ? true : false) : false
-        command: ["sh","-c","notify-send -u critical 'Battery Low' 'Please connect a charger'"]
-    }
-    Process {
-        id: chargingBat
-        running: root.exists ? (root.isCharging && root.chargeNotif <= 1? true: false) : false
-        command: ["sh","-c","notify-send 'Battery is charging' 'Thank you for not killing me'"]
-    }
-
+    visible: Battery.exists
     Rectangle {
         id: batRect
         implicitHeight: parent.implicitHeight
@@ -36,13 +15,13 @@ Item {
         color: Theme.rectcolor
 
         Text {
-            id:batText
+            id: batText
             anchors.centerIn: parent
-            text: root.isCharging ? root.percentage + "% 󰂄" : root.percentage + "% 󰁹"
-            color: root.isCharging ? Theme.miconcolor : (root.percentage <= 15 ? Theme.alertcolor : Theme.text1)
+            text: Battery.percentage + "% " + Battery.charge_Icon() + Battery.get_Battery_Icon()
+            color: Battery.isCharging ? Theme.miconcolor : (Battery.percentage > 20 ? Theme.text1 : Theme.alertcolor)
             font {
-                pixelSize: Theme.fontlg * States.fontScale
                 family: Theme.fontfamily
+                pixelSize: Theme.fontlg
             }
         }
     }

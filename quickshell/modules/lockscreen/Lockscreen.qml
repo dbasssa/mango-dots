@@ -28,9 +28,8 @@ Scope {
         onPamMessage: {
             if (passwdCheck.responseRequired)
                 passwdCheck.respond(userPass);
-
         }
-        onCompleted: (result) => {
+        onCompleted: result => {
             if (result === PamResult.Success) {
                 States.lockScreen = false;
                 root.wrongPwCounter = 0;
@@ -51,9 +50,7 @@ Scope {
             root.userN = stdout.text.trim();
         }
 
-        stdout: StdioCollector {
-        }
-
+        stdout: StdioCollector {}
     }
 
     IpcHandler {
@@ -73,7 +70,6 @@ Scope {
         onRunningChanged: {
             if (running)
                 root.lockEnd = Date.now() + wrongPwTimer.interval;
-
         }
         onTriggered: {
             root.wrongPwCounter = 0;
@@ -136,7 +132,7 @@ Scope {
                     RowLayout {
                         spacing: 7
                         Layout.alignment: Qt.AlignHCenter
-                        anchors.margins:5
+                        anchors.margins: 5
 
                         Text {
                             text: root.userN
@@ -147,7 +143,6 @@ Scope {
                                 pixelSize: Theme.fontxl
                                 bold: true
                             }
-
                         }
 
                         Rectangle {
@@ -181,7 +176,7 @@ Scope {
                                         States.lockScreen = false;
                                         root.wrongPwCounter = 0;
                                     } else {
-                                        root.userPass = text
+                                        root.userPass = text;
                                         passwdCheck.start();
                                     }
                                 }
@@ -191,11 +186,8 @@ Scope {
                                     color: "transparent"
                                     radius: States.panelRounding
                                 }
-
                             }
-
                         }
-
                     }
 
                     Text {
@@ -208,16 +200,12 @@ Scope {
                             pixelSize: Theme.fontlg
                             bold: true
                         }
-
                     }
-                    Item {Layout.fillHeight: true}
-
+                    Item {
+                        Layout.fillHeight: true
+                    }
                 }
-
             }
-
         }
-
     }
-
 }

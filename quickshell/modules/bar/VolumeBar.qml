@@ -22,29 +22,25 @@ Item {
     implicitWidth: voltxt.implicitWidth + 10
     anchors.verticalCenter: parent.verticalCenter
 
-        Text {
-            id: voltxt
+    Text {
+        id: voltxt
 
-            anchors.centerIn: parent
-            text: {
-                if (!root.sinkReady)
-                    return "-";
+        anchors.centerIn: parent
+        text: {
+            if (!root.sinkReady)
+                return "-";
 
-                if (root.muted)
-                    return "0%";
+            if (root.muted)
+                return "0%";
 
-                return root.vol + "% 󰕾";
-            }
-            color: root.muted ? Theme.textmuted : Theme.text1
-            font.family: Theme.fontfamily
-            font.pixelSize: Theme.fontlg * States.fontScale
+            return root.vol + "% 󰕾";
         }
-
-
+        color: root.muted ? Theme.textmuted : Theme.text1
+        font.family: Theme.fontfamily
+        font.pixelSize: Theme.fontlg
+    }
 
     PwObjectTracker {
         objects: [root.sink]
     }
-
-
 }

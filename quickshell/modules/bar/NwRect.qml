@@ -1,14 +1,12 @@
-import Quickshell
 import Quickshell.Networking
 import QtQuick
-import QtQuick.Layouts
 import qs.modules
 import qs.modules.themeing
-//fuck this you are taking way too long to work 
+
 Item {
-    anchors.verticalCenter: parent.verticalCenter
     id: root
-    implicitHeight: parent.implicitHeight -5
+    anchors.verticalCenter: parent.verticalCenter
+    implicitHeight: parent.implicitHeight - 5
     implicitWidth: wiredTxt.visible ? wiredTxt.implicitWidth + 10 : wifiTxt.implicitWidth + 10
     property bool wifiEnabled: Networking.wifiEnabled
     readonly property list<NetworkDevice> devices: Networking.devices.values
@@ -22,17 +20,16 @@ Item {
     function wifiConnection() {
         if (wifiDev != null) {
             if (wifiDev.state === ConnectionState.Connected) {
-                return " 󰖩" 
+                return " 󰖩";
             }
             if (wifiDev.state === ConnectionState.Connecting) {
-                return " 󱛆"
-
+                return " 󱛆";
             }
             if (wifiDev.state === ConnectionState.Disconnected) {
-                return " 󱛅"
+                return " 󱛅";
             }
             if (wifiDev.state === ConnectionState.Disconnecting) {
-                return " 󱛆"
+                return " 󱛆";
             }
         } else {
             return;
@@ -43,43 +40,42 @@ Item {
     function wiredConnection() {
         if (wiredDev != null) {
             if (wiredDev.state === ConnectionState.Connected) {
-                return " 󰈁" //you heard me
+                return " 󰈁"; //you heard me
             }
             if (wiredDev.state === ConnectionState.Disconnected || wiredDev.state === ConnectionState.Unknown) {
-                return " 󰈂"  //south park reference if your ethernet dies
+                return " 󰈂";  //south park reference if your ethernet dies
             } else {
-                return "󰈂 wait..."
+                return "󰈂 wait...";
             }
         } else {
             return;
         }
-
     }
 
-        //wifi network shit
-        Text {
-            id:wifiTxt
-            visible: wifiDev != null
-            anchors.centerIn: parent
-            text: root.activeNetName + root.wifiConnection()
-            color: Theme.text1
+    //wifi network shit
+    Text {
+        id: wifiTxt
+        visible: wifiDev != null
+        anchors.centerIn: parent
+        text: root.activeNetName + root.wifiConnection()
+        color: Theme.text1
 
-            font {
-                family: Theme.fontfamily
-                pixelSize: Theme.fontlg * States.fontScale
-            }
-        }
-        //wired network shitu
-        Text {
-            anchors.centerIn: parent
-            visible: wiredDev != null
-            id: wiredTxt
-            text: root.activeWiredName + root.wiredConnection()  //pussy i hated writing this 
-            color: Theme.text1
-
-            font {
-                family: Theme.fontfamily
-                pixelSize: Theme.fontlg * States.fontScale
-            }
+        font {
+            family: Theme.fontfamily
+            pixelSize: Theme.fontlg
         }
     }
+    //wired network shitu
+    Text {
+        id: wiredTxt
+        anchors.centerIn: parent
+        visible: wiredDev != null
+        text: root.activeWiredName + root.wiredConnection()  //pussy i hated writing this
+        color: Theme.text1
+
+        font {
+            family: Theme.fontfamily
+            pixelSize: Theme.fontlg
+        }
+    }
+}
