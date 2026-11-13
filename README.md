@@ -1,27 +1,23 @@
-**Shell-Yeah**: A Quickshell based shell made for mangowm... WE'RE BACK AND BETTER (sort of...)
-
-This Shell is still a work in progress, and is currently being worked on/added to. If you experience any issues with the Shell or installation, or just have a feature request, please raise an issue.
+**Shell-Yeah**: A MangoWM shell written entirely in quickshell. (plus some JSON)
 
 ---
 ## **install steps**:
-- Clone this repo into `~/.config/`
-- `qs -p ~/.config/quickshell/shell.qml`
-- Enjoy!
----
+- install dependencies listed below
+- clone this repo
+- `cp -r mango-dots/quickshell ~/.config`
+- `qs -p ~/.config/quickshell`
+I am working on an install script, which will handle dependencies and folder placement automatically.
 ## **IPC Calls (Bound in mangowm)**
-
     # control center
     qs ipc call ctrlcntr-qs toggle
     # settings app
     qs ipc call settings-qs toggle
-    # notifications menu
-    qs ipc call notifications-qs toggle
     # lock screen
     qs ipc call lockscreen-qs toggle
-    # system monitor
-    qs ipc call systemmonitor-qs toggle
     # app launcher
     qs ipc call app-launcher toggle
+    # clipboard manager
+    qs ipc call clipboard-qs toggle
 ---
 ## **Required programs/packages**
 
@@ -29,17 +25,18 @@ This Shell is still a work in progress, and is currently being worked on/added t
 - [`quickshell`](https://quickshell.org/) (Desktop Shell for wayland)
 - Google Sans Code NF (Font and Icons)
 ---
-## **Updates:**
-- Removed Theme and Wallpaper switcher due to a file search error on some devices.
-- Localized the walls directory. all wallpapers must be stored in `~/.config/quickshell/walls/`
-- Added a Battery and network monitor to the control center button.
-- Redid the control center and some other menus/functions
-- Optimized aand reworked a bunch of different problems with the whole shell
+## Features 
+- Fully themed Desktop & Status Bar Customization
+- Wallpapers sorted by theme
+- Notification handling via Quickshell
+- Clipboard manager with history.
+- Screenshot manager via grim + slurp
+- Wifi and Bluetooth management via NetworkManager and BlueZ
+- CPU and RAM monitoring
+- Lock screen with information displays. 
 
-
-## **TODO:**
-- Add a Button to toggle System Monitor visibility in the Bar
-- Add GPU monitors to the System Monitor
-- figure out a way to have changes in settings persist
-- complete the install script to automate the setup and creation process
-- feel godly and love life again
+---
+### Note 
+This shell is currently being worked on and hasnt reached a 1.0 state yet. That being said, all features (except one or two) will work completely. 
+I also cannot guarantee that this shell will work on non-arch distros, since that is what i use to develop this shell (CachyOS & Arch).
+I am 100% open to suggestions, feature ideas, and of course, bugs. if you find/want something, raise an issue and i will get to it as soon as i can.
