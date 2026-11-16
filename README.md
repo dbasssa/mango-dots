@@ -1,5 +1,5 @@
-**Shell-Yeah**: A MangoWM shell written entirely in quickshell. (plus some JSON)
-
+# Shell-Yeah
+A MangoWM shell written entirely in quickshell. (plus some JSON)
 ---
 ## **install steps**:
 - install dependencies listed below
@@ -7,18 +7,6 @@
 - `cp -r mango-dots/quickshell ~/.config`
 - `qs -p ~/.config/quickshell`
 I am working on an install script, which will handle dependencies and folder placement automatically.
-## **IPC Calls (Bound in mangowm)**
-    # control center
-    qs ipc call ctrlcntr-qs toggle
-    # settings app
-    qs ipc call settings-qs toggle
-    # lock screen
-    qs ipc call lockscreen-qs toggle
-    # app launcher
-    qs ipc call app-launcher toggle
-    # clipboard manager
-    qs ipc call clipboard-qs toggle
----
 ## **Required programs/packages**
 
 - [`mangowm`](https://mangowm.github.io/) (Window Manager)
@@ -30,7 +18,7 @@ I am working on an install script, which will handle dependencies and folder pla
 - Wallpapers sorted by theme
 - Notification handling via Quickshell
 - Clipboard manager with history.
-- Screenshot manager via grim + slurp
+- Screenshot manager via grim + slurp with auto save and copy
 - Wifi and Bluetooth management via NetworkManager and BlueZ
 - CPU and RAM monitoring
 - Lock screen with information displays. 
