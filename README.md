@@ -1,4 +1,5 @@
 # Shell-Yeah
+
 A MangoWM shell written entirely in quickshell. (plus some JSON)
 ---
 ## **install steps**:
