@@ -241,7 +241,7 @@ Item {
                     width: 16
                     height: 16
                     radius: 8
-                    color: sliderMouse.pressed ? Theme.textactive : Theme.text1
+                    color: sliderMouse.pressed || sliderMouse.containsMouse ? Theme.textactive : Theme.text1
 
                     border {
                         width: 2

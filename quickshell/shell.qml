@@ -11,7 +11,8 @@ import "modules/controlcenter"
 import "modules/settings"
 import "modules/lockscreen"
 import "modules/themeing"
-
+import "modules/osd"
+import "modules/clipboard"
 
 ShellRoot {
     Variants {
@@ -42,5 +43,7 @@ ShellRoot {
     CtrlCenter{}
     ThemeSelector {}
     WallSelector {}
+    Clipboard {}
+    Volosd {}
 
 }

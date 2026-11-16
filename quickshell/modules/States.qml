@@ -1,12 +1,33 @@
 pragma Singleton
 import QtQuick
-import Quickshell
-import Quickshell.Io
 
-import qs.modules.themeing
+import qs.services
 
 QtObject {
     id: root
+
+    //every "(Bound)" setting below loads from and saves to state/state.json
+    //through the StateStore service — one file for the whole shell instead
+    //of one text file per value.
+
+    //hydration gate: initial property loads happen before onCompleted, so
+    //restored values don't get pointlessly written straight back to disk
+    property bool hydrated: false
+    Component.onCompleted: root.hydrated = true
+
+    //called from onXChanged handlers to write a property back to state.json
+    function persist(key) {
+        if (root.hydrated)
+            StateStore.set(key, root[key]);
+    }
+
+    //osd settings
+    property int timerLength: StateStore.get("timerLength", 1000)
+    onTimerLengthChanged: root.persist("timerLength")
+    //brightness level (0-100). runtime-only on purpose: the monitor/backlight
+    //owns the real value, this mirrors it. the backend is picked at runtime in
+    //services/Deps.qml (brightnessctl for internal panels, ddcutil for DDC/CI).
+    property int brightness: 50
 
     // App launcher open/closed
     property bool appOpen: false
@@ -19,224 +40,87 @@ QtObject {
     property bool themeOpen: false
     property bool funTime: false
     property bool wallOpen: false
+    //clipboard history overlay
+    property bool clipboardOpen: false
     //registered by CtrlCenter so modules can animate its close instead of hard-hiding it
     property var ctrlCloser: null
     //registered by CtrlCenter; call when page content grows/shrinks so it resizes to fit
     property var reheight: null
-    //extra height the audio page needs on top of its own layout height.
-    //set by the audio page (e.g. the output dropdown) and added by CtrlCenter.
+    //extra height pages need on top of their own layout height.
+    //set by the audio page (output dropdown) and added by CtrlCenter.
     property int ctrlExtraHeight: 0
-    //Bar dimensions when in pill mode (bound)
-    property int barHeight: 40
-    property int barWidth: 200
-    //Bars Available Types (Bound)
-    property bool fullBar: true
-    property bool islandBar: false
-    property bool notchBar: false
+
+    //Bar dimensions when in pill mode (Bound)
+    property int barHeight: StateStore.get("barHeight", 30)
+    onBarHeightChanged: root.persist("barHeight")
+    property int barWidth: StateStore.get("barWidth", 200)
+    onBarWidthChanged: root.persist("barWidth")
+
+    //Bar style (Bound): "full" | "island" | "notch"
+    property string barStyle: StateStore.get("barStyle", "full")
+    onBarStyleChanged: root.persist("barStyle")
+    //the style used to be three booleans — kept as derived properties so
+    //existing consumers don't have to change
+    readonly property bool fullBar: root.barStyle !== "notch"
+    readonly property bool islandBar: root.barStyle === "island"
+    readonly property bool notchBar: root.barStyle === "notch"
+    function fullBarSelect() { root.barStyle = "full" }
+    function islandBarSelect() { root.barStyle = "island" }
+    function notchSelect() { root.barStyle = "notch" }
+
     //item rectangle color in bar
-    property bool flushItems: false
+    property bool flushItems: StateStore.get("flushItems", false)
+    onFlushItemsChanged: root.persist("flushItems")
+
     //toggles the screen frame along the edges of the monitor (Bound)
-    property bool frameVis: false
-    property int frameThickness: 5
-    property int frameRounding: 0
+    property bool frameVis: StateStore.get("frameVis", false)
+    onFrameVisChanged: root.persist("frameVis")
+    property int frameThickness: StateStore.get("frameThickness", 5)
+    onFrameThicknessChanged: root.persist("frameThickness")
+    property int frameRounding: StateStore.get("frameRounding", 0)
+    onFrameRoundingChanged: root.persist("frameRounding")
+
     //outer gap inside bar (Bound)
-    property int barMargin: 12
+    property int barMargin: StateStore.get("barMargin", 12)
+    onBarMarginChanged: root.persist("barMargin")
     //Gap from top of screen to top of notch (Bound)
-    property int notchMargin: 5
+    property int notchMargin: StateStore.get("notchMargin", 5)
+    onNotchMarginChanged: root.persist("notchMargin")
     //Bar Rounding (Bound)
-    property int barRounding: 0
+    property int barRounding: StateStore.get("barRounding", 0)
+    onBarRoundingChanged: root.persist("barRounding")
+
     //General Rounding Scale
-    property int panelRounding: 20
-    property int itemRounding: 20
-    property int tagRounding: 10
-    property int sliderRounding: 5
+    property int panelRounding: StateStore.get("panelRounding", 20)
+    onPanelRoundingChanged: root.persist("panelRounding")
+    property int itemRounding: StateStore.get("itemRounding", 20)
+    onItemRoundingChanged: root.persist("itemRounding")
+    property int tagRounding: StateStore.get("tagRounding", 10)
+    onTagRoundingChanged: root.persist("tagRounding")
+    property int sliderRounding: StateStore.get("sliderRounding", 5)
+    onSliderRoundingChanged: root.persist("sliderRounding")
+
     //notification Card timer & Margin
-    property int notifCardSideMargin: 10
-    property int notifTimeout: 5000
+    property int notifCardSideMargin: StateStore.get("notifCardSideMargin", 10)
+    onNotifCardSideMarginChanged: root.persist("notifCardSideMargin")
+    property int notifTimeout: StateStore.get("notifTimeout", 5000)
+    onNotifTimeoutChanged: root.persist("notifTimeout")
 
-    property bool wsVisible: true
-    property bool appsVisible: true
-    property bool clockVisible: true
-    property bool buttonsVisible: true
-    property bool trayVisible: true
-    property bool borderOn: true
-    property int borderThick: 2
+    //bar module visibility
+    property bool wsVisible: StateStore.get("wsVisible", true)
+    onWsVisibleChanged: root.persist("wsVisible")
+    property bool appsVisible: StateStore.get("appsVisible", true)
+    onAppsVisibleChanged: root.persist("appsVisible")
+    property bool clockVisible: StateStore.get("clockVisible", true)
+    onClockVisibleChanged: root.persist("clockVisible")
+    property bool buttonsVisible: StateStore.get("buttonsVisible", true)
+    onButtonsVisibleChanged: root.persist("buttonsVisible")
+    property bool trayVisible: StateStore.get("trayVisible", true)
+    onTrayVisibleChanged: root.persist("trayVisible")
 
-    //bar height
-    property Process heightReader
-    //bar width
-    property Process widthReader
-    //gap reader
-    property Process gapReader
-    //rounding reader
-    property Process roundingReader
-    //frame settings readers
-    property Process frameReader
-    property Process frameThickReader
-    property Process frameRoundReader
-    property Process styleReader
-    property Process readWal
-    //universal state saver
-    property Process stateSaver
-
-    readWal: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/wallpaper"]
-        running: true
-        stdout: StdioCollector {
-            onStreamFinished: WallpaperState.currentWallpaper = this.text.trim()
-        }
-    }
-
-    //universal save: echo <value> > state/<file>
-    function saveState(file, value) {
-        if (!root.stateSaver)
-            return;
-        if (root.stateSaver.running)
-            root.stateSaver.running = false;
-        root.stateSaver.command = ["sh", "-c", "echo " + value + " > " + Quickshell.shellDir + "/state/" + file];
-        root.stateSaver.running = true;
-    }
-
-    function fullBarSelect() {
-        root.fullBar = true;
-        root.islandBar = false;
-        root.notchBar = false;
-        root.saveState("barstyle", "full");
-    }
-    function islandBarSelect() {
-        root.fullBar = true;
-        root.islandBar = true;
-        root.notchBar = false;
-        root.saveState("barstyle", "island");
-    }
-    function notchSelect() {
-        root.fullBar = false;
-        root.islandBar = false;
-        root.notchBar = true;
-        root.saveState("barstyle", "notch");
-    }
-
-    heightReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/height"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.barHeight = v;
-            }
-        }
-    }
-    //end of height saver
-
-    widthReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/width"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.barWidth = v;
-            }
-        }
-    }
-    //end of width saver
-
-    gapReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/gap"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.notchMargin = v;
-            }
-        }
-    }
-    //end of gap save
-
-    roundingReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/rounding"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.barRounding = v;
-            }
-        }
-    }
-    //end of rounding saver
-
-    //bar style you cunt
-    styleReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/barstyle"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                if (this.text.trim() === "notch") {
-                    root.fullBar = false;
-                    root.islandBar = false;
-                    root.notchBar = true;
-                } else if (this.text.trim() === "island") {
-                    root.fullBar = true;
-                    root.islandBar = true;
-                    root.notchBar = false;
-                } else if (this.text.trim() === "full") {
-                    root.fullBar = true;
-                    root.islandBar = false;
-                    root.notchBar = false;
-                }
-            }
-        }
-    }
-
-    //end of bar style
-
-    //universal state saver (runs echo <value> > state/<file> via saveState())
-    stateSaver: Process {
-        command: ["sh", "-c", "true"]
-        running: false
-    }
-
-    //frame settings readers
-    frameReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/framevis"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: root.frameVis = (this.text.trim() === "true")
-        }
-    }
-
-    frameThickReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/framethickness"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.frameThickness = v;
-            }
-        }
-    }
-
-    frameRoundReader: Process {
-        command: ["sh", "-c", "cat " + Quickshell.shellDir + "/state/framerounding"]
-        running: true
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                var v = parseInt(this.text);
-                if (!isNaN(v))
-                    root.frameRounding = v;
-            }
-        }
-    }
+    //borders on control center + popup items
+    property bool borderOn: StateStore.get("borderOn", true)
+    onBorderOnChanged: root.persist("borderOn")
+    property int borderThick: StateStore.get("borderThick", 2)
+    onBorderThickChanged: root.persist("borderThick")
 }

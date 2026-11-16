@@ -9,6 +9,24 @@ Rectangle {
     Layout.fillHeight: true
     Layout.fillWidth: true
     color: Theme.bgcolor
+
+    function intError(t) {
+        if (t == null) {
+            return "";
+        }
+        var v = parseInt(t);
+        if (t.trim() === "") {
+            return "";
+        }
+        if (isNaN(v)) {
+            return "Enter a whole number.";
+        }
+        if (v < 0) {
+            return "Value can't be negative.";
+        }
+        return "";
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 20
@@ -209,6 +227,7 @@ Rectangle {
                 }
 
                 TextField {
+                    id: barHeightField
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.barHeight
@@ -226,13 +245,22 @@ Rectangle {
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null;
-                        if (val >= 0) {
+                        var val = parseInt(text);
+                        if (!isNaN(val) && val >= 0) {
                             States.barHeight = val;
-                            States.saveState("height", val);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            visible: intError(barHeightField.text) !== ""
+            text: intError(barHeightField.text)
+            color: Theme.alertcolor
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontsm
             }
         }
 
@@ -256,6 +284,7 @@ Rectangle {
                 }
 
                 TextField {
+                    id: barWidthField
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.barWidth
@@ -273,13 +302,22 @@ Rectangle {
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null;
-                        if (val >= 0) {
+                        var val = parseInt(text);
+                        if (!isNaN(val) && val >= 0) {
                             States.barWidth = val;
-                            States.saveState("width", val);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            visible: intError(barWidthField.text) !== ""
+            text: intError(barWidthField.text)
+            color: Theme.alertcolor
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontsm
             }
         }
 
@@ -303,6 +341,7 @@ Rectangle {
                 }
 
                 TextField {
+                    id: barRoundField
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.barRounding
@@ -320,13 +359,22 @@ Rectangle {
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null;
-                        if (val >= 0) {
+                        var val = parseInt(text);
+                        if (!isNaN(val) && val >= 0) {
                             States.barRounding = val;
-                            States.saveState("rounding", val);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            visible: intError(barRoundField.text) !== ""
+            text: intError(barRoundField.text)
+            color: Theme.alertcolor
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontsm
             }
         }
     }

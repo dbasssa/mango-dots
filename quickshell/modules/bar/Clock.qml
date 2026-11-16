@@ -7,7 +7,7 @@ import qs.modules.themeing
 Rectangle {
     id: root
     visible: States.clockVisible
-    property real fontSize: Theme.fontxl * States.fontScale
+    property real fontSize: Theme.fontlg
     property string rectColor: Theme.rectcolor
 
     property bool dateShow: false
@@ -19,7 +19,7 @@ Rectangle {
         color: Theme.bordercolor
     }
 
-    color: States.flushItems ? Theme.bgcolor : Theme.rectcolor
+    color: States.flushItems ? Theme.bgcolor : (clockMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor)
     radius: States.panelRounding
 
     SystemClock {
@@ -34,13 +34,15 @@ Rectangle {
         color: Theme.text1
         font {
             family: Theme.fontfamily
-            pixelSize: Theme.fontlg
+            pixelSize: root.fontSize
             bold: true
         }
     }
 
     MouseArea {
+        id: clockMouse
         anchors.fill: parent
+        hoverEnabled: true
         onClicked: root.dateShow = !root.dateShow
     }
 }

@@ -1,28 +1,18 @@
 pragma Singleton
 import QtQuick
 import Quickshell
-import Quickshell.Io
+import qs.services
 
 Singleton {
     id: root
-    Process {
-        id:themeSaverProc
-        command: [""]
-        running: false
-    }
-    function saveTheme () {
-        themeSaverProc.command = ["sh","-c","echo " + root.themeIndex + " > " + Quickshell.shellDir + "/state/theme"];
-        themeSaverProc.running = true;
-    }
-    Process {
-        id: themeReaderProc
-        command: ["sh","-c","cat " + Quickshell.shellDir + "/state/theme"];
-        running: true;
-        stdout: StdioCollector {
-            onStreamFinished: root.themeIndex = parseInt(this.text);
-        }
-    }
-    property int themeIndex: 0
+
+    //current theme — persisted through StateStore (was state/theme as a
+    //bare index file). hydration gate: skip the write-back of the initial load
+    property int themeIndex: StateStore.get("themeIndex", 0)
+    property bool hydrated: false
+    Component.onCompleted: root.hydrated = true
+    onThemeIndexChanged: if (root.hydrated) StateStore.set("themeIndex", root.themeIndex)
+
     property var themes: [{
         name: "Dark",
         bgcolor: "#16161a",

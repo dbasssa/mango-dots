@@ -12,9 +12,10 @@ ColumnLayout {
     spacing: 10
 
     function cycle(dir) {
-        const n = ThemeState.themes.length;
-        ThemeState.themeIndex = (ThemeState.themeIndex + dir + n) % n;
-        ThemeState.saveTheme();
+        const next = WallpaperState.nextSelectableTheme(ThemeState.themeIndex, dir);
+        if (next === ThemeState.themeIndex)
+            return;
+        ThemeState.themeIndex = next;
         WallpaperState.randomWal();
     }
 
@@ -84,6 +85,11 @@ ColumnLayout {
                     pixelSize: Theme.fontlg
                     bold: true
                 }
+            }
+            MouseArea {
+              anchors.fill: parent
+              onClicked: {States.themeOpen = true; States.ctrlOpen = false}
+              cursorShape: Qt.PointingHandCursor
             }
         }
 
@@ -249,7 +255,6 @@ ColumnLayout {
             checked: States.frameVis
             onClicked: {
                 States.frameVis = checked;
-                States.saveState("framevis", checked);
             }
         }
     }

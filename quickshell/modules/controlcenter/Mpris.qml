@@ -23,8 +23,10 @@ Item {
     Layout.fillWidth: true
 
     MouseArea {
+        id: artMouse
         anchors.fill: parent
         z: -1
+        hoverEnabled: true
         onWheel: {
             if (root.playersList.length <= 1)
                 return;
@@ -103,7 +105,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: Theme.bgcolor
+            color: artMouse.containsMouse ? Theme.recthovercolor : Theme.bgcolor
             opacity: 0.72
             visible: art.visible
         }

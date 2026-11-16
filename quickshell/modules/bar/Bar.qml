@@ -14,7 +14,6 @@ PanelWindow {
     implicitWidth: States.barWidth
     color: "transparent"
 
-
     Behavior on implicitHeight {
         NumberAnimation {
             duration: 100
@@ -36,7 +35,6 @@ PanelWindow {
         anchors.fill: parent
         color: States.islandBar ? "transparent" : States.notchBar ? Theme.rectcolor : Theme.bgcolor
         radius: States.fullBar ? 0 : States.barRounding
-
     }
 
     RowLayout {
@@ -50,20 +48,24 @@ PanelWindow {
             visible: States.notchBar ? true : false
         }
 
-        Workspaces { monitor: modelData.name}
+        Workspaces {
+            monitor: modelData.name
+        }
 
         FocusedApp {}
 
         //big black clock
         Clock {}
 
-        Item {Layout.fillWidth: true}
-        
-        SettingsBtn {
+        Item {
+            Layout.fillWidth: true
         }
+
+        ClipboardBtn {}
+        SettingsBtn {}
+        Indicators {}
         SysTray {}
 
-        CtrlCenterBtn{}
+        CtrlCenterBtn {}
     }
-
 }

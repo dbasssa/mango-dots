@@ -9,6 +9,14 @@ PanelWindow {
     property string pendingUrl: ""
     property bool transitioning: false
 
+    //quickshell only fires the change signal when the wallpaper is switched.
+    //a config reload recreates this window with activeWall empty, so without
+    //this the persisted wallpaper is never applied and the screen goes white.
+    Component.onCompleted: {
+        if (WallpaperState.currentWallpaper !== "")
+            root.finalize(WallpaperState.currentWallpaper);
+    }
+
     function startSwap(url) {
         if (!url || url === root.activeWall)
             return ;
@@ -32,15 +40,18 @@ PanelWindow {
     }
 
     function finalize(url) {
-        swapAnim.stop()
-        root.activeWall = url
-        root.pendingUrl = ""
-        root.transitioning = false
-        imgA.source = url
-        imgA.opacity = 1
-        imgB.opacity = 0
-        imgB.scale = 1
-        imgB.source = ""
+        swapAnim.stop();
+        root.pendingUrl = "";
+        root.transitioning = false;
+        if (!url)
+            return ;
+        //imgA.source is bound to activeWall; assigning it directly would break
+        //that binding and stop later swaps from updating the base image
+        root.activeWall = url;
+        imgA.opacity = 1;
+        imgB.opacity = 0;
+        imgB.scale = 1;
+        imgB.source = "";
     }
 
     Connections {
@@ -51,6 +62,9 @@ PanelWindow {
     }
 
     screen: modelData
+    //theme background instead of the default white while an image is loading
+    //or if the saved wallpaper is missing
+    color: Theme.bgcolor
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Bottom
 
@@ -66,6 +80,9 @@ PanelWindow {
 
         anchors.fill: parent
         asynchronous: true
+        //keep the old frame up while the replacement decodes, so activeWall
+        //updates never flash the background between images
+        retainWhileLoading: true
         fillMode: Image.PreserveAspectCrop
         source: root.activeWall
         opacity: 1

@@ -1,0 +1,17 @@
+{
+  "barHeight": 30,
+  "barWidth": 150,
+  "barStyle": "island",
+  "notchMargin": 5,
+  "barRounding": 20,
+  "frameVis": false,
+  "frameThickness": 5,
+  "frameRounding": 10,
+  "themeIndex": 6,
+  "wallpaper": "/home/tanish/.config/quickshell/walls/nord/dunes-nord.png",
+  "dnd": false,
+  "borderOn": false,
+  "idleLockMinutes": 3,
+  "idleIgnoreInhibitors": false,
+  "idleSleepMinutes": 20
+}

@@ -9,7 +9,7 @@ Rectangle {
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Math.round(States.barHeight * 0.75)
     implicitWidth: btnRow.implicitWidth + 10
-    color: States.flushItems ? Theme.bgcolor : Theme.rectcolor
+    color: States.flushItems ? Theme.bgcolor : (ctrlCenterMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor)
     radius: States.itemRounding
     clip: true
 
@@ -51,8 +51,10 @@ Rectangle {
     }
 
     MouseArea {
+        id: ctrlCenterMouse
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
         onClicked: {
             if (States.ctrlOpen) {
                 if (States.ctrlCloser)

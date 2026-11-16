@@ -1,18 +1,18 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.Notifications
 import Quickshell.Wayland
 import qs.modules
 import qs.modules.themeing
 import qs.services
+
 Scope {
     id: root
 
     PanelWindow {
         color: "transparent"
         implicitWidth: 380
-        implicitHeight:column.implicitHeight
+        implicitHeight: column.implicitHeight
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay
 
@@ -35,98 +35,23 @@ Scope {
             Repeater {
                 model: NotificationState.server.trackedNotifications
 
-                delegate: Rectangle {
-                    id: card
-
+                delegate: NotificationCard {
                     required property var modelData
 
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 60
-                    radius: States.frameRounding
-                    color: Theme.rectcolor
+                    notification: modelData
+                    autoTimeout: true
+                    cardRadius: States.frameRounding
+                    borderThick: 2
 
-                    Timer {
-                        id: timer
-                        running: card.modelData.urgency !== NotificationUrgency.Critical
-                        interval: States.notifTimeout
-                        onTriggered: card.modelData.dismiss()
-                    }
+                    //DND hides non-critical cards live; they still time out
+                    //and stay in the history page
+                    visible: NotificationState.shouldDisplay(modelData)
 
-                    border {
-                        width: 2
-                        color: modelData.urgency === NotificationUrgency.Critical ? Theme.alertcolor : Theme.bordercolor
-                    }
-
-                    RowLayout {
-                        id: layout
-
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        spacing: 10
-
-                        Image {
-                            Layout.preferredHeight: 36
-                            Layout.preferredWidth: 36
-                            Layout.alignment: Qt.AlignTop
-                            fillMode: Image.PreserveAspectFit
-                            visible: source.toString() !== ""
-                            source: card.modelData.image || card.modelData.appIcon || ""
-                        }
-
-                        ColumnLayout {
-                            Layout.fillWidth: true
-                            spacing: 2
-
-                            Text {
-                                id: headTxt
-                                Layout.fillWidth: true
-                                text: modelData.summary
-                                color: Theme.text1
-                                elide: Text.ElideRight
-
-                                font {
-                                    family: Theme.fontfamily
-                                    pixelSize: Theme.fontlg
-                                    bold: true
-                                }
-
-                            }
-
-                            Text {
-                              id:bodyTxt
-                                Layout.fillWidth: true
-                                visible: text !== ""
-                                text: modelData.body
-                                color: Theme.text1
-                                wrapMode: Text.WordWrap
-
-                                font {
-                                    family: Theme.fontfamily
-                                    pixelSize: Theme.fontmd
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-                    MouseArea {
-                        id: dimClk
-
-                        anchors.fill: parent
-                        onClicked: {
-                            card.modelData.dismiss();
-                            timer.stop();
-                        }
-                    }
-
+                    //acknowledging a popup hides the card but keeps the
+                    //notification (and its actions) in history
+                    onBodyClicked: modelData.tracked = false
                 }
-
             }
-
         }
-
     }
-
 }

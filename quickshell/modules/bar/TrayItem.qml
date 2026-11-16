@@ -20,6 +20,7 @@ Item {
         source: modelData.icon
         width: Math.round(States.barHeight * 0.5)
         height: Math.round(States.barHeight * 0.5)
+        opacity: trayMouse.containsMouse ? 1 : 0.8
     }
 
     QsMenuAnchor {
@@ -29,9 +30,11 @@ Item {
     }
 
     MouseArea {
+        id: trayMouse
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
         cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true
 
         onClicked : (mouse) => {
             switch (mouse.button) {

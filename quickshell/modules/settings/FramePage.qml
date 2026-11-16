@@ -10,6 +10,23 @@ Rectangle {
     Layout.fillWidth: true
     color: Theme.bgcolor
 
+    function intError(t) {
+        if (t == null) {
+            return "";
+        }
+        var v = parseInt(t);
+        if (t.trim() === "") {
+            return "";
+        }
+        if (isNaN(v)) {
+            return "Enter a whole number.";
+        }
+        if (v < 0) {
+            return "Value can't be negative.";
+        }
+        return "";
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 20
@@ -46,7 +63,6 @@ Rectangle {
                     checked: States.frameVis
                     onClicked: {
                         States.frameVis = checked;
-                        States.saveState("framevis", checked);
                     }
                 }
             }
@@ -72,6 +88,7 @@ Rectangle {
                 }
 
                 TextField {
+                    id: frameRoundField
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.frameRounding
@@ -89,13 +106,22 @@ Rectangle {
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null;
-                        if (val >= 0) {
+                        var val = parseInt(text);
+                        if (!isNaN(val) && val >= 0) {
                             States.frameRounding = val;
-                            States.saveState("framerounding", val);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            visible: intError(frameRoundField.text) !== ""
+            text: intError(frameRoundField.text)
+            color: Theme.alertcolor
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontsm
             }
         }
 
@@ -119,6 +145,7 @@ Rectangle {
                 }
 
                 TextField {
+                    id: frameThickField
                     implicitHeight: 50
                     implicitWidth: 100
                     placeholderText: States.frameThickness
@@ -136,13 +163,22 @@ Rectangle {
                     }
 
                     onAccepted: {
-                        var val = parseInt(text) ?? null;
-                        if (val >= 0) {
+                        var val = parseInt(text);
+                        if (!isNaN(val) && val >= 0) {
                             States.frameThickness = val;
-                            States.saveState("framethickness", val);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            visible: intError(frameThickField.text) !== ""
+            text: intError(frameThickField.text)
+            color: Theme.alertcolor
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontsm
             }
         }
     }

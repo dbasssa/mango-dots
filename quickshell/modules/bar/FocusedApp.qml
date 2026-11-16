@@ -1,19 +1,20 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
 import qs.modules
 import qs.modules.themeing
+import qs.services
 
 Rectangle {
     id: root
     clip: true
 
     visible: States.notchBar ? false : (States.appsVisible ? true : false)
-    property string focusedApp: ""
-    property string focusedTitle: ""
+    property string focusedApp: Mmsg.focusedApp
+    property string focusedTitle: Mmsg.focusedTitle
     implicitHeight: Math.round(States.barHeight * 0.75)
-    implicitWidth: appTxt.implicitWidth + 20
+    implicitWidth: Math.min(200, appTxt.implicitWidth + 20)
+
     Layout.alignment: Qt.AlignVCenter
 
     color: Theme.rectcolor
@@ -26,49 +27,20 @@ Rectangle {
 
     Text {
         id: appTxt
-        anchors.centerIn: parent
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
         anchors.topMargin: 2
         anchors.bottomMargin: 2
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
         color: Theme.text1
-        text: root.focusedApp
+        text: root.focusedTitle !== "" ? root.focusedTitle : root.focusedApp
+        elide: Text.ElideRight
+        width: parent.width - 20
         font {
             family: Theme.fontfamily
             pixelSize: Theme.fontxl
             bold: true
-        }
-    }
-
-    Process {
-        id: getFocusedApp
-
-        command: ["mmsg", "watch", "focusing-client"]
-        running: true
-
-        stdout: SplitParser {
-            splitMarker: "\n"
-            onRead: data => {
-                const line = String(data).trim();
-                if (line === "")
-                    return;
-
-                let obj = null;
-                try {
-                    obj = JSON.parse(line);
-                } catch (e) {
-                    console.log("PARSE FAIL: ", e);
-                    return;
-                }
-                if (obj && obj.appid && obj.appid !== "") {
-                    root.focusedApp = obj.appid;
-                } else if (obj.appid === "") {
-                    root.focusedApp = "Desktop";
-                }
-                if (obj && obj.title && obj.title !== "")
-                    root.focusedTitle = obj.title;
-            }
         }
     }
 }

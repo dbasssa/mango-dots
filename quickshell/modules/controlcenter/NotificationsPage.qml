@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
-import qs.modules
 import qs.modules.themeing
 import qs.services
+
 ColumnLayout {
     id: root
 
@@ -12,6 +12,7 @@ ColumnLayout {
 
     RowLayout {
         Layout.fillWidth: true
+        spacing: 10
 
         Text {
             Layout.fillWidth: true
@@ -23,12 +24,26 @@ ColumnLayout {
                 pixelSize: Theme.fontxxl
                 bold: true
             }
+        }
 
+        Text {
+            text: "Do Not Disturb"
+            color: NotificationState.dnd ? Theme.textactive : Theme.textmuted
+
+            font {
+                family: Theme.fontfamily
+                pixelSize: Theme.fontmd
+            }
+        }
+
+        ThemeSwitch {
+            checked: NotificationState.dnd
+            onClicked: NotificationState.dnd = checked
         }
 
         Text {
             text: "Clear All"
-            color: clearHover.containsMouse && NotificationState.history.count > 0 ? Theme.textactive : (NotificationState.history.count > 0 ? Theme.text1 : Theme.textmuted)
+            color: clearHover.containsMouse && NotificationState.history.length > 0 ? Theme.textactive : (NotificationState.history.length > 0 ? Theme.text1 : Theme.textmuted)
 
             font {
                 family: Theme.fontfamily
@@ -44,9 +59,20 @@ ColumnLayout {
                 hoverEnabled: true
                 onClicked: NotificationState.clearHistory()
             }
-
         }
+    }
 
+    Text {
+        Layout.fillWidth: true
+        visible: NotificationState.dnd
+        text: "Critical notifications still get through"
+        color: Theme.textmuted
+        wrapMode: Text.WordWrap
+
+        font {
+            family: Theme.fontfamily
+            pixelSize: Theme.fontsm
+        }
     }
 
     ListView {
@@ -59,89 +85,15 @@ ColumnLayout {
         clip: true
         model: NotificationState.history
 
-        delegate: Rectangle {
+        delegate: NotificationCard {
             required property var modelData
 
             width: list.width
-            implicitHeight: col.implicitHeight + 10
-            radius: States.tagRounding
-            color: Theme.rectcolor
+            notification: modelData.view
+            timeLabel: modelData.time
+            hoverHighlight: true
 
-            border {
-                width: States.borderOn ? 1 : 0
-                color: Theme.bordercolor
-            }
-
-            ColumnLayout {
-                id: col
-
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.margins: 6
-                spacing: 2
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 6
-
-                    Text {
-                        Layout.fillWidth: true
-                        text: modelData.summary
-                        color: Theme.text1
-                        elide: Text.ElideRight
-
-                        font {
-                            family: Theme.fontfamily
-                            pixelSize: Theme.fontlg
-                            bold: true
-                        }
-
-                    }
-
-                    Text {
-                        text: modelData.time
-                        color: Theme.textmuted
-
-                        font {
-                            family: Theme.fontfamily
-                            pixelSize: Theme.fontmd
-                        }
-
-                    }
-
-                }
-
-                Text {
-                    Layout.fillWidth: true
-                    visible: modelData.body !== ""
-                    text: modelData.body
-                    color: Theme.text1
-                    wrapMode: Text.WordWrap
-
-                    font {
-                        family: Theme.fontfamily
-                        pixelSize: Theme.fontmd
-                    }
-
-                }
-
-                Text {
-                    visible: modelData.appName !== ""
-                    text: modelData.appName
-                    color: Theme.textmuted
-
-                    font {
-                        family: Theme.fontfamily
-                        pixelSize: Theme.fontsm
-                    }
-
-                }
-
-            }
-
+            onBodyClicked: NotificationState.dismissEntry(modelData)
         }
-
     }
-
 }

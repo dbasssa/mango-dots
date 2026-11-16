@@ -12,9 +12,11 @@ PanelWindow {
     function select(index) {
         if (index < 0 || index >= ThemeState.themes.length)
             return;
+        //empty themes have no wallpaper to pick, so they can't be applied
+        if (!WallpaperState.themeHasWallpapers(ThemeState.themes[index]))
+            return;
 
         ThemeState.themeIndex = index;
-        ThemeState.saveTheme();
         //grab a wallpaper that matches the new theme
         WallpaperState.randomWal();
         States.themeOpen = false;
@@ -112,10 +114,14 @@ PanelWindow {
                 required property int index
                 required property var modelData
 
+                //theme folder has no wallpapers to apply
+                readonly property bool empty: !WallpaperState.themeHasWallpapers(themeCard.modelData)
+
                 width: 186
                 height: 186
                 radius: States.tagRounding
                 color: themeCard.modelData.bgcolor
+                opacity: themeCard.empty ? 0.45 : 1
 
                 border {
                     width: themeGrid.currentIndex === themeCard.index ? 3 : 1
@@ -228,6 +234,34 @@ PanelWindow {
                     }
                 }
 
+                //no-wallpaper badge
+                Rectangle {
+                    anchors.centerIn: preview
+                    visible: themeCard.empty
+                    width: emptyLabel.implicitWidth + 18
+                    height: 26
+                    radius: 13
+                    color: themeCard.modelData.bgcolor
+
+                    border {
+                        width: 1
+                        color: themeCard.modelData.alertcolor
+                    }
+
+                    Text {
+                        id: emptyLabel
+
+                        anchors.centerIn: parent
+                        text: "No wallpapers"
+                        color: themeCard.modelData.alertcolor
+
+                        font {
+                            family: Theme.fontfamily
+                            pixelSize: Theme.fontsm
+                        }
+                    }
+                }
+
                 //theme name
                 Text {
                     anchors.left: parent.left
@@ -260,8 +294,11 @@ PanelWindow {
 
                 MouseArea {
                     anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.select(themeCard.index)
+                    cursorShape: themeCard.empty ? Qt.ForbiddenCursor : Qt.PointingHandCursor
+                    onClicked: {
+                        if (!themeCard.empty)
+                            root.select(themeCard.index);
+                    }
                 }
             }
         }

@@ -21,8 +21,8 @@ PanelWindow {
     //chrome height: margins 10+10 + tab row 20 + column spacing 10
     function desiredHeight() {
         let pageH = 0;
-        if (root.currentPage === 0) pageH = audioPage.implicitHeight + States.ctrlExtraHeight;
-        else if (root.currentPage === 1) pageH = connectionsPage.implicitHeight;
+        if (root.currentPage === 0) pageH = audioDisplayPage.implicitHeight + States.ctrlExtraHeight;
+        else if (root.currentPage === 1) pageH = connectionsPage.implicitHeight + States.ctrlExtraHeight;
         else if (root.currentPage === 2) pageH = appearancePage.implicitHeight;
         else if (root.currentPage === 3) pageH = systemPage.implicitHeight;
         else if (root.currentPage === 4) pageH = powerPage.implicitHeight;
@@ -198,7 +198,7 @@ PanelWindow {
             }
 
             AudioPage {
-                id: audioPage
+                id: audioDisplayPage
 
                 Layout.fillWidth: true
                 visible: root.currentPage === 0

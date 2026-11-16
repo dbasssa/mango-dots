@@ -1,63 +1,22 @@
-import Quickshell.Networking
 import QtQuick
-import qs.modules
+
 import qs.modules.themeing
+import qs.services
 
 Item {
     id: root
+
     anchors.verticalCenter: parent.verticalCenter
     implicitHeight: parent.implicitHeight - 5
     implicitWidth: wiredTxt.visible ? wiredTxt.implicitWidth + 10 : wifiTxt.implicitWidth + 10
-    property bool wifiEnabled: Networking.wifiEnabled
-    readonly property list<NetworkDevice> devices: Networking.devices.values
-    property WifiDevice wifiDev: devices.find(dev => dev.type === DeviceType.Wifi) ?? null
-    property WiredDevice wiredDev: devices.find(dev => dev.type === DeviceType.Wired) ?? null
-    property list<WifiNetwork> wifiNetworks: wifiDev?.networks.values ?? []
-    readonly property string activeWiredName: wiredDev?.networks.values.find(n => n.connected)?.name ?? ""
-    readonly property string activeNetName: wifiDev?.networks.values.find(n => n.connected)?.name ?? ""
 
-    //wifi function (fuck the name of ur wifi)
-    function wifiConnection() {
-        if (wifiDev != null) {
-            if (wifiDev.state === ConnectionState.Connected) {
-                return " 󰖩";
-            }
-            if (wifiDev.state === ConnectionState.Connecting) {
-                return " 󱛆";
-            }
-            if (wifiDev.state === ConnectionState.Disconnected) {
-                return " 󱛅";
-            }
-            if (wifiDev.state === ConnectionState.Disconnecting) {
-                return " 󱛆";
-            }
-        } else {
-            return;
-        }
-    }
-
-    //fuck this you dont need this on ethernet you pussy look at ur motherboard... THERES LIGHTS THERE FOR A REASON
-    function wiredConnection() {
-        if (wiredDev != null) {
-            if (wiredDev.state === ConnectionState.Connected) {
-                return " 󰈁"; //you heard me
-            }
-            if (wiredDev.state === ConnectionState.Disconnected || wiredDev.state === ConnectionState.Unknown) {
-                return " 󰈂";  //south park reference if your ethernet dies
-            } else {
-                return "󰈂 wait...";
-            }
-        } else {
-            return;
-        }
-    }
-
-    //wifi network shit
+    //wifi network
     Text {
         id: wifiTxt
-        visible: wifiDev != null
+
+        visible: NetworkState.wifiDev != null
         anchors.centerIn: parent
-        text: root.activeNetName + root.wifiConnection()
+        text: NetworkState.wifiName + NetworkState.wifiIcon
         color: Theme.text1
 
         font {
@@ -65,12 +24,14 @@ Item {
             pixelSize: Theme.fontlg
         }
     }
-    //wired network shitu
+
+    //wired network
     Text {
         id: wiredTxt
+
         anchors.centerIn: parent
-        visible: wiredDev != null
-        text: root.activeWiredName + root.wiredConnection()  //pussy i hated writing this
+        visible: NetworkState.wiredDev != null
+        text: NetworkState.wiredName + NetworkState.wiredIcon
         color: Theme.text1
 
         font {

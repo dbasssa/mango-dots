@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Io
 import qs.modules
 import qs.modules.themeing
+import qs.services
 
 Rectangle {
     id: root
@@ -63,30 +63,14 @@ Rectangle {
         }
     }
 
-    Process {
-        command: ["mmsg", "watch", "tags", root.monitor]
-        running: true
-        stdout: SplitParser {
-            splitMarker: "\n"
-            onRead: data => {
-                const line = String(data).trim();
-                if (line === "")
-                    return;
-                let obj = null;
-                try {
-                    obj = JSON.parse(line);
-                } catch (e) {
-                    return;
-                }
-                if (obj && obj.tags)
-                    root.syncTags(obj.tags);
-            }
-        }
-    }
-    Process {
-        id: switchWS
-        command: [""]
-        running: false
+    //fed by the shared watcher in services/Mmsg.qml
+    property var monitorTags: Mmsg.tags(root.monitor)
+
+    onMonitorTagsChanged: {
+        //an empty list only means no event has arrived yet; keep the
+        //placeholder so the widget doesn't collapse before the first update
+        if (monitorTags.length > 0)
+            root.syncTags(monitorTags);
     }
 
     RowLayout {
@@ -104,7 +88,7 @@ Rectangle {
                 implicitWidth: model.is_active ? 30 : 20
                 radius: States.tagRounding
 
-                color: model.is_active ? Theme.text1 : (model.is_urgent ? Theme.alertcolor : (model.client_count > 0 ? Theme.occupiedcolor : Theme.recthovercolor))
+                color: model.is_active ? Theme.text1 : (model.is_urgent ? Theme.alertcolor : (model.client_count > 0 ? Theme.occupiedcolor : (tagHover.containsMouse ? Theme.recthovercolor : Theme.rectcolor)))
 
                 Text {
                     property bool fresh
@@ -120,10 +104,11 @@ Rectangle {
                 }
 
                 MouseArea {//MOTHERFUCKER JUST WORK BRO
+                    id: tagHover
                     anchors.fill: parent
+                    hoverEnabled: true
                     onClicked: {
-                        switchWS.command = ["mmsg", "dispatch", "view," + (model.index + 1) + ",0"];
-                        switchWS.running = true;
+                        Mmsg.dispatchView(model.index + 1, root.monitor);
                     }
                 }
                 Behavior on implicitWidth {
