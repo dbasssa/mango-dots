@@ -11,6 +11,9 @@ ColumnLayout {
     Layout.fillHeight: true
     spacing: 10
 
+    //refresh wallpaper counts when the appearance page is opened
+    onVisibleChanged: if (visible) WallpaperState.rescan()
+
     function cycle(dir) {
         const next = WallpaperState.nextSelectableTheme(ThemeState.themeIndex, dir);
         if (next === ThemeState.themeIndex)

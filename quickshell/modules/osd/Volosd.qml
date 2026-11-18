@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import QtQuick.Layouts
+import Quickshell.Wayland
 
 import qs.modules
 import qs.modules.themeing
@@ -13,6 +14,30 @@ Scope {
     property bool showOsd: false
     //raised by brightness changes instead of volume changes
     property bool osdBrightness: false
+
+    //show the osd and restart the hide countdown.
+    //
+    //this must run on *every* volume/brightness change, not just the first
+    //one: holding a volume key emits changes faster than the hide timer, and
+    //the old code only restarted the timer while the osd was hidden, so it
+    //faded out mid-adjustment. see raise() below.
+    function raise(brightness) {
+        root.osdBrightness = brightness;
+
+        //a change that lands during the fade-out should reverse it, not be
+        //swallowed while the old animation keeps running
+        osdFadeOut.stop();
+
+        root.showOsd = true;
+        hideTimer.restart();
+
+        //only start a fade-in when one isn't already in flight, and continue
+        //from the current opacity instead of snapping back to 0
+        if (!osdFadeIn.running && osdWindow.osdOpacity < 1) {
+            osdFadeIn.from = osdWindow.osdOpacity;
+            osdFadeIn.restart();
+        }
+    }
 
     Timer {
         id: hideTimer
@@ -27,12 +52,7 @@ Scope {
         target: Pipewire.sinkReady ? Pipewire.sink.audio : null
 
         function onVolumesChanged() {
-            root.osdBrightness = false;
-            if (!root.showOsd) {
-                root.showOsd = true;
-                hideTimer.restart();
-                osdFadeIn.restart();
-            }
+            root.raise(false);
         }
     }
 
@@ -41,12 +61,7 @@ Scope {
         target: States
 
         function onBrightnessChanged() {
-            root.osdBrightness = true;
-            if (!root.showOsd) {
-                root.showOsd = true;
-                hideTimer.restart();
-                osdFadeIn.restart();
-            }
+            root.raise(true);
         }
     }
 
@@ -57,6 +72,7 @@ Scope {
         anchors.bottom: true
         margins.bottom: 20
         exclusiveZone: 0
+        WlrLayershell.layer: WlrLayer.Overlay
 
         implicitWidth: 400
         implicitHeight: 50
@@ -75,6 +91,7 @@ Scope {
             from: 0
             to: 1
             duration: 300
+            easing.type: Easing.OutCubic
             running: false
         }
 
@@ -87,12 +104,10 @@ Scope {
             duration: 300
             easing.type: Easing.OutCubic
             running: false
-            onRunningChanged: {
-                if (!running) {
-                    //fade finished — hide the osd until it is raised again
-                    root.showOsd = false;
-                }
-            }
+
+            //onFinished only fires when the fade actually completes, so
+            //stopping it for a late volume change does not hide the window
+            onFinished: root.showOsd = false
         }
 
         Rectangle {

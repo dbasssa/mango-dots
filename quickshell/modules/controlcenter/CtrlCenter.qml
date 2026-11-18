@@ -18,16 +18,27 @@ PanelWindow {
     //animated height of the control center panel
     property real ctrlH: 0
 
+    //content height of the page that is currently shown
+    function pageHeight() {
+        let pageH = 0;
+        if (root.currentPage === 0)
+            pageH = audioDisplayPage.implicitHeight + States.ctrlExtraHeight;
+        else if (root.currentPage === 1)
+            pageH = connectionsPage.implicitHeight + States.ctrlExtraHeight;
+        else if (root.currentPage === 2)
+            pageH = appearancePage.implicitHeight;
+        else if (root.currentPage === 3)
+            pageH = systemPage.implicitHeight;
+        else if (root.currentPage === 4)
+            pageH = powerPage.implicitHeight;
+        else if (root.currentPage === 5)
+            pageH = notificationsPage.implicitHeight;
+        return pageH;
+    }
+
     //chrome height: margins 10+10 + tab row 20 + column spacing 10
     function desiredHeight() {
-        let pageH = 0;
-        if (root.currentPage === 0) pageH = audioDisplayPage.implicitHeight + States.ctrlExtraHeight;
-        else if (root.currentPage === 1) pageH = connectionsPage.implicitHeight + States.ctrlExtraHeight;
-        else if (root.currentPage === 2) pageH = appearancePage.implicitHeight;
-        else if (root.currentPage === 3) pageH = systemPage.implicitHeight;
-        else if (root.currentPage === 4) pageH = powerPage.implicitHeight;
-        else if (root.currentPage === 5) pageH = notificationsPage.implicitHeight;
-        return Math.max(1, pageH + 50);
+        return Math.max(1, root.pageHeight() + 50);
     }
 
     NumberAnimation {
@@ -135,6 +146,16 @@ PanelWindow {
 
     property int currentPage: 0
 
+    //tab definitions: the icons fill the panel width evenly
+    readonly property var tabs: [
+        { icon: "󰕾", name: "Audio" },
+        { icon: "󱘖", name: "Connections" },
+        { icon: "󰏘", name: "Appearance" },
+        { icon: "󰒓", name: "System" },
+        { icon: "󰐥", name: "Power" },
+        { icon: "󰂚", name: "Notifications" }
+    ]
+
     Rectangle {
         id: ctrlrect
 
@@ -159,16 +180,27 @@ PanelWindow {
             spacing: 10
 
             RowLayout {
-                spacing: 2
+                id: tabRow
+
                 Layout.fillWidth: true
+                spacing: 2
+
                 Repeater {
-                    model: ["Audio","Connections","Appearance","System","Power","Notifications"]
+                    model: [
+                        { icon: "󰕾", name: "Audio" },
+                        { icon: "󱘖", name: "Connections" },
+                        { icon: "󰏘", name: "Appearance" },
+                        { icon: "󰒓", name: "System" },
+                        { icon: "󰐥", name: "Power" },
+                        { icon: "󰂚", name: "Notifications" }
+                    ]
 
                     delegate: Rectangle {
+                        Layout.fillWidth: true
                         implicitHeight: 20
-                        implicitWidth: modelTxt.implicitWidth + 7
                         radius: States.sliderRounding
-                        color: root.currentPage === model.index ? Theme.occupiedcolor : Theme.bgcolor
+
+                        color: root.currentPage === model.index ? Theme.occupiedcolor : (tabMouse.containsMouse ? Theme.recthovercolor : Theme.bgcolor)
 
                         border {
                             width: States.borderOn ? 1 : 0
@@ -176,71 +208,66 @@ PanelWindow {
                         }
 
                         Text {
-                            id: modelTxt
+                            id: tabIcon
 
                             anchors.centerIn: parent
-                            text: modelData
+                            text: modelData.icon
                             color: Theme.text1
 
                             font {
                                 family: Theme.fontfamily
-                                pixelSize: Theme.fontmd
+                                pixelSize: Theme.fontlg
                             }
-
                         }
 
                         MouseArea {
+                            id: tabMouse
+
                             anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked: root.currentPage = model.index
                         }
+
+                        ToolTip.text: modelData.name
+                        ToolTip.visible: tabMouse.containsMouse
+                        ToolTip.delay: 400
                     }
                 }
             }
 
-            AudioPage {
-                id: audioDisplayPage
+            StackLayout {
+                id: pageStack
 
                 Layout.fillWidth: true
-                visible: root.currentPage === 0
+                Layout.fillHeight: true
+                Layout.preferredHeight: root.pageHeight()
+                currentIndex: root.currentPage
+
+                AudioPage {
+                    id: audioDisplayPage
+                }
+
+                ConnectionsPage {
+                    id: connectionsPage
+                }
+
+                AppearancePage {
+                    id: appearancePage
+                }
+
+                SystemPage {
+                    id: systemPage
+                }
+
+                PowerPage {
+                    id: powerPage
+                }
+
+                NotificationsPage {
+                    id: notificationsPage
+                }
             }
-
-            ConnectionsPage {
-                id: connectionsPage
-
-                Layout.fillWidth: true
-                visible: root.currentPage === 1
-            }
-
-            AppearancePage {
-                id: appearancePage
-
-                Layout.fillWidth: true
-                visible: root.currentPage === 2
-            }
-
-            SystemPage {
-                id: systemPage
-
-                Layout.fillWidth: true
-                visible: root.currentPage === 3
-            }
-
-            PowerPage {
-                id: powerPage
-
-                Layout.fillWidth: true
-                visible: root.currentPage === 4
-            }
-
-            NotificationsPage {
-                id: notificationsPage
-
-                Layout.fillWidth: true
-                visible: root.currentPage === 5
-            }
-
         }
-
     }
-
 }

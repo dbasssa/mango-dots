@@ -19,20 +19,18 @@ ShellRoot {
         model: Quickshell.screens
 
         Bar {}
-
     }
 
     Variants {
         model: Quickshell.screens
 
         ScreenFrame {}
-
     }
 
     Variants {
         model: Quickshell.screens
 
-        Wallpaper{}
+        Wallpaper {}
     }
 
     Notifications {}

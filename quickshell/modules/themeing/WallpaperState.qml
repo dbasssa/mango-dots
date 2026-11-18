@@ -75,6 +75,15 @@ Singleton {
         root.randomPending = true;
     }
 
+    //refresh the per-theme counts, e.g. after wallpapers were added or removed
+    //outside the shell. an in-flight scan is already fresh, so let it finish.
+    function rescan() {
+        if (scanProc.running)
+            return;
+        root.countsReady = false;
+        scanProc.running = true;
+    }
+
     function isCurrent(name) {
         return root.fileBasename(root.currentWallpaper) === name;
     }

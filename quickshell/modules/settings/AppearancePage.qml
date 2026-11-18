@@ -9,6 +9,9 @@ Rectangle {
     Layout.fillWidth: true
     color: Theme.bgcolor
 
+    //refresh wallpaper counts when the appearance page is opened
+    onVisibleChanged: if (visible) WallpaperState.rescan()
+
     //shared by the numeric fields
     function intError(t) {
         if (t == null)

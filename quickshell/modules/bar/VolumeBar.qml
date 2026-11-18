@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import qs.modules.themeing
 import qs.services
@@ -8,7 +9,7 @@ Item {
 
     implicitHeight: parent.implicitHeight - 5
     implicitWidth: voltxt.implicitWidth + 10
-    anchors.verticalCenter: parent.verticalCenter
+    Layout.alignment: Qt.AlignVCenter
 
     Text {
         id: voltxt

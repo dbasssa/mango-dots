@@ -117,9 +117,9 @@ Item {
 
             Text {
                 id: title
-                anchors.horizontalCenter: parent.horizontalCenter
                 Layout.fillWidth: true
                 Layout.maximumWidth: implicitWidth
+                Layout.alignment: Qt.AlignHCenter
                 visible: root.hasTitle
                 text: root.player ? root.player.trackTitle : ""
                 color: Theme.text1
@@ -137,9 +137,9 @@ Item {
 
             Text {
                 id: artist
-                anchors.horizontalCenter: parent.horizontalCenter
                 Layout.fillWidth: true
                 Layout.maximumWidth: implicitWidth
+                Layout.alignment: Qt.AlignHCenter
                 visible: root.hasArtist
                 text: root.player ? root.player.trackArtist : ""
                 color: Theme.text1
@@ -158,10 +158,8 @@ Item {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 30
+                Layout.alignment: Qt.AlignHCenter
                 spacing: 50
-                anchors.leftMargin: 50
-                anchors.rightMargin: 50
-                anchors.horizontalCenter: parent.horizontalCenter
 
                 Rectangle {
                     Layout.preferredWidth: 12

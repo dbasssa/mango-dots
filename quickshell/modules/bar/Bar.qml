@@ -65,6 +65,7 @@ PanelWindow {
         SettingsBtn {}
         Indicators {}
         SysTray {}
+        ThemeName {}
 
         CtrlCenterBtn {}
     }

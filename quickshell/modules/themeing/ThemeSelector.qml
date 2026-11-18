@@ -32,6 +32,9 @@ PanelWindow {
         if (!root.visible)
             return;
 
+        //the folder contents may have changed since the shell started
+        WallpaperState.rescan();
+
         //start on the theme that is currently applied
         themeGrid.currentIndex = ThemeState.themeIndex;
         themeGrid.positionViewAtIndex(themeGrid.currentIndex, GridView.Center);

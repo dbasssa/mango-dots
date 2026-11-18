@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
@@ -13,8 +14,8 @@ FloatingWindow {
     title: "Settings"
     color: Theme.bgcolor
     visible: States.settingsOpen
-    width: 1200
-    height: 800
+    implicitWidth: 1200
+    implicitHeight: 800
     minimumSize: Qt.size(900, 600)
     onClosed: States.settingsOpen = false
 
@@ -25,7 +26,6 @@ FloatingWindow {
 
         target: "settings-qs"
     }
-
 
     property int currentPage: 0
 
@@ -114,31 +114,75 @@ FloatingWindow {
                         spacing: 5
 
                         Repeater {
-                            model: ["Bar", "Frame", "Appearance", "Connections", "Timers"]
+                            model: [
+                                {
+                                    icon: "󱔓",
+                                    name: "Bar"
+                                },
+                                {
+                                    icon: "󰃇",
+                                    name: "Frame"
+                                },
+                                {
+                                    icon: "󰏘",
+                                    name: "Appearance"
+                                },
+                                {
+                                    icon: "󱘖",
+                                    name: "Connections"
+                                },
+                                {
+                                    icon: "󰕾",
+                                    name: "Audio"
+                                },
+                                {
+                                    icon: "󰂚",
+                                    name: "Notifications"
+                                },
+                                {
+                                    icon: "󰒓",
+                                    name: "System"
+                                },
+                                {
+                                    icon: "󰐥",
+                                    name: "Power"
+                                },
+                                {
+                                    icon: "",
+                                    name: "Idle Behavior"
+                                }
+                            ]
 
                             delegate: Rectangle {
                                 implicitHeight: 40
                                 implicitWidth: 140
-                                anchors.margins: 10
 
-                                color: root.currentPage === model.index ? Theme.occupiedcolor : Theme.rectcolor
+                                color: root.currentPage === model.index ? Theme.occupiedcolor : (tabMouse.containsMouse ? Theme.recthovercolor : Theme.rectcolor)
                                 radius: States.itemRounding
 
                                 Text {
-                                    anchors.left: parent.left
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    text: modelData
+                                    anchors.centerIn: parent
+                                    text: modelData.icon
                                     color: Theme.text1
+
                                     font {
                                         family: Theme.fontfamily
-                                        pixelSize: Theme.fontxl
+                                        pixelSize: Theme.fontxxl
                                     }
                                 }
 
                                 MouseArea {
+                                    id: tabMouse
+
                                     anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
                                     onClicked: root.currentPage = model.index
                                 }
+
+                                ToolTip.text: modelData.name
+                                ToolTip.visible: tabMouse.containsMouse
+                                ToolTip.delay: 400
                             }
                         }
 
@@ -147,21 +191,22 @@ FloatingWindow {
                         }
                     }
                 }
-                BarPage {
-                    visible: root.currentPage === 0
-                }
-                FramePage {
-                    visible: root.currentPage === 1
-                }
+                StackLayout {
+                    id: settingsStack
 
-                AppearancePage {
-                    visible: root.currentPage === 2
-                }
-                ConnectionsPage {
-                    visible: root.currentPage === 3
-                }
-                TimersPage {
-                    visible: root.currentPage === 4
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    currentIndex: root.currentPage
+
+                    BarPage {}
+                    FramePage {}
+                    AppearancePage {}
+                    ConnectionsPage {}
+                    AudioPage {}
+                    NotificationsPage {}
+                    SystemPage {}
+                    PowerPage {}
+                    TimersPage {}
                 }
             }
         }

@@ -52,7 +52,7 @@ ColumnLayout {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onClicked: Screenshot.screenshot - qs.region()
+            onClicked: Screenshot.region()
         }
     }
 

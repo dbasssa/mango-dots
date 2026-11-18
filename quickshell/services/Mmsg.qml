@@ -73,8 +73,8 @@ Singleton {
                     if (obj.appid === "")
                         root.focusedTitle = "";
                 }
-                if (obj.title !== undefined && obj.title !== "")
-                    root.focusedTitle = obj.title;
+                if (obj.title !== undefined)
+                    root.focusedTitle = obj.title === "" ? "Desktop" : obj.title;
             }
         }
     }
@@ -128,7 +128,6 @@ Singleton {
                 }
             }
         }
-
     }
 
     Process {

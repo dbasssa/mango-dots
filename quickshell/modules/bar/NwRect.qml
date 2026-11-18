@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import qs.modules.themeing
 import qs.services
@@ -6,7 +7,7 @@ import qs.services
 Item {
     id: root
 
-    anchors.verticalCenter: parent.verticalCenter
+    Layout.alignment: Qt.AlignVCenter
     implicitHeight: parent.implicitHeight - 5
     implicitWidth: wiredTxt.visible ? wiredTxt.implicitWidth + 10 : wifiTxt.implicitWidth + 10
 
